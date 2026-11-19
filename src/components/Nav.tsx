@@ -18,7 +18,11 @@ type Tone = "dark" | "light";
 export function Logo({ tone = "dark", className = "" }: { tone?: Tone; className?: string }) {
   return (
     <Link href="/" aria-label="Astrocade home" className={`relative block h-[30px] w-[169.4px] ${className}`}>
-      <img src="/img/shared/logo-mark.svg" alt="" className="absolute left-0 top-0 h-[30px] w-[31.2px]" />
+      <img
+        src={tone === "dark" ? "/img/shared/logo-mark.svg" : "/img/about/logo-mark.svg"}
+        alt=""
+        className="absolute left-0 top-0 h-[30px] w-[31.2px]"
+      />
       <img
         src={tone === "dark" ? "/img/shared/logo-wordmark.svg" : "/img/about/logo-wordmark-dark.svg"}
         alt="Astrocade"
