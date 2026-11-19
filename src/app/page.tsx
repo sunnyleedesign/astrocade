@@ -21,7 +21,7 @@ export default function HomePage() {
   return (
     <main>
       {/* ═════════════ Desktop (Figma: Homepage, 1440 × 3619) ═════════════ */}
-      <Stage height={3401} className="hidden lg:block">
+      <Stage height={3671} className="hidden lg:block">
         <DesktopNav />
 
         {/* Hero video + fade overlay */}
@@ -78,7 +78,7 @@ export default function HomePage() {
         </InView>
 
         {/* Ending: headline + Play / Create / Share */}
-        <section className="absolute left-0 top-[2706px] h-[695px] w-[1440px] overflow-x-clip">
+        <section className="absolute left-0 top-[2706px] h-[965px] w-[1440px] overflow-x-clip">
           <InView className="absolute left-[146.5px] top-0 z-20 w-[1143px] text-center text-[72px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
@@ -89,9 +89,9 @@ export default function HomePage() {
           </InView>
           <PlayCreateShare
             swooshSrc="/img/home/swoosh.svg"
-            swooshBox={{ left: 207, top: -38, width: 3546, height: 721 }}
+            swooshBox={{ left: 207, top: 11, width: 3546, height: 721 }}
             swooshImg={{ width: 3521.4, height: 471.5 }}
-            tagTop={246}
+            tagTop={360}
           />
           <Footer className="absolute bottom-12 left-1/2 z-20 -translate-x-1/2" />
         </section>
@@ -158,7 +158,7 @@ export default function HomePage() {
           </div>
         </InView>
 
-        <section className="relative mt-[96px] h-[462px]">
+        <section className="relative mt-[96px] h-[622px]">
           <InView className="relative z-20 mx-auto w-[335px] text-center text-[40px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
@@ -171,9 +171,9 @@ export default function HomePage() {
             <PlayCreateShare
               mobile
               swooshSrc="/img/mobile/swoosh.svg"
-              swooshBox={{ left: -100, top: 185, width: 1707, height: 347.5 }}
+              swooshBox={{ left: -100, top: 210, width: 1707, height: 347.5 }}
               swooshImg={{ width: 1695.5, height: 227 }}
-              tagTop={203}
+              tagTop={259}
             />
           </div>
           <Footer className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2" />
