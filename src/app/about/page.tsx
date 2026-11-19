@@ -104,7 +104,7 @@ export default function AboutPage() {
             <img src="/img/about/hero-star.svg" alt="" className="hero-star-in h-[1469.75px] w-[1358.66px] max-w-none shrink-0 rotate-[10.68deg] origin-[52%_30%]" style={d(0.1)} />
           </div>
           <img src="/img/about/grid2.svg" alt="" className="tile-grow absolute left-[875.25px] top-[305.75px] h-[319.5px] w-[320.25px] origin-bottom-left" style={d(0.75)} />
-          <img src="/img/about/grid1.svg" alt="" className="tile-grow absolute left-[557.34px] top-[624.22px] size-[319.46px] origin-top-right" style={d(1.15)} />
+          <img src="/img/about/grid1.svg" alt="" className="tile-grow absolute left-[557.34px] top-[624.22px] h-[320.5px] w-[319.46px] origin-top-right" style={d(1.15)} />
           <div className="tile-grow absolute left-[1194.85px] top-[305.75px] size-[319.46px] origin-bottom-left overflow-hidden bg-[#071738]" style={d(0.95)}>
             <div className="absolute left-[-218.8px] top-[-253.3px] flex h-[962.6px] w-[869.1px] items-center justify-center">
               <img src="/img/about/grid3-lines.svg" alt="" className="h-[848.4px] w-[733.1px] max-w-none shrink-0 rotate-[-9.98deg]" />
@@ -131,7 +131,7 @@ export default function AboutPage() {
         <DesktopNav tone="light" />
 
         {/* ── Why now ── swoosh L→R while 3 artworks slide up one by one */}
-        <InView className="absolute left-0 top-[990px] h-[800px] w-[1440px]" threshold={0.3}>
+        <InView className="absolute left-0 top-[987px] h-[800px] w-[1440px]" threshold={0.3}>
           <div className="a-up absolute left-[218px] top-[99.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-cloud" style={d(0.35, { "--y": "80px" })}>
             <img src="/img/about/art-food.webp" alt="" className="absolute left-[17.15px] top-[17.15px] size-[151.9px] object-cover" />
           </div>
