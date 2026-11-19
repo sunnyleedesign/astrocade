@@ -137,11 +137,12 @@ export default function HomePage() {
             />
             <img src="/img/home/symbol-big.svg" alt="" className="a-spin absolute left-[145.7px] top-[117.2px] h-[84px] w-[87.4px]" />
           </div>
-          <div className="relative -mt-[26px] flex flex-col gap-6">
+          {/* pills have their own trigger so they pop in one by one when they reach the screen */}
+          <InView className="relative -mt-[26px] flex flex-col gap-6" threshold={0.35}>
             {[STATS[1], STATS[0], STATS[2]].map((s, i) => (
-              <StatPill key={s.label} {...s} size="sm" className="a-up w-full" style={{ ...d(0.5 + i * 0.18), ["--y" as string]: "20px" }} />
+              <StatPill key={s.label} {...s} size="sm" className="a-up w-full" style={{ ...d(0.1 + i * 0.25), ["--y" as string]: "28px" }} />
             ))}
-          </div>
+          </InView>
         </InView>
 
         <InView className="mt-[103px] flex flex-col items-center gap-6">
@@ -158,7 +159,7 @@ export default function HomePage() {
           </div>
         </InView>
 
-        <section className="relative mt-[96px] h-[630px]">
+        <section className="relative mt-[96px] h-[590px]">
           <InView className="relative z-20 mx-auto w-[335px] text-center text-[40px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
