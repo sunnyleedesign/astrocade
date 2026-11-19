@@ -371,32 +371,52 @@ body {
 .tile-grow {
   opacity: 0;
 }
+/* full sequence loops every 6s: star spins in → tiles grow → hold → tiles shrink → star spins out */
 .is-in .hero-star-in {
-  animation: hero-star-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+  animation: hero-star-loop 6s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) infinite both;
 }
 .is-in .tile-grow {
-  animation: tile-grow 0.5s cubic-bezier(0.33, 1, 0.68, 1) var(--d, 0s) both;
+  animation: tile-loop 6s cubic-bezier(0.33, 1, 0.68, 1) var(--d, 0s) infinite both;
 }
-@keyframes hero-star-in {
+@keyframes hero-star-loop {
   0% {
     opacity: 1;
     scale: 0.06;
     rotate: -50deg;
   }
-  100% {
+  14% {
     opacity: 1;
     scale: 1;
     rotate: 10.68deg;
   }
+  86% {
+    opacity: 1;
+    scale: 1;
+    rotate: 10.68deg;
+  }
+  100% {
+    opacity: 1;
+    scale: 0.06;
+    rotate: -50deg;
+  }
 }
-@keyframes tile-grow {
+@keyframes tile-loop {
   0% {
     opacity: 1;
     scale: 0;
   }
-  100% {
+  8.3% {
     opacity: 1;
     scale: 1;
+  }
+  60% {
+    opacity: 1;
+    scale: 1;
+  }
+  66.7%,
+  100% {
+    opacity: 1;
+    scale: 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {
