@@ -3,6 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import InView from "./InView";
 
+/** One swoosh sweep + one tag change per cycle */
+const CYCLE_MS = 2200;
+
 const TAGS = [
   { label: "Play", bg: "linear-gradient(267.5deg, #ff4288 0.94%, #ffaa5d 98.94%)" },
   { label: "Create", bg: "linear-gradient(270deg, #5578ff 0%, #c42fed 100%)" },
@@ -11,8 +14,8 @@ const TAGS = [
 
 /**
  * Landing ending (Figma storyboard "landing ending"):
- * swoosh sweeps in and out right→left, then Play / Create / Share slide in
- * from the right one at a time; the centered tag is highlighted and the next
+ * the swoosh sweeps right→left on a loop, and with each sweep the next of
+ * Play / Create / Share slides in from the right; the centered tag is highlighted and the next
  * one peeks in at 20% opacity.
  */
 export default function PlayCreateShare({
@@ -48,8 +51,8 @@ export default function PlayCreateShare({
     // swoosh takes ~1.8s; tags begin as it leaves
     const start = setTimeout(() => {
       setStep(0);
-      timer.current = setInterval(() => setStep((s) => s + 1), 2000);
-    }, 1500);
+      timer.current = setInterval(() => setStep((s) => s + 1), CYCLE_MS);
+    }, CYCLE_MS);
     return () => {
       clearTimeout(start);
       if (timer.current) clearInterval(timer.current);
@@ -61,9 +64,11 @@ export default function PlayCreateShare({
 
   return (
     <InView className="absolute inset-0" threshold={0.35} onChange={onChange}>
+      {/* Re-keyed every step so the swoosh replays with each tag change */}
       <div
+        key={`swoosh-${step}`}
         className="a-wipe-rtl pointer-events-none absolute flex items-center justify-center"
-        style={{ ...swooshBox, ["--dur" as string]: "1.8s" }}
+        style={{ ...swooshBox, ["--dur" as string]: `${CYCLE_MS}ms` }}
       >
         <img
           src={swooshSrc}
