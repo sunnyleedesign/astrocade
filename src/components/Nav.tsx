@@ -64,7 +64,7 @@ export function DesktopNav({ tone = "dark" }: { tone?: Tone }) {
     <header className="absolute left-[32.37px] top-[24px] z-30 h-[47px] w-[1374px]">
       <Logo tone={tone} className="absolute left-0 top-[9px]" />
       <nav
-        className={`absolute left-[calc(50%+1.13px)] top-[2px] flex w-[339px] -translate-x-1/2 items-center justify-center gap-8 rounded-full border-[0.75px] border-[rgba(202,202,202,0.26)] px-6 py-[10px] text-[15px] font-medium ${
+        className={`absolute left-[calc(50%+1.13px)] top-[4px] flex h-[39px] w-[339px] -translate-x-1/2 items-center justify-center gap-8 rounded-full border-[0.75px] border-[rgba(202,202,202,0.26)] px-6 text-[15px] font-medium ${
           tone === "dark" ? "bg-[rgba(4,14,34,0.15)] text-white" : "bg-white text-dark-navy"
         }`}
       >

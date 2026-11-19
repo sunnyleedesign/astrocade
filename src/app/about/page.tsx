@@ -97,7 +97,7 @@ export default function AboutPage() {
       <div className="absolute inset-x-0 top-0 hidden h-[calc(944px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: About, 1440 × 6059) ═════════════ */}
-      <Stage height={6059} className="hidden lg:block" innerClassName="overflow-hidden">
+      <Stage height={5869} className="hidden lg:block" innerClassName="overflow-hidden">
         {/* ── Hero ── star spins + zooms in, then tiles grow out of their shared corner (reference video) */}
         <InView className="absolute left-0 top-0 h-[944px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
           <div className="absolute left-[-145.6px] top-[42.1px] flex h-[1696px] w-[1607.5px] items-center justify-center">
@@ -131,7 +131,7 @@ export default function AboutPage() {
         <DesktopNav tone="light" />
 
         {/* ── Why now ── swoosh L→R while 3 artworks slide up one by one */}
-        <InView className="absolute left-0 top-[1100px] h-[800px] w-[1440px]" threshold={0.3}>
+        <InView className="absolute left-0 top-[990px] h-[800px] w-[1440px]" threshold={0.3}>
           <div className="a-up absolute left-[218px] top-[99.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-cloud" style={d(0.35, { "--y": "80px" })}>
             <img src="/img/about/art-food.webp" alt="" className="absolute left-[17.15px] top-[17.15px] size-[151.9px] object-cover" />
           </div>
@@ -152,12 +152,12 @@ export default function AboutPage() {
           </h2>
           <div className="a-up absolute left-[846px] top-[200.4px] w-[446px] text-[17px] leading-[1.7] text-muted" style={d(0.25)}>
             <p>{WHY_NOW[0]}</p>
-            <p className="mt-[115px]">{WHY_NOW[1]}</p>
+            <p className="mt-[1.2em]">{WHY_NOW[1]}</p>
           </div>
         </InView>
 
         {/* ── What we are ── swoosh R→L while the app video slides up and plays */}
-        <InView className="absolute left-0 top-[2000px] h-[950px] w-[1440px]" threshold={0.3}>
+        <InView className="absolute left-0 top-[1810px] h-[950px] w-[1440px]" threshold={0.3}>
           <h2 className="a-up absolute left-[148px] top-[67.4px] w-[554px] text-[48px] font-medium leading-[0.95] tracking-[-0.06em]">
             What we are and
             <span className="grad-text block pb-1" style={{ backgroundImage: "linear-gradient(270deg, #c42fed 0%, #ff4288 100%)" }}>
@@ -182,7 +182,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Why we win ── star grows outward, art 1 then art 2 slide up */}
-        <InView className="absolute left-0 top-[3000px] h-[620px] w-[1440px]" threshold={0.3}>
+        <InView className="absolute left-0 top-[2810px] h-[620px] w-[1440px]" threshold={0.3}>
           <div className="a-grow absolute left-[96px] top-[79.2px] h-[498.6px] w-[449px]" style={d(0)}>
             <img src="/img/about/art4-star.svg" alt="" className="size-full -scale-x-100" />
           </div>
@@ -204,7 +204,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Leadership ── */}
-        <InView className="absolute left-0 top-[3700px] h-[600px] w-[1440px]" threshold={0.25}>
+        <InView className="absolute left-0 top-[3510px] h-[600px] w-[1440px]" threshold={0.25}>
           {LEADERS.map((l, i) => (
             <div
               key={l.name}
@@ -217,7 +217,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Investors ── */}
-        <InView className="absolute left-[207px] top-[4406.7px] flex w-[1027px] flex-col items-center gap-10">
+        <InView className="absolute left-[207px] top-[4216.7px] flex w-[1027px] flex-col items-center gap-10">
           <p className="a-up text-[32px] font-medium leading-[1.12] tracking-[-0.025em] text-blue">Investors</p>
           <div className="a-up" style={d(0.15, { "--y": "20px" })}>
             <Investors />
@@ -225,7 +225,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Angels ── */}
-        <InView className="absolute left-8 top-[4755.4px] flex w-[1376px] flex-col items-center gap-10">
+        <InView className="absolute left-8 top-[4565.4px] flex w-[1376px] flex-col items-center gap-10">
           <p className="a-up text-[32px] font-medium leading-[1.12] tracking-[-0.025em] text-neon">Angels</p>
           <div className="w-[1142px]">
             <Angels />
@@ -233,7 +233,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Community ── stars appear one by one */}
-        <InView className="absolute left-0 top-[5100px] h-[959px] w-[1440px]" threshold={0.2}>
+        <InView className="absolute left-0 top-[4910px] h-[959px] w-[1440px]" threshold={0.2}>
           <div className="a-pop absolute left-[606.5px] top-[429.4px] flex h-[319.7px] w-[309px] items-center justify-center" style={d(0.3)}>
             <div className="relative h-[268.6px] w-[254.3px] shrink-0 rotate-[13.24deg]">
               <img src="/img/about/star-a.svg" alt="" className="absolute inset-[-13.68%_-14.45%] max-w-none" />
