@@ -63,11 +63,28 @@ export function PeopleCarousel({ mobile = false }: { mobile?: boolean }) {
   const [dir, setDir] = useState<1 | -1>(1);
   const front = stack[3];
 
+  const busy = useRef(false);
+  const [leaving, setLeaving] = useState<number | null>(null);
+  const markLeaving = (idx: number) => {
+    setLeaving(idx);
+    setTimeout(() => setLeaving(null), 420);
+  };
+  const lock = () => {
+    if (busy.current) return false;
+    busy.current = true;
+    setTimeout(() => (busy.current = false), 900);
+    return true;
+  };
+
   const next = () => {
+    if (!lock()) return;
+    markLeaving(stack[3]);
     setDir(1);
     setStack((s) => [s[3], s[0], s[1], s[2]]);
   };
   const prev = () => {
+    if (!lock()) return;
+    markLeaving(stack[0]);
     setDir(-1);
     setStack((s) => [s[1], s[2], s[3], s[0]]);
   };
@@ -78,24 +95,38 @@ export function PeopleCarousel({ mobile = false }: { mobile?: boolean }) {
         {PEOPLE.map((p, i) => {
           const slot = stack.indexOf(i);
           const pos = SLOTS[slot];
-          // card cycling front→back (or back→front) takes a detour so it doesn't clip through the stack
+          // Like the reference: the leaving card slides one step further out and fades,
+          // then fades back in at the other end of the stack while the rest shift by one.
           const wrapping = (dir === 1 && slot === 0) || (dir === -1 && slot === 3);
+          const step = { x: SLOTS[1].x - SLOTS[0].x, y: SLOTS[1].y - SLOTS[0].y };
+          const from = dir === 1 ? SLOTS[3] : SLOTS[0];
+          const out = dir === 1 ? { x: from.x + step.x, y: from.y + step.y } : { x: from.x - step.x, y: from.y - step.y };
+          const pre = dir === 1 ? { x: pos.x - step.x, y: pos.y - step.y } : { x: pos.x + step.x, y: pos.y + step.y };
           return (
             <motion.div
               key={p.name}
               className="absolute flex h-[536.36px] w-[411.57px] items-center justify-center"
-              style={{ zIndex: slot, marginLeft: -205.78, marginTop: -268.18 }}
+              style={{
+                marginLeft: -205.78,
+                marginTop: -268.18,
+                // while fading out it stays on its old layer (front, or back for "prev")
+                zIndex: leaving === i ? (dir === 1 ? 10 : 0) : slot + 1,
+              }}
               initial={false}
               animate={
                 wrapping
                   ? {
-                      left: dir === 1 ? [SLOTS[3].x, SLOTS[3].x + 140, pos.x] : [SLOTS[0].x, SLOTS[0].x - 140, pos.x],
-                      top: dir === 1 ? [SLOTS[3].y, SLOTS[3].y + 60, pos.y] : [SLOTS[0].y, SLOTS[0].y - 60, pos.y],
-                      opacity: [1, 0, 1],
+                      left: [from.x, out.x, pre.x, pos.x],
+                      top: [from.y, out.y, pre.y, pos.y],
+                      opacity: [1, 0, 0, 1],
                     }
                   : { left: pos.x, top: pos.y, opacity: 1 }
               }
-              transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
+              transition={
+                wrapping
+                  ? { duration: 0.9, times: [0, 0.45, 0.5, 1], ease: "easeInOut" }
+                  : { duration: 0.8, ease: [0.65, 0, 0.35, 1] }
+              }
             >
               <div className="relative size-[426.085px] shrink-0 overflow-hidden rounded-[15.55px]" style={{ transform: CARD_TRANSFORM, backgroundImage: p.bg }}>
                 <img src={p.photo} alt={slot === 3 ? p.name : ""} className="absolute inset-0 size-full object-cover" />
