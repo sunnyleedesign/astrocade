@@ -93,13 +93,14 @@ function CommunityHeadline({ className = "" }: { className?: string }) {
 export default function AboutPage() {
   return (
     <main className="relative">
+      <DesktopNav tone="light" />
       {/* full-bleed cream band behind the hero */}
-      <div className="absolute inset-x-0 top-0 hidden h-[calc(944px*var(--vs))] bg-cloud lg:block" />
+      <div className="absolute inset-x-0 top-0 hidden h-[calc(939px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: About, 1440 × 6059) ═════════════ */}
       <Stage height={5827} className="hidden lg:block" innerClassName="overflow-hidden">
         {/* ── Hero ── star spins + zooms in, then tiles grow out of their shared corner (reference video) */}
-        <InView className="absolute left-0 top-0 h-[944px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
+        <InView className="absolute left-0 top-0 h-[939px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
           <div className="absolute left-[-145.6px] top-[42.1px] flex h-[1696px] w-[1607.5px] items-center justify-center">
             <img src="/img/about/hero-star.svg" alt="" className="hero-star-in h-[1469.75px] w-[1358.66px] max-w-none shrink-0 rotate-[10.68deg] origin-[52%_30%]" style={d(0.1)} />
           </div>
@@ -128,10 +129,9 @@ export default function AboutPage() {
             </p>
           </div>
         </InView>
-        <DesktopNav tone="light" />
 
         {/* ── Why now ── swoosh L→R while 3 artworks slide up one by one */}
-        <InView className="absolute left-0 top-[987px] h-[800px] w-[1440px]" threshold={0.3}>
+        <InView className="absolute left-0 top-[990px] h-[800px] w-[1440px]" threshold={0.3}>
           <div className="a-up absolute left-[218px] top-[99.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-cloud" style={d(0.35, { "--y": "80px" })}>
             <img src="/img/about/art-food.webp" alt="" className="absolute left-[17.15px] top-[17.15px] size-[151.9px] object-cover" />
           </div>

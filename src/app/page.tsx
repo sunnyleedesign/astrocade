@@ -20,9 +20,9 @@ const starDelays = (i: number) => `--d:${0.25 + i * 0.22}s`;
 export default function HomePage() {
   return (
     <main>
+      <DesktopNav />
       {/* ═════════════ Desktop (Figma: Homepage, 1440 × 3619) ═════════════ */}
       <Stage height={3551} className="hidden lg:block">
-        <DesktopNav />
 
         {/* Hero video + fade overlay */}
         <InView className="absolute left-0 top-[697px] h-[713px] w-[1440px]" threshold={0}>

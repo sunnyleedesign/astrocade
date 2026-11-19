@@ -150,9 +150,9 @@ function StarField({ className = "" }: { className?: string }) {
 export default function PressPage() {
   return (
     <main>
+      <DesktopNav />
       {/* ═════════════ Desktop (Figma: Press - D, 1440 × 3184) ═════════════ */}
       <Stage height={3192} className="hidden lg:block">
-        <DesktopNav />
 
         {/* Hero art — blurred stars appear, swoosh sweeps through and leaves */}
         <InView className="absolute inset-x-0 top-0 h-[1260px]" threshold={0}>

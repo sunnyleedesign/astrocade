@@ -57,41 +57,74 @@ function useActive() {
   return (href: string) => pathname === href || pathname?.startsWith(href + "/");
 }
 
-/** Desktop nav, positioned in 1440 canvas coordinates (place at top:24 left:32). */
-export function DesktopNav({ tone = "dark" }: { tone?: Tone }) {
+/** True once the page has scrolled past the top few pixels. */
+function useScrolled(threshold = 8) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > threshold);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [threshold]);
+  return scrolled;
+}
+
+const BAR_BG = "bg-[rgba(4,14,34,0.82)] backdrop-blur-md";
+
+/**
+ * Desktop nav, fixed to the top of the viewport. Laid out on the 1440 Figma
+ * canvas and scaled with the page (--vs). Transparent at the top of the page;
+ * once scrolled it gets a dark blurred bar and switches to the dark tone.
+ * Render it OUTSIDE <Stage> (a transformed parent would break `position: fixed`).
+ */
+export function DesktopNav({ tone: pageTone = "dark" }: { tone?: Tone }) {
   const isActive = useActive();
+  const scrolled = useScrolled();
+  const tone: Tone = scrolled ? "dark" : pageTone;
   return (
-    <header className="absolute left-[32.37px] top-[24px] z-30 h-[47px] w-[1374px]">
-      <Logo tone={tone} className="absolute left-0 top-[9px]" />
-      <nav
-        className={`absolute left-[calc(50%+1.13px)] top-[4px] flex h-[39px] w-[339px] -translate-x-1/2 items-center justify-center gap-8 rounded-full border-[0.75px] border-[rgba(202,202,202,0.26)] px-6 text-[15px] font-medium ${
-          tone === "dark" ? "bg-[rgba(4,14,34,0.15)] text-white" : "bg-white text-dark-navy"
-        }`}
-      >
-        {NAV_LINKS.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            className={
-              isActive(l.href)
-                ? "grad-text bg-gradient-to-l from-violet to-pink"
-                : "transition-opacity hover:opacity-60"
-            }
-          >
-            {l.label}
-          </Link>
-        ))}
-      </nav>
-      <PlayCta className="absolute left-[1205.63px] top-0 w-[170.8px]" />
-    </header>
+    <div
+      className={`fixed inset-x-0 top-0 z-50 hidden h-[calc(95px*var(--vs))] transition-colors duration-300 lg:block ${
+        scrolled ? BAR_BG : "bg-transparent"
+      }`}
+    >
+      <div className="relative mx-auto h-full w-full max-w-[1440px]">
+        <div className="absolute left-0 top-0 h-[95px] w-[1440px] origin-top-left [transform:scale(var(--vs))]">
+          <header className="absolute left-[32.37px] top-[24px] h-[47px] w-[1374px]">
+            <Logo tone={tone} className="absolute left-0 top-[9px]" />
+            <nav
+              className={`absolute left-[calc(50%+1.13px)] top-[4px] flex h-[39px] w-[339px] -translate-x-1/2 items-center justify-center gap-8 rounded-full border-[0.75px] border-[rgba(202,202,202,0.26)] px-6 text-[15px] font-medium transition-colors duration-300 ${
+                tone === "dark" ? "bg-[rgba(4,14,34,0.15)] text-white" : "bg-white text-dark-navy"
+              }`}
+            >
+              {NAV_LINKS.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={
+                    isActive(l.href)
+                      ? "grad-text bg-gradient-to-l from-violet to-pink"
+                      : "transition-opacity hover:opacity-60"
+                  }
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+            <PlayCta className="absolute left-[1205.63px] top-0 w-[170.8px]" />
+          </header>
+        </div>
+      </div>
+    </div>
   );
 }
 
 /** Mobile header + full-screen menu (Figma: Mobile / Nav Open). */
-export function MobileNav({ tone = "dark" }: { tone?: Tone }) {
+export function MobileNav({ tone: pageTone = "dark" }: { tone?: Tone }) {
   const [open, setOpen] = useState(false);
   const isActive = useActive();
   const pathname = usePathname();
+  const scrolled = useScrolled();
+  const tone: Tone = scrolled ? "dark" : pageTone;
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
@@ -103,7 +136,13 @@ export function MobileNav({ tone = "dark" }: { tone?: Tone }) {
 
   return (
     <>
-      <header className="relative z-30 flex items-center justify-between px-5 pt-4">
+      {/* spacer keeps the page layout where the header used to sit */}
+      <div aria-hidden className="h-14 lg:hidden" />
+      <header
+        className={`fixed inset-x-0 top-0 z-40 flex items-center justify-between px-5 pb-3 pt-4 transition-colors duration-300 lg:hidden ${
+          scrolled ? BAR_BG : "bg-transparent"
+        }`}
+      >
         <Logo tone={tone} />
         <button
           type="button"

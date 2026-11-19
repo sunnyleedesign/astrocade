@@ -64,6 +64,7 @@ function ValueCard({ title, body, mobile = false }: { title: string[]; body: str
 export default function CareersPage() {
   return (
     <main className="relative">
+      <DesktopNav tone="light" />
       <div className="absolute inset-x-0 top-0 hidden h-[calc(946px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: Career, 1440 × 5884) ═════════════ */}
@@ -101,7 +102,6 @@ export default function CareersPage() {
             </a>
           </div>
         </InView>
-        <DesktopNav tone="light" />
 
         {/* Intro */}
         <InView className="absolute left-[148px] top-[1146px] w-[1173px]">

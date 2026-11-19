@@ -14,12 +14,12 @@ const BLOG_GRAD = "linear-gradient(111.65deg, #5578ff 6.54%, #f956d1 49%)";
 export default function BlogPage() {
   return (
     <main>
+      <DesktopNav />
       {/* ═════════════ Desktop (Figma: Blog - D, 1440 × 3105) ═════════════ */}
       <Stage height={3113} className="hidden lg:block">
         <InView className="absolute left-[487px] top-[-123px] flex h-[1300.4px] w-[1258.7px] items-center justify-center" threshold={0}>
           <BlogStar className="h-[1158px] w-[1109.26px] shrink-0 rotate-[7.95deg]" />
         </InView>
-        <DesktopNav />
 
         <InView className="absolute left-8 top-[151px] w-[562px]" threshold={0}>
           <h1 className="a-up grad-text pb-3 text-[104px] font-medium leading-[0.95] tracking-[-0.035em]" style={{ backgroundImage: BLOG_GRAD }}>
