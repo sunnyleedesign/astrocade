@@ -48,7 +48,7 @@ export default function HomePage() {
             <span className="a-up block" style={d(0.1)}>
               Where the Internet
             </span>
-            <span className="a-up grad-text block pb-2" style={{ ...d(0.25), backgroundImage: "linear-gradient(255.7deg, #ff4288 0.94%, #ffaa5d 98.94%)" }}>
+            <span className="a-up grad-text block pb-[0.25em] -mb-[calc(0.25em-8px)]" style={{ ...d(0.25), backgroundImage: "linear-gradient(255.7deg, #ff4288 0.94%, #ffaa5d 98.94%)" }}>
               comes to play.
             </span>
           </h1>
@@ -82,7 +82,7 @@ export default function HomePage() {
           <InView className="absolute left-[146.5px] top-0 z-20 w-[1143px] text-center text-[72px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
-              <span className="a-up grad-text block pb-2" style={{ ...d(0.15), backgroundImage: GRAD.violet }}>
+              <span className="a-up grad-text block pb-[0.25em] -mb-[calc(0.25em-8px)]" style={{ ...d(0.15), backgroundImage: GRAD.violet }}>
                 Internet’s biggest platforms
               </span>
             </h2>
@@ -106,7 +106,7 @@ export default function HomePage() {
             <span className="a-up block" style={d(0.1)}>
               Where the Internet
             </span>
-            <span className="a-up grad-text block pb-1" style={{ ...d(0.25), backgroundImage: "linear-gradient(266deg, #ff4288 0.94%, #ffaa5d 98.94%)" }}>
+            <span className="a-up grad-text block pb-[0.25em] -mb-[calc(0.25em-4px)]" style={{ ...d(0.25), backgroundImage: "linear-gradient(266deg, #ff4288 0.94%, #ffaa5d 98.94%)" }}>
               comes to play.
             </span>
           </h1>
@@ -162,7 +162,7 @@ export default function HomePage() {
           <InView className="relative z-20 mx-auto w-[335px] text-center text-[40px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
-              <span className="a-up grad-text block pb-1" style={{ ...d(0.15), backgroundImage: GRAD.violet }}>
+              <span className="a-up grad-text block pb-[0.25em] -mb-[calc(0.25em-4px)]" style={{ ...d(0.15), backgroundImage: GRAD.violet }}>
                 Internet’s biggest platforms
               </span>
             </h2>
