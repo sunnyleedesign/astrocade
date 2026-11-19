@@ -7,9 +7,9 @@ import InView from "./InView";
 const CYCLE_MS = 2200;
 
 const TAGS = [
-  { label: "Play", bg: "linear-gradient(267.5deg, #ff4288 0.94%, #ffaa5d 98.94%)" },
-  { label: "Create", bg: "linear-gradient(270deg, #5578ff 0%, #c42fed 100%)" },
-  { label: "Share", bg: "linear-gradient(-59.79deg, #2be1a2 4.03%, #5578ff 152.72%)" },
+  { label: "Play", bg: "linear-gradient(267.5deg, #ff4288 0.94%, #ffaa5d 98.94%)", swoosh: "#ff4288" },
+  { label: "Create", bg: "linear-gradient(270deg, #5578ff 0%, #c42fed 100%)", swoosh: "#c42fed" },
+  { label: "Share", bg: "linear-gradient(-59.79deg, #2be1a2 4.03%, #5578ff 152.72%)", swoosh: "#5578ff" },
 ];
 
 /**
@@ -33,7 +33,7 @@ export default function PlayCreateShare({
   swooshImg: { width: number; height: number };
   tagTop: number;
 }) {
-  const [step, setStep] = useState(-1);
+  const [step, setStep] = useState(0);
   const [started, setStarted] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -44,17 +44,10 @@ export default function PlayCreateShare({
   useEffect(() => {
     if (!started) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setStep(0);
-      return;
-    }
-    // swoosh takes ~1.8s; tags begin as it leaves
-    const start = setTimeout(() => {
-      setStep(0);
-      timer.current = setInterval(() => setStep((s) => s + 1), CYCLE_MS);
-    }, CYCLE_MS);
+    if (reduce) return;
+    // Play is shown first with its swoosh; then advance one tag per sweep
+    timer.current = setInterval(() => setStep((s) => s + 1), CYCLE_MS);
     return () => {
-      clearTimeout(start);
       if (timer.current) clearInterval(timer.current);
     };
   }, [started]);
@@ -70,11 +63,20 @@ export default function PlayCreateShare({
         className="a-wipe-rtl pointer-events-none absolute flex items-center justify-center"
         style={{ ...swooshBox, ["--dur" as string]: `${CYCLE_MS}ms` }}
       >
-        <img
-          src={swooshSrc}
-          alt=""
-          className="max-w-none shrink-0"
-          style={{ width: swooshImg.width, height: swooshImg.height, rotate: "-4.1deg" }}
+        {/* swoosh shape used as a mask so it can take each tag's colour */}
+        <span
+          aria-hidden
+          className="block shrink-0"
+          style={{
+            width: swooshImg.width,
+            height: swooshImg.height,
+            rotate: "-4.1deg",
+            backgroundColor: TAGS[((step % 3) + 3) % 3].swoosh,
+            maskImage: `url(${swooshSrc})`,
+            maskSize: "100% 100%",
+            WebkitMaskImage: `url(${swooshSrc})`,
+            WebkitMaskSize: "100% 100%",
+          }}
         />
       </div>
 
