@@ -39,7 +39,7 @@ export const LEADERS: Leader[] = [
     photo: "/img/about/ceo3.webp",
     bg: "linear-gradient(239.52deg, #ff4288 12.59%, #ffaa5d 91.23%)",
     bioBg: "linear-gradient(237.23deg, #ff4288 0%, #ffaa5d 49.96%)",
-    imgClass: "size-full object-cover object-bottom",
+    imgClass: "size-full object-cover",
   },
 ];
 
