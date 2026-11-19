@@ -151,7 +151,7 @@ export default function PressPage() {
   return (
     <main>
       {/* ═════════════ Desktop (Figma: Press - D, 1440 × 3184) ═════════════ */}
-      <Stage height={3184} className="hidden lg:block">
+      <Stage height={3192} className="hidden lg:block">
         <DesktopNav />
 
         {/* Hero art — blurred stars appear, swoosh sweeps through and leaves */}
@@ -207,7 +207,7 @@ export default function PressPage() {
           <StatPill {...STATS.available} className="a-up absolute left-[31px] top-[583px] p-10" style={d(0.95, { "--y": "24px" })} />
         </InView>
 
-        <Footer className="absolute bottom-10 left-1/2 -translate-x-1/2" />
+        <Footer className="absolute bottom-12 left-1/2 -translate-x-1/2" />
       </Stage>
 
       {/* ═════════════ Mobile / tablet ═════════════ */}

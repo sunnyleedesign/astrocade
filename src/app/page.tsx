@@ -158,7 +158,7 @@ export default function HomePage() {
           </div>
         </InView>
 
-        <section className="relative mt-[96px] h-[622px]">
+        <section className="relative mt-[96px] h-[630px]">
           <InView className="relative z-20 mx-auto w-[335px] text-center text-[40px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
@@ -176,7 +176,7 @@ export default function HomePage() {
               tagTop={259}
             />
           </div>
-          <Footer className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2" />
+          <Footer className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2" />
         </section>
       </div>
     </main>

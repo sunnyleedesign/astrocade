@@ -67,7 +67,7 @@ export default function CareersPage() {
       <div className="absolute inset-x-0 top-0 hidden h-[calc(946px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: Career, 1440 × 5884) ═════════════ */}
-      <Stage height={5884} className="hidden lg:block" innerClassName="overflow-hidden">
+      <Stage height={5762} className="hidden lg:block" innerClassName="overflow-hidden">
         {/* Hero — colour blocks pop in one by one while the product UI slides up */}
         <InView className="absolute left-0 top-[2px] h-[944px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
           <div className="a-tile absolute left-[1145px] top-[-112px] size-[390px] rounded-[20px] bg-neon" style={d(0.15)} />
@@ -181,7 +181,7 @@ export default function CareersPage() {
           <OpenRoles />
         </div>
 
-        <Footer className="absolute bottom-[170px] left-1/2 -translate-x-1/2" />
+        <Footer className="absolute bottom-12 left-1/2 -translate-x-1/2" />
       </Stage>
 
       {/* ═════════════ Mobile / tablet ═════════════ */}

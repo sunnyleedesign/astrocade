@@ -97,7 +97,7 @@ export default function AboutPage() {
       <div className="absolute inset-x-0 top-0 hidden h-[calc(944px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: About, 1440 × 6059) ═════════════ */}
-      <Stage height={5869} className="hidden lg:block" innerClassName="overflow-hidden">
+      <Stage height={5827} className="hidden lg:block" innerClassName="overflow-hidden">
         {/* ── Hero ── star spins + zooms in, then tiles grow out of their shared corner (reference video) */}
         <InView className="absolute left-0 top-0 h-[944px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
           <div className="absolute left-[-145.6px] top-[42.1px] flex h-[1696px] w-[1607.5px] items-center justify-center">
@@ -233,7 +233,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Community ── stars appear one by one */}
-        <InView className="absolute left-0 top-[4910px] h-[959px] w-[1440px]" threshold={0.2}>
+        <InView className="absolute left-0 top-[4910px] h-[917px] w-[1440px]" threshold={0.2}>
           <div className="a-pop absolute left-[606.5px] top-[429.4px] flex h-[319.7px] w-[309px] items-center justify-center" style={d(0.3)}>
             <div className="relative h-[268.6px] w-[254.3px] shrink-0 rotate-[13.24deg]">
               <img src="/img/about/star-a.svg" alt="" className="absolute inset-[-13.68%_-14.45%] max-w-none" />
@@ -250,7 +250,7 @@ export default function AboutPage() {
           <div className="a-up absolute left-10 top-[99.4px] w-[1019px]" style={d(0)}>
             <CommunityHeadline className="text-[72px]" />
           </div>
-          <Footer className="absolute bottom-[89.6px] left-1/2 -translate-x-1/2" />
+          <Footer className="absolute bottom-12 left-1/2 -translate-x-1/2" />
         </InView>
       </Stage>
 
