@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Stage from "@/components/Stage";
 import InView from "@/components/InView";
-import { DesktopNav } from "@/components/Nav";
 import StatTicker from "@/components/alt/StatTicker";
 
 export const metadata: Metadata = { title: "Alt 2", robots: { index: false } };
@@ -33,7 +32,6 @@ export default function Alt2Page() {
           </div>
         </InView>
 
-        <DesktopNav />
 
         <div className="absolute left-[265px] top-[174px] flex w-[1027px] flex-col gap-20 font-medium">
           {STATS.map((s, i) => (
