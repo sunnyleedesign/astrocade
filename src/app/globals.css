@@ -369,3 +369,44 @@ body {
     opacity: 1 !important;
   }
 }
+
+/* ───────────── About hero (reference video): star spins + zooms in, tiles grow from their shared corner ───────────── */
+.hero-star-in,
+.tile-grow {
+  opacity: 0;
+}
+.is-in .hero-star-in {
+  animation: hero-star-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) both;
+}
+.is-in .tile-grow {
+  animation: tile-grow 0.5s cubic-bezier(0.33, 1, 0.68, 1) var(--d, 0s) both;
+}
+@keyframes hero-star-in {
+  0% {
+    opacity: 1;
+    scale: 0.06;
+    rotate: -50deg;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    rotate: 10.68deg;
+  }
+}
+@keyframes tile-grow {
+  0% {
+    opacity: 1;
+    scale: 0;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-star-in,
+  .tile-grow {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}

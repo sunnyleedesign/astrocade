@@ -98,14 +98,14 @@ export default function AboutPage() {
 
       {/* ═════════════ Desktop (Figma: About, 1440 × 6059) ═════════════ */}
       <Stage height={6059} className="hidden lg:block" innerClassName="overflow-hidden">
-        {/* ── Hero ── grids pop in one by one (storyboard "About Hero") */}
+        {/* ── Hero ── star spins + zooms in, then tiles grow out of their shared corner (reference video) */}
         <InView className="absolute left-0 top-0 h-[944px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
           <div className="absolute left-[-145.6px] top-[42.1px] flex h-[1696px] w-[1607.5px] items-center justify-center">
-            <img src="/img/about/hero-star.svg" alt="" className="a-grow h-[1469.75px] w-[1358.66px] max-w-none shrink-0 rotate-[10.68deg]" style={d(0)} />
+            <img src="/img/about/hero-star.svg" alt="" className="hero-star-in h-[1469.75px] w-[1358.66px] max-w-none shrink-0 rotate-[10.68deg] origin-[52%_30%]" style={d(0.1)} />
           </div>
-          <img src="/img/about/grid2.svg" alt="" className="a-tile loop absolute left-[875.25px] top-[305.75px] h-[319.5px] w-[320.25px]" style={d(0.35)} />
-          <img src="/img/about/grid1.svg" alt="" className="a-tile loop absolute left-[557.34px] top-[624.22px] size-[319.46px]" style={d(0.6)} />
-          <div className="a-tile loop absolute left-[1194.85px] top-[305.75px] size-[319.46px] overflow-hidden bg-[#071738]" style={d(0.85)}>
+          <img src="/img/about/grid2.svg" alt="" className="tile-grow absolute left-[875.25px] top-[305.75px] h-[319.5px] w-[320.25px] origin-bottom-left" style={d(0.75)} />
+          <img src="/img/about/grid1.svg" alt="" className="tile-grow absolute left-[557.34px] top-[624.22px] size-[319.46px] origin-top-right" style={d(1.15)} />
+          <div className="tile-grow absolute left-[1194.85px] top-[305.75px] size-[319.46px] origin-bottom-left overflow-hidden bg-[#071738]" style={d(0.95)}>
             <div className="absolute left-[-218.8px] top-[-253.3px] flex h-[962.6px] w-[869.1px] items-center justify-center">
               <img src="/img/about/grid3-lines.svg" alt="" className="h-[848.4px] w-[733.1px] max-w-none shrink-0 rotate-[-9.98deg]" />
             </div>
@@ -270,9 +270,9 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="absolute bottom-0 left-1/2 h-[440px] w-[560px] -translate-x-[40%]">
-            <img src="/img/about/hero-star.svg" alt="" className="a-grow absolute left-[-120px] top-[10px] h-[640px] w-[592px] max-w-none rotate-[10.68deg]" />
-            <img src="/img/about/grid2.svg" alt="" className="a-tile loop absolute left-[260px] top-[60px] size-[150px]" style={d(0.35)} />
-            <img src="/img/about/grid1.svg" alt="" className="a-tile loop absolute left-[110px] top-[210px] size-[150px]" style={d(0.6)} />
+            <img src="/img/about/hero-star.svg" alt="" className="hero-star-in absolute left-[-120px] top-[10px] h-[640px] w-[592px] max-w-none rotate-[10.68deg]" style={d(0.1)} />
+            <img src="/img/about/grid2.svg" alt="" className="tile-grow absolute left-[260px] top-[60px] size-[150px] origin-bottom-left" style={d(0.75)} />
+            <img src="/img/about/grid1.svg" alt="" className="tile-grow absolute left-[110px] top-[210px] size-[150px] origin-top-right" style={d(0.95)} />
           </div>
         </InView>
 
