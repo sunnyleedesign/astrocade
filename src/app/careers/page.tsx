@@ -65,7 +65,7 @@ export default function CareersPage() {
   return (
     <main className="relative">
       <DesktopNav tone="light" />
-      <div className="absolute inset-x-0 top-0 hidden h-[calc(946px*var(--vs))] bg-cloud lg:block" />
+      <div data-nav-light className="absolute inset-x-0 top-0 hidden h-[calc(946px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: Career, 1440 × 5884) ═════════════ */}
       <Stage height={5762} className="hidden lg:block" innerClassName="overflow-hidden">
@@ -187,6 +187,7 @@ export default function CareersPage() {
       {/* ═════════════ Mobile / tablet ═════════════ */}
       <div className="overflow-hidden lg:hidden">
         <InView className="relative overflow-hidden bg-cloud pb-16" threshold={0}>
+          <div data-nav-light aria-hidden className="pointer-events-none absolute inset-0" />
           <div className="a-tile absolute -right-16 -top-24 size-[220px] rounded-[20px] bg-neon" style={d(0.15)} />
           <MobileNav tone="light" />
           <div className="relative flex flex-col gap-6 px-5 pt-14">

@@ -57,39 +57,48 @@ function useActive() {
   return (href: string) => pathname === href || pathname?.startsWith(href + "/");
 }
 
-/** True once the page has scrolled past the top few pixels. */
-function useScrolled(threshold = 8) {
-  const [scrolled, setScrolled] = useState(false);
+/**
+ * Which tone the fixed nav should use right now: "light" (dark text) while it
+ * sits over a cream section marked with `data-nav-light`, otherwise "dark".
+ * Pages without light sections always get "dark".
+ */
+function useNavTone(pageTone: Tone, navY: number): Tone {
+  const [tone, setTone] = useState<Tone>(pageTone);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > threshold);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [threshold]);
-  return scrolled;
+    if (pageTone === "dark") return;
+    const update = () => {
+      const overLight = [...document.querySelectorAll<HTMLElement>("[data-nav-light]")].some((el) => {
+        if (!el.offsetParent) return false; // hidden layout (desktop vs mobile)
+        const r = el.getBoundingClientRect();
+        return r.top <= navY && r.bottom >= navY;
+      });
+      setTone(overLight ? "light" : "dark");
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pageTone, navY]);
+  return tone;
 }
-
-const BAR_BG = "bg-[rgba(4,14,34,0.82)] backdrop-blur-md";
 
 /**
  * Desktop nav, fixed to the top of the viewport. Laid out on the 1440 Figma
- * canvas and scaled with the page (--vs). Transparent at the top of the page;
- * once scrolled it gets a dark blurred bar and switches to the dark tone.
+ * canvas and scaled with the page (--vs). No background: it switches between
+ * the light and dark tone depending on the section behind it.
  * Render it OUTSIDE <Stage> (a transformed parent would break `position: fixed`).
  */
 export function DesktopNav({ tone: pageTone = "dark" }: { tone?: Tone }) {
   const isActive = useActive();
-  const scrolled = useScrolled();
-  const tone: Tone = scrolled ? "dark" : pageTone;
+  const tone = useNavTone(pageTone, 47);
   return (
-    <div
-      className={`fixed inset-x-0 top-0 z-50 hidden h-[calc(95px*var(--vs))] transition-colors duration-300 lg:block ${
-        scrolled ? BAR_BG : "bg-transparent"
-      }`}
-    >
+    <div className="pointer-events-none fixed inset-x-0 top-0 z-50 hidden h-[calc(95px*var(--vs))] lg:block">
       <div className="relative mx-auto h-full w-full max-w-[1440px]">
         <div className="absolute left-0 top-0 h-[95px] w-[1440px] origin-top-left [transform:scale(var(--vs))]">
-          <header className="absolute left-[32.37px] top-[24px] h-[47px] w-[1374px]">
+          <header className="pointer-events-auto absolute left-[32.37px] top-[24px] h-[47px] w-[1374px]">
             <Logo tone={tone} className="absolute left-0 top-[9px]" />
             <nav
               className={`absolute left-[calc(50%+1.13px)] top-[4px] flex h-[39px] w-[339px] -translate-x-1/2 items-center justify-center gap-8 rounded-full border-[0.75px] border-[rgba(202,202,202,0.26)] px-6 text-[15px] font-medium transition-colors duration-300 ${
@@ -123,8 +132,7 @@ export function MobileNav({ tone: pageTone = "dark" }: { tone?: Tone }) {
   const [open, setOpen] = useState(false);
   const isActive = useActive();
   const pathname = usePathname();
-  const scrolled = useScrolled();
-  const tone: Tone = scrolled ? "dark" : pageTone;
+  const tone = useNavTone(pageTone, 36);
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
@@ -139,9 +147,7 @@ export function MobileNav({ tone: pageTone = "dark" }: { tone?: Tone }) {
       {/* spacer keeps the page layout where the header used to sit */}
       <div aria-hidden className="h-14 lg:hidden" />
       <header
-        className={`fixed inset-x-0 top-0 z-40 flex items-center justify-between px-5 pb-3 pt-4 transition-colors duration-300 lg:hidden ${
-          scrolled ? BAR_BG : "bg-transparent"
-        }`}
+        className="fixed inset-x-0 top-0 z-40 flex items-center justify-between px-5 pt-4 lg:hidden"
       >
         <Logo tone={tone} />
         <button

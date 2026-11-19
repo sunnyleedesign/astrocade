@@ -95,7 +95,7 @@ export default function AboutPage() {
     <main className="relative">
       <DesktopNav tone="light" />
       {/* full-bleed cream band behind the hero */}
-      <div className="absolute inset-x-0 top-0 hidden h-[calc(939px*var(--vs))] bg-cloud lg:block" />
+      <div data-nav-light className="absolute inset-x-0 top-0 hidden h-[calc(939px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: About, 1440 × 6059) ═════════════ */}
       <Stage height={5827} className="hidden lg:block" innerClassName="overflow-hidden">
@@ -257,6 +257,7 @@ export default function AboutPage() {
       {/* ═════════════ Mobile / tablet ═════════════ */}
       <div className="overflow-hidden lg:hidden">
         <InView className="relative overflow-hidden bg-cloud pb-[420px]" threshold={0}>
+          <div data-nav-light aria-hidden className="pointer-events-none absolute inset-0" />
           <MobileNav tone="light" />
           <div className="relative z-10 flex flex-col gap-6 px-5 pt-14">
             <h1 className="a-up text-[40px] font-medium leading-[0.92] tracking-[-0.06em] text-dark-navy sm:text-[56px]" style={d(0.1)}>
