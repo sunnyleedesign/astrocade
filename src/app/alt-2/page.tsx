@@ -33,7 +33,7 @@ export default function Alt2Page() {
         </InView>
 
 
-        <div className="absolute left-[265px] top-[174px] flex w-[1027px] flex-col gap-20 font-medium">
+        <InView className="absolute left-[265px] top-[174px] flex w-[1027px] flex-col gap-20 font-medium" threshold={0}>
           {STATS.map((s, i) => (
             <div key={s.label} className="flex items-center gap-[136px]">
               <StatTicker
@@ -43,10 +43,16 @@ export default function Alt2Page() {
                 delay={300 + i * 250}
                 className="w-[445px] pb-2 text-[112px] leading-[0.95] tracking-[-0.06em]"
               />
-              <p className="text-[32px] leading-[1.12] tracking-[-0.025em] text-white">{s.label}</p>
+              {/* label slides up subtly, in step with its number */}
+              <p
+                className="a-up text-[32px] leading-[1.12] tracking-[-0.025em] text-white"
+                style={{ ["--d" as string]: `${0.3 + i * 0.25}s`, ["--y" as string]: "20px" }}
+              >
+                {s.label}
+              </p>
             </div>
           ))}
-        </div>
+        </InView>
       </Stage>
     </main>
   );
