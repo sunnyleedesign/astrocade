@@ -257,29 +257,46 @@ body {
   }
 }
 
-/* Blog hero: solid star lands, outlines ripple out one by one */
-.blog-art-path {
+/* Blog hero star: solid star lands, then outlines ripple out of its edge forever */
+.blog-star path {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.blog-star-solid,
+.blog-ripple {
   opacity: 0;
 }
-.is-in .blog-art-path {
-  animation: a-outline 0.8s var(--ease-out-expo) var(--d, 0s) both;
+.is-in .blog-star-solid {
+  animation: a-grow 1.1s var(--ease-back) 0.15s both;
 }
-.is-in .blog-art-path:first-of-type {
-  animation: a-grow 1.2s var(--ease-back) var(--d, 0s) both;
+.is-in .blog-ripple {
+  /* 5 lines, 0.7s apart → one new line every 0.7s, like the reference */
+  animation: blog-ripple 3.5s linear calc(0.6s + var(--i) * 0.7s) infinite both;
 }
-@keyframes a-outline {
-  from {
+@keyframes blog-ripple {
+  0% {
     opacity: 0;
-    scale: 0.9;
-  }
-  to {
-    opacity: 1;
+    translate: 0 0;
     scale: 1;
+  }
+  10% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    translate: -300px -200px;
+    scale: 1.24;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .blog-art-path {
+  .blog-star-solid {
     opacity: 1 !important;
+    animation: none !important;
+  }
+  .blog-ripple {
     animation: none !important;
   }
 }
@@ -293,10 +310,6 @@ body {
 }
 .is-in .a-tile.loop {
   animation: a-tile-loop var(--cycle, 4.4s) var(--ease-out-expo) var(--d, 0s) infinite both;
-}
-/* Blog hero: the solid star stays; the outlines keep rippling in and out */
-.is-in .blog-art-path:not(:first-of-type) {
-  animation: a-outline-loop 3.6s ease-in-out var(--d, 0s) infinite both;
 }
 
 @keyframes a-wipe-ltr-loop {
@@ -345,25 +358,8 @@ body {
     translate: 0 -24px;
   }
 }
-@keyframes a-outline-loop {
-  0% {
-    opacity: 0;
-    scale: 0.9;
-  }
-  18%,
-  68% {
-    opacity: 1;
-    scale: 1;
-  }
-  86%,
-  100% {
-    opacity: 0;
-    scale: 1.04;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .is-in .loop,
-  .is-in .blog-art-path {
+  .is-in .loop {
     animation: none !important;
     clip-path: none !important;
     opacity: 1 !important;

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Stage from "@/components/Stage";
 import InView from "@/components/InView";
-import InlineSvg from "@/components/InlineSvg";
+import BlogStar from "@/components/BlogStar";
 import Footer from "@/components/Footer";
 import BlogList from "@/components/BlogList";
 import { DesktopNav, MobileNav } from "@/components/Nav";
@@ -10,9 +10,6 @@ export const metadata: Metadata = { title: "Blog" };
 
 const BLOG_GRAD = "linear-gradient(111.65deg, #5578ff 6.54%, #f956d1 49%)";
 
-/** Solid star lands first, then each outline ripples out one by one. */
-const heroPathStyle = (i: number) => (i === 0 ? "--d:0.15s" : `--d:${0.55 + (i - 1) * 0.18}s`);
-const heroPathClass = "blog-art-path";
 
 export default function BlogPage() {
   return (
@@ -20,12 +17,7 @@ export default function BlogPage() {
       {/* ═════════════ Desktop (Figma: Blog - D, 1440 × 3105) ═════════════ */}
       <Stage height={3105} className="hidden lg:block">
         <InView className="absolute left-[487px] top-[-123px] flex h-[1300.4px] w-[1258.7px] items-center justify-center" threshold={0}>
-          <InlineSvg
-            src="img/blog/hero-art.svg"
-            className="svg-anim blog-art h-[1158px] w-[1109.26px] shrink-0 rotate-[7.95deg]"
-            pathClass={heroPathClass}
-            pathStyle={heroPathStyle}
-          />
+          <BlogStar className="h-[1158px] w-[1109.26px] shrink-0 rotate-[7.95deg]" />
         </InView>
         <DesktopNav />
 
@@ -50,12 +42,7 @@ export default function BlogPage() {
         <MobileNav />
         <InView className="relative px-5 pb-10 pt-14" threshold={0}>
           <div className="pointer-events-none absolute -right-[260px] -top-[120px] h-[620px] w-[600px]">
-            <InlineSvg
-              src="img/blog/hero-art.svg"
-              className="svg-anim blog-art size-full rotate-[7.95deg] opacity-80"
-              pathClass={heroPathClass}
-              pathStyle={heroPathStyle}
-            />
+            <BlogStar className="size-full rotate-[7.95deg] opacity-80" />
           </div>
           <h1 className="a-up grad-text relative pb-2 text-[72px] font-medium leading-[0.95] tracking-[-0.035em]" style={{ backgroundImage: BLOG_GRAD }}>
             Blog
