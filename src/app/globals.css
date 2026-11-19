@@ -283,3 +283,89 @@ body {
     animation: none !important;
   }
 }
+
+/* ───────────── Looping variants (add `loop` next to the base class) ───────────── */
+.is-in .a-wipe-ltr.loop {
+  animation: a-wipe-ltr-loop var(--cycle, 3.6s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) infinite both;
+}
+.is-in .a-wipe-rtl.loop {
+  animation: a-wipe-rtl-loop var(--cycle, 3.6s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) infinite both;
+}
+.is-in .a-tile.loop {
+  animation: a-tile-loop var(--cycle, 4.4s) var(--ease-out-expo) var(--d, 0s) infinite both;
+}
+/* Blog hero: the solid star stays; the outlines keep rippling in and out */
+.is-in .blog-art-path:not(:first-of-type) {
+  animation: a-outline-loop 3.6s ease-in-out var(--d, 0s) infinite both;
+}
+
+@keyframes a-wipe-ltr-loop {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  35%,
+  45% {
+    clip-path: inset(0 0 0 0);
+  }
+  80%,
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@keyframes a-wipe-rtl-loop {
+  0% {
+    clip-path: inset(0 0 0 100%);
+  }
+  35%,
+  45% {
+    clip-path: inset(0 0 0 0);
+  }
+  80%,
+  100% {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+/* tile slides up into view, holds, then slides away upward */
+@keyframes a-tile-loop {
+  0% {
+    opacity: 1;
+    clip-path: inset(100% 0 0 0);
+    translate: 0 24px;
+  }
+  12%,
+  76% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    translate: 0 0;
+  }
+  90%,
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 100% 0);
+    translate: 0 -24px;
+  }
+}
+@keyframes a-outline-loop {
+  0% {
+    opacity: 0;
+    scale: 0.9;
+  }
+  18%,
+  68% {
+    opacity: 1;
+    scale: 1;
+  }
+  86%,
+  100% {
+    opacity: 0;
+    scale: 1.04;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-in .loop,
+  .is-in .blog-art-path {
+    animation: none !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+  }
+}

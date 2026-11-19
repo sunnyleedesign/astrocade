@@ -103,9 +103,9 @@ export default function AboutPage() {
           <div className="absolute left-[-145.6px] top-[42.1px] flex h-[1696px] w-[1607.5px] items-center justify-center">
             <img src="/img/about/hero-star.svg" alt="" className="a-grow h-[1469.75px] w-[1358.66px] max-w-none shrink-0 rotate-[10.68deg]" style={d(0)} />
           </div>
-          <img src="/img/about/grid2.svg" alt="" className="a-tile absolute left-[875.25px] top-[305.75px] h-[319.5px] w-[320.25px]" style={d(0.35)} />
-          <img src="/img/about/grid1.svg" alt="" className="a-tile absolute left-[557.34px] top-[624.22px] size-[319.46px]" style={d(0.6)} />
-          <div className="a-tile absolute left-[1194.85px] top-[305.75px] size-[319.46px] overflow-hidden bg-[#071738]" style={d(0.85)}>
+          <img src="/img/about/grid2.svg" alt="" className="a-tile loop absolute left-[875.25px] top-[305.75px] h-[319.5px] w-[320.25px]" style={d(0.35)} />
+          <img src="/img/about/grid1.svg" alt="" className="a-tile loop absolute left-[557.34px] top-[624.22px] size-[319.46px]" style={d(0.6)} />
+          <div className="a-tile loop absolute left-[1194.85px] top-[305.75px] size-[319.46px] overflow-hidden bg-[#071738]" style={d(0.85)}>
             <div className="absolute left-[-218.8px] top-[-253.3px] flex h-[962.6px] w-[869.1px] items-center justify-center">
               <img src="/img/about/grid3-lines.svg" alt="" className="h-[848.4px] w-[733.1px] max-w-none shrink-0 rotate-[-9.98deg]" />
             </div>
@@ -135,7 +135,7 @@ export default function AboutPage() {
           <div className="a-up absolute left-[218px] top-[99.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-cloud" style={d(0.35, { "--y": "80px" })}>
             <img src="/img/about/art-food.webp" alt="" className="absolute left-[17.15px] top-[17.15px] size-[151.9px] object-cover" />
           </div>
-          <div className="a-wipe-ltr pointer-events-none absolute left-[-286.8px] top-[114.2px] flex h-[522.9px] w-[3386.4px] items-center justify-center" style={d(0)}>
+          <div className="a-wipe-ltr loop pointer-events-none absolute left-[-286.8px] top-[114.2px] flex h-[522.9px] w-[3386.4px] items-center justify-center" style={d(0)}>
             <img src="/img/about/swoosh1.svg" alt="" className="h-[452.3px] w-[3377.7px] max-w-none shrink-0 -scale-x-100 rotate-[1.2deg]" />
           </div>
           <div className="a-up absolute left-[404.3px] top-[50.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-[#2ddaa7]" style={d(0.6, { "--y": "80px" })}>
@@ -178,7 +178,7 @@ export default function AboutPage() {
               <LazyVideo src="/video/app.mp4" poster="/video/app-poster.jpg" className="size-full object-cover" />
             </div>
           </div>
-          <img src="/img/about/swoosh2.svg" alt="" className="a-wipe-rtl pointer-events-none absolute left-[95px] top-[217.6px] h-[707.7px] w-[2096.9px] max-w-none" style={d(0)} />
+          <img src="/img/about/swoosh2.svg" alt="" className="a-wipe-rtl loop pointer-events-none absolute left-[95px] top-[217.6px] h-[707.7px] w-[2096.9px] max-w-none" style={d(0)} />
         </InView>
 
         {/* ── Why we win ── star grows outward, art 1 then art 2 slide up */}
@@ -271,8 +271,8 @@ export default function AboutPage() {
           </div>
           <div className="absolute bottom-0 left-1/2 h-[440px] w-[560px] -translate-x-[40%]">
             <img src="/img/about/hero-star.svg" alt="" className="a-grow absolute left-[-120px] top-[10px] h-[640px] w-[592px] max-w-none rotate-[10.68deg]" />
-            <img src="/img/about/grid2.svg" alt="" className="a-tile absolute left-[260px] top-[60px] size-[150px]" style={d(0.35)} />
-            <img src="/img/about/grid1.svg" alt="" className="a-tile absolute left-[110px] top-[210px] size-[150px]" style={d(0.6)} />
+            <img src="/img/about/grid2.svg" alt="" className="a-tile loop absolute left-[260px] top-[60px] size-[150px]" style={d(0.35)} />
+            <img src="/img/about/grid1.svg" alt="" className="a-tile loop absolute left-[110px] top-[210px] size-[150px]" style={d(0.6)} />
           </div>
         </InView>
 
