@@ -66,10 +66,17 @@ export default function HomePage() {
             pathStyle={starDelays}
           />
           <img src="/img/home/symbol-big.svg" alt="" className="a-spin absolute left-[642.9px] top-[248.4px] h-[168px] w-[174.9px]" />
-          <StatPill {...STATS[0]} className="a-up absolute left-[97px] top-[265px] px-10 py-6" style={{ ...d(0.5), ["--y" as string]: "24px" }} />
-          <StatPill {...STATS[1]} className="a-up absolute left-[921.5px] top-[115.4px] px-10 py-6" style={{ ...d(0.7), ["--y" as string]: "24px" }} />
-          <StatPill {...STATS[2]} className="a-up absolute left-[765.5px] top-[544px] px-10 py-6" style={{ ...d(0.9), ["--y" as string]: "24px" }} />
         </InView>
+        {/* each stat has its own trigger: it slides up when it reaches the screen */}
+        {([
+          [STATS[1], 921.5, 1645.4],
+          [STATS[0], 97, 1795],
+          [STATS[2], 765.5, 2074],
+        ] as const).map(([st, left, top]) => (
+          <InView key={st.label} className="absolute" style={{ left, top }} threshold={0.9}>
+            <StatPill {...st} className="a-up px-10 py-6" style={{ ...d(0.15), ["--y" as string]: "40px" }} />
+          </InView>
+        ))}
 
         {/* Backed by */}
         <InView className="absolute left-[207px] top-[2374px] flex w-[1027px] flex-col items-center gap-10">
@@ -137,13 +144,15 @@ export default function HomePage() {
             />
             <img src="/img/home/symbol-big.svg" alt="" className="a-spin absolute left-[145.7px] top-[117.2px] h-[84px] w-[87.4px]" />
           </div>
-          {/* pills have their own trigger so they pop in one by one when they reach the screen */}
-          <InView className="relative -mt-[26px] flex flex-col gap-6" threshold={0.35}>
-            {[STATS[1], STATS[0], STATS[2]].map((s, i) => (
-              <StatPill key={s.label} {...s} size="sm" className="a-up w-full" style={{ ...d(0.1 + i * 0.25), ["--y" as string]: "28px" }} />
-            ))}
-          </InView>
         </InView>
+        {/* each pill has its own trigger: it slides up when it reaches the screen */}
+        <div className="relative mx-auto -mt-[26px] flex w-[335px] flex-col gap-6">
+          {[STATS[1], STATS[0], STATS[2]].map((s) => (
+            <InView key={s.label} threshold={0.9}>
+              <StatPill {...s} size="sm" className="a-up w-full" style={{ ...d(0.1), ["--y" as string]: "28px" }} />
+            </InView>
+          ))}
+        </div>
 
         <InView className="mt-[103px] flex flex-col items-center gap-6">
           <p className="a-up text-[24px] font-medium leading-[1.12] tracking-[-0.025em] text-blue">Backed by</p>
