@@ -345,7 +345,9 @@ export default function AboutPage() {
             <img src="/img/about/star-violet-img.webp" alt="" className="a-pop absolute bottom-6 left-0 w-[120px] max-w-none" style={d(0.3)} />
             <img src="/img/about/star-big-img.webp" alt="" className="a-pop absolute bottom-10 left-[30%] w-[200px] max-w-none" style={d(0.6)} />
             <img src="/img/about/star-peach-img.webp" alt="" className="a-pop absolute -right-4 bottom-0 w-[100px] max-w-none" style={d(0.9)} />
-            <div className="a-up relative z-10">
+            {/* small symbol above the closing line (Figma mobile) */}
+            <img src="/img/home/symbol-big.svg" alt="" className="a-spin relative z-10 mx-auto mb-8 block h-[70px] w-[73.4px]" />
+            <div className="a-up relative z-10" style={d(0.15)}>
               <CommunityHeadline className="text-[40px]" />
             </div>
           </InView>
