@@ -28,7 +28,6 @@ const W = 252;
 const H = 536.5;
 const SCALE = [1, 200 / 252, 160 / 252, 160 / 252];
 const N = CARDS.length; // 7 → slots -3 … 3
-const START = 3; // Figma shows the Mimic Madness card in the centre
 const INTERVAL = 3200;
 
 function slotOf(i: number, step: number) {
@@ -57,6 +56,7 @@ export default function GameCarousel({
   gap = 127,
   centerX = 720,
   scale = 1,
+  start = 3,
 }: {
   /** top of the 536.5px-tall row, in design px */
   top?: number;
@@ -66,7 +66,10 @@ export default function GameCarousel({
   centerX?: number;
   /** overall size multiplier (mobile uses ~0.5) */
   scale?: number;
+  /** index of the card that starts in the centre (2 = nose-fishing, 3 = Mimic Madness) */
+  start?: number;
 }) {
+  const START = start;
   const reduce = useReducedMotion();
   const [step, setStep] = useState(START);
   const [entered, setEntered] = useState(false);

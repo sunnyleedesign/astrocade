@@ -34,7 +34,7 @@ export default function HomePage() {
 
         {/* Hero game-card carousel (replaces the hero video) */}
         <div className="absolute inset-x-0 top-0 z-10 h-[1300px] overflow-x-clip">
-          <GameCarousel top={696} gap={72} />
+          <GameCarousel top={696} gap={72} start={2} />
         </div>
 
         {/* Hero copy */}
@@ -119,7 +119,7 @@ export default function HomePage() {
 
         {/* hero game-card carousel (Figma mobile: 0.5× scale, 48px gaps) */}
         <div className="relative mx-auto mt-[71px] h-[268px] w-[375px] overflow-x-clip">
-          <GameCarousel top={0} gap={96} centerX={187.5} scale={0.4995} />
+          <GameCarousel top={0} gap={96} centerX={187.5} scale={0.4995} start={2} />
         </div>
 
         <InView className="relative mx-auto mt-[71px] w-[335px]" threshold={0.2}>
