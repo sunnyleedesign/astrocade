@@ -465,3 +465,29 @@ body {
     animation: none !important;
   }
 }
+
+/* ───────────── Careers hero: boxes resize through 3 storyboard states ───────────── */
+.career-box-1 { left: 1145px; top: -112px; width: 390px; height: 390px; }
+.career-box-2 { left: 624px; top: 278px; width: 521px; height: 521px; }
+.career-box-3 { left: 1145px; top: 799px; width: 255px; height: 255px; }
+.is-in .career-box-1 { animation: career-box-1 9s cubic-bezier(0.65, 0, 0.35, 1) 2s infinite; }
+.is-in .career-box-2 { animation: career-box-2 9s cubic-bezier(0.65, 0, 0.35, 1) 2s infinite; }
+.is-in .career-box-3 { animation: career-box-3 9s cubic-bezier(0.65, 0, 0.35, 1) 2s infinite; }
+@keyframes career-box-1 {
+  0%, 22%, 100% { left: 1145px; top: -112px; width: 390px; height: 390px; }
+  33%, 55% { left: 943px; top: -134px; width: 592px; height: 592px; }
+  66%, 88% { left: 1079px; top: 54px; width: 211px; height: 212px; }
+}
+@keyframes career-box-2 {
+  0%, 22%, 100% { left: 624px; top: 278px; width: 521px; height: 521px; }
+  33%, 55% { left: 624px; top: 440px; width: 321px; height: 321px; }
+  66%, 88% { left: 614px; top: 257px; width: 465px; height: 465px; }
+}
+@keyframes career-box-3 {
+  0%, 22%, 100% { left: 1145px; top: 799px; width: 255px; height: 255px; }
+  33%, 55% { left: 945px; top: 761px; width: 461px; height: 461px; }
+  66%, 88% { left: 1079px; top: 722px; width: 327px; height: 327px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-in .career-box-1, .is-in .career-box-2, .is-in .career-box-3 { animation: none; }
+}

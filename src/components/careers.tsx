@@ -183,47 +183,62 @@ export function PeopleCarousel({ mobile = false }: { mobile?: boolean }) {
 /* ───────────── Benefits: each line turns from faint white to gradient as you scroll ───────────── */
 export function Benefits({ mobile = false }: { mobile?: boolean }) {
   const refs = useRef<(HTMLParagraphElement | null)[]>([]);
-  const [active, setActive] = useState<boolean[]>(() => BENEFITS.map(() => false));
+  // 0 = faint, 1 = gradient sweeping in, 2 = settled to white (Figma storyboard)
+  const [state, setState] = useState<number[]>(() => BENEFITS.map(() => 0));
+  const timers = useRef<Record<number, ReturnType<typeof setTimeout>>>({});
 
   useEffect(() => {
+    const set = (i: number, v: number) => setState((a) => (a[i] === v ? a : a.map((x, j) => (j === i ? v : x))));
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           const i = Number((e.target as HTMLElement).dataset.i);
-          // active once the line has scrolled above ~60% of the viewport
+          // a line activates once it has scrolled above ~60% of the viewport
           const on = e.isIntersecting || e.boundingClientRect.top < 0;
-          setActive((a) => (a[i] === on ? a : a.map((v, j) => (j === i ? on : v))));
+          clearTimeout(timers.current[i]);
+          if (on) {
+            setState((a) => (a[i] ? a : a.map((x, j) => (j === i ? 1 : x))));
+            timers.current[i] = setTimeout(() => set(i, 2), 1100);
+          } else set(i, 0);
         });
       },
       { rootMargin: "0px 0px -40% 0px", threshold: 0 },
     );
     refs.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
+    const t = timers.current;
+    return () => {
+      io.disconnect();
+      Object.values(t).forEach(clearTimeout);
+    };
   }, []);
 
   return (
     <div className={`flex flex-col items-center text-center font-semibold leading-[0.95] ${mobile ? "gap-4 text-[28px]" : "gap-[22px] text-[48px]"}`}>
-      {BENEFITS.map((b, i) => (
-        <p
-          key={b.text}
-          ref={(el) => {
-            refs.current[i] = el;
-          }}
-          data-i={i}
-          className={`grad-text px-2 ${i === BENEFITS.length - 1 ? (mobile ? "" : "max-w-[721px]") : mobile ? "" : "whitespace-nowrap"}`}
-          style={{
-            backgroundImage: `${b.grad}, linear-gradient(#fff, #fff)`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: active[i] ? "100% 100%, 100% 100%" : "0% 100%, 100% 100%",
-            opacity: active[i] ? 1 : 0.12,
-            translate: active[i] ? "0 0" : "0 16px",
-            transition:
-              "background-size 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0.6s ease, translate 0.6s cubic-bezier(0.16,1,0.3,1)",
-          }}
-        >
-          {b.text}
-        </p>
-      ))}
+      {BENEFITS.map((b, i) => {
+        const st = state[i];
+        return (
+          <p
+            key={b.text}
+            ref={(el) => {
+              refs.current[i] = el;
+            }}
+            data-i={i}
+            className={`grad-text px-2 ${i === BENEFITS.length - 1 ? (mobile ? "" : "max-w-[721px]") : mobile ? "" : "whitespace-nowrap"}`}
+            style={{
+              // layers: white (final) · gradient · faint white base
+              backgroundImage: `linear-gradient(#fff, #fff), ${b.grad}, linear-gradient(#fff, #fff)`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: st === 2 ? "100% 100%, 100% 100%, 100% 100%" : st === 1 ? "0% 100%, 100% 100%, 100% 100%" : "0% 100%, 0% 100%, 100% 100%",
+              opacity: st ? 1 : 0.12,
+              translate: st ? "0 0" : "0 16px",
+              transition:
+                "background-size 0.9s cubic-bezier(0.16,1,0.3,1), opacity 0.6s ease, translate 0.6s cubic-bezier(0.16,1,0.3,1)",
+            }}
+          >
+            {b.text}
+          </p>
+        );
+      })}
     </div>
   );
 }

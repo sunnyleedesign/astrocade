@@ -68,13 +68,15 @@ export default function CareersPage() {
       <div data-nav-light className="absolute inset-x-0 top-0 hidden h-[calc(946px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: Career, 1440 × 5884) ═════════════ */}
-      <Stage height={5762} className="hidden lg:block" innerClassName="overflow-hidden">
+      <Stage height={5714} className="hidden lg:block" innerClassName="overflow-hidden">
         {/* Hero — colour blocks pop in one by one while the product UI slides up */}
         <InView className="absolute left-0 top-[2px] h-[944px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
-          <div className="a-tile absolute left-[1145px] top-[-112px] size-[390px] rounded-[20px] bg-neon" style={d(0.15)} />
-          <div className="a-tile absolute left-[624px] top-[278px] size-[521px] rounded-[20px] bg-blue" style={d(0.3)} />
-          <div className="a-tile absolute left-[1145px] top-[799px] size-[255px] rounded-[20px] bg-violet" style={d(0.45)} />
-          <ProductUI className="a-up absolute left-[776px] top-[345px] w-[594px] p-10" style={d(0.45, { "--y": "120px" })} />
+          {/* boxes appear one by one, then the product UI; afterwards the boxes
+              keep resizing through the 3 storyboard states while the UI stays put */}
+          <div className="career-box career-box-1 absolute"><div className="a-tile size-full rounded-[20px] bg-neon" style={d(0.15)} /></div>
+          <div className="career-box career-box-2 absolute"><div className="a-tile size-full rounded-[20px] bg-blue" style={d(0.35)} /></div>
+          <div className="career-box career-box-3 absolute"><div className="a-tile size-full rounded-[20px] bg-violet" style={d(0.55)} /></div>
+          <ProductUI className="a-up absolute left-[776px] top-[345px] w-[594px] p-10" style={d(0.9, { "--y": "120px" })} />
 
           <h1 className="absolute left-8 top-[151px] w-[678px] text-[72px] font-medium leading-[0.92] tracking-[-0.06em] text-dark-navy">
             <span className="a-up block" style={d(0.05)}>
@@ -181,7 +183,7 @@ export default function CareersPage() {
           <OpenRoles />
         </div>
 
-        <Footer className="absolute bottom-12 left-1/2 -translate-x-1/2" />
+        <Footer className="absolute bottom-6 left-1/2 -translate-x-1/2" />
       </Stage>
 
       {/* ═════════════ Mobile / tablet ═════════════ */}
