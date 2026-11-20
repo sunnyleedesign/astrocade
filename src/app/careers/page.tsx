@@ -68,7 +68,7 @@ export default function CareersPage() {
       <div data-nav-light className="absolute inset-x-0 top-0 hidden h-[calc(946px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: Career, 1440 × 5884) ═════════════ */}
-      <Stage height={5714} className="hidden lg:block" innerClassName="overflow-hidden">
+      <Stage height={5770} className="hidden lg:block" innerClassName="overflow-hidden">
         {/* Hero — colour blocks pop in one by one while the product UI slides up */}
         <InView className="absolute left-0 top-[2px] h-[944px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
           {/* boxes appear one by one, then the product UI; afterwards the boxes
@@ -178,7 +178,7 @@ export default function CareersPage() {
           <OpenRoles />
         </div>
 
-        <Footer className="absolute bottom-6 left-1/2 -translate-x-1/2" />
+        <Footer className="absolute bottom-20 left-1/2 -translate-x-1/2" />
       </Stage>
 
       {/* ═════════════ Mobile / tablet ═════════════ */}
@@ -269,7 +269,7 @@ export default function CareersPage() {
         <section className="px-5 pb-20">
           <OpenRoles mobile />
         </section>
-        <Footer className="pb-6" />
+        <Footer className="pb-10" />
       </div>
     </main>
   );

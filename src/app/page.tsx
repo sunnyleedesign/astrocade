@@ -22,7 +22,7 @@ export default function HomePage() {
     <main>
       <DesktopNav />
       {/* ═════════════ Desktop (Figma: Updated Website / Homepage, 1440 × 3539) ═════════════ */}
-      <Stage height={3539} className="hidden lg:block">
+      <Stage height={3595} className="hidden lg:block">
 
         <div
           className="pointer-events-none absolute left-0 top-0 h-[1280px] w-[1440px]"
@@ -80,7 +80,7 @@ export default function HomePage() {
         </InView>
 
         {/* Ending: headline + Play / Create / Share */}
-        <section className="absolute left-0 top-[2590px] h-[949px] w-[1440px] overflow-x-clip">
+        <section className="absolute left-0 top-[2590px] h-[1005px] w-[1440px] overflow-x-clip">
           <InView className="absolute left-[146.5px] top-0 z-20 w-[1143px] text-center text-[72px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
@@ -95,7 +95,7 @@ export default function HomePage() {
             swooshImg={{ width: 3521.4, height: 471.5 }}
             tagTop={401}
           />
-          <Footer className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2" />
+          <Footer className="absolute bottom-20 left-1/2 z-20 -translate-x-1/2" />
         </section>
       </Stage>
 
@@ -156,7 +156,7 @@ export default function HomePage() {
           </div>
         </InView>
 
-        <section className="relative mt-[96px] h-[590px]">
+        <section className="relative mt-[96px] h-[606px]">
           <InView className="relative z-20 mx-auto w-[335px] text-center text-[40px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
@@ -174,7 +174,7 @@ export default function HomePage() {
               tagTop={259}
             />
           </div>
-          <Footer className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2" />
+          <Footer className="absolute bottom-10 left-1/2 z-20 -translate-x-1/2" />
         </section>
       </div>
     </main>

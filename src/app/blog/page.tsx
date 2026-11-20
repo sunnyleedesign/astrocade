@@ -16,7 +16,7 @@ export default function BlogPage() {
     <main>
       <DesktopNav />
       {/* ═════════════ Desktop (Figma: Blog - D, 1440 × 3105) ═════════════ */}
-      <Stage height={3105} className="hidden lg:block">
+      <Stage height={3161} className="hidden lg:block">
         <InView className="absolute left-[487px] top-[-123px] flex h-[1300.4px] w-[1258.7px] items-center justify-center" threshold={0}>
           <BlogStar className="h-[1158px] w-[1109.26px] shrink-0 rotate-[7.95deg]" />
         </InView>
@@ -34,7 +34,7 @@ export default function BlogPage() {
           <BlogList />
         </div>
 
-        <Footer className="absolute bottom-6 left-1/2 -translate-x-1/2" />
+        <Footer className="absolute bottom-20 left-1/2 -translate-x-1/2" />
       </Stage>
 
       {/* ═════════════ Mobile / tablet ═════════════ */}
@@ -54,7 +54,7 @@ export default function BlogPage() {
         <section className="px-5 pb-20">
           <BlogList mobile />
         </section>
-        <Footer className="pb-6" />
+        <Footer className="pb-10" />
       </div>
     </main>
   );

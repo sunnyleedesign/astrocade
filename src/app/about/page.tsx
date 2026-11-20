@@ -93,7 +93,7 @@ export default function AboutPage() {
       <div data-nav-light className="absolute inset-x-0 top-0 hidden h-[calc(939px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: About, 1440 × 6059) ═════════════ */}
-      <Stage height={5785} className="hidden lg:block" innerClassName="overflow-hidden">
+      <Stage height={5841} className="hidden lg:block" innerClassName="overflow-hidden">
         {/* ── Hero ── star spins + zooms in, then tiles grow out of their shared corner (reference video) */}
         <InView className="absolute left-0 top-0 h-[939px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
           <div className="absolute left-[-145.6px] top-[42.1px] flex h-[1696px] w-[1607.5px] items-center justify-center">
@@ -231,7 +231,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Community ── stars appear one by one */}
-        <InView className="absolute left-0 top-[4803.6px] h-[981.4px] w-[1440px]" threshold={0.2}>
+        <InView className="absolute left-0 top-[4803.6px] h-[1037.4px] w-[1440px]" threshold={0.2}>
           {/* supplied star images; they appear one by one, left to right */}
           <img src="/img/about/star-violet-img.webp" alt="" className="a-pop absolute left-[237px] top-[498.4px] h-[337px] w-[302px] max-w-none" style={d(0.3)} />
           <img src="/img/about/star-big-img.webp" alt="" className="a-pop absolute left-[669px] top-[289.4px] h-[542px] w-[572px] max-w-none" style={d(0.6)} />
@@ -239,7 +239,7 @@ export default function AboutPage() {
           <div className="a-up absolute left-[200.3px] top-[99.4px] z-10 w-[1019px]" style={d(0)}>
             <CommunityHeadline className="text-[72px]" />
           </div>
-          <Footer className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2" />
+          <Footer className="absolute bottom-20 left-1/2 z-10 -translate-x-1/2" />
         </InView>
       </Stage>
 
@@ -350,7 +350,7 @@ export default function AboutPage() {
             </div>
           </InView>
         </section>
-        <Footer className="pb-6" />
+        <Footer className="pb-10" />
       </div>
     </main>
   );
