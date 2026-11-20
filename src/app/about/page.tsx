@@ -114,7 +114,7 @@ export default function AboutPage() {
                 We’re on a mission to share{" "}
                 <span className="text-violet">
                   fun{" "}
-                  <img src="/img/about/symbol-inline.svg" alt="" className="inline-block h-[64px] w-[66.6px] align-[-0.12em]" /> with the
+                  <img src="/img/about/symbol-inline-dark.svg" alt="" className="inline-block h-[64px] w-[66.6px] align-[-0.12em]" /> with the
                   world
                 </span>
               </span>
@@ -127,16 +127,16 @@ export default function AboutPage() {
 
         {/* ── Why now ── swoosh L→R while 3 artworks slide up one by one */}
         <InView className="absolute left-0 top-[990px] h-[800px] w-[1440px]" threshold={0.3}>
-          <div className="a-up absolute left-[218px] top-[99.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-cloud" style={d(0.35, { "--y": "80px" })}>
+          <div className="a-up absolute left-[218px] top-[179.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-cloud" style={d(0.35, { "--y": "80px" })}>
             <img src="/img/about/art-food.webp" alt="" className="absolute left-[17.15px] top-[17.15px] size-[151.9px] object-cover" />
           </div>
-          <div className="a-wipe-ltr loop pointer-events-none absolute left-[-286.8px] top-[114.2px] flex h-[522.9px] w-[3386.4px] items-center justify-center" style={d(0)}>
+          <div className="a-wipe-ltr loop pointer-events-none absolute left-[-286.8px] top-[194.2px] flex h-[522.9px] w-[3386.4px] items-center justify-center" style={d(0)}>
             <img src="/img/about/swoosh1.svg" alt="" className="h-[452.3px] w-[3377.7px] max-w-none shrink-0 -scale-x-100 rotate-[1.2deg]" />
           </div>
-          <div className="a-up absolute left-[404.3px] top-[50.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-[#2ddaa7]" style={d(0.6, { "--y": "80px" })}>
+          <div className="a-up absolute left-[404.3px] top-[130.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-[#2ddaa7]" style={d(0.6, { "--y": "80px" })}>
             <img src="/img/about/art-mascot.webp" alt="" className="absolute left-[21.6px] top-[21.7px] size-[142.7px] object-cover" />
           </div>
-          <div className="a-up absolute left-8 top-[148.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-[#1739c7]" style={d(0.1, { "--y": "80px" })}>
+          <div className="a-up absolute left-8 top-[228.4px] size-[186.2px] overflow-hidden rounded-[16px] bg-[#1739c7]" style={d(0.1, { "--y": "80px" })}>
             <img src="/img/about/art-skate.webp" alt="" className="absolute left-[28.5px] top-[2.5px] h-[181.1px] w-[128.9px] object-cover" />
           </div>
           <h2
@@ -232,19 +232,10 @@ export default function AboutPage() {
 
         {/* ── Community ── stars appear one by one */}
         <InView className="absolute left-0 top-[4803.6px] h-[981.4px] w-[1440px]" threshold={0.2}>
-          <div className="a-pop absolute left-[294.5px] top-[515.4px] flex h-[319.7px] w-[309px] items-center justify-center" style={d(0.3)}>
-            <div className="relative h-[268.6px] w-[254.3px] shrink-0 rotate-[13.24deg]">
-              <img src="/img/about/star-a.svg" alt="" className="absolute inset-[-13.68%_-14.45%] max-w-none" />
-            </div>
-          </div>
-          <div className="a-pop absolute left-[698px] top-[328.4px] h-[445px] w-[475px]" style={d(0.1)}>
-            <img src="/img/about/star-b2.svg" alt="" className="absolute inset-[-10.82%_-10.14%] max-w-none" />
-          </div>
-          <div className="a-pop absolute left-[1205.3px] top-[719.4px] flex h-[232.2px] w-[220px] items-center justify-center" style={d(0.5)}>
-            <div className="relative h-[201.2px] w-[185.9px] shrink-0 rotate-[10.68deg]">
-              <img src="/img/about/star-c.svg" alt="" className="absolute inset-[-20.76%_-22.46%] max-w-none" />
-            </div>
-          </div>
+          {/* supplied star images; they appear one by one, left to right */}
+          <img src="/img/about/star-violet-img.webp" alt="" className="a-pop absolute left-[237px] top-[498.4px] h-[337px] w-[302px] max-w-none" style={d(0.3)} />
+          <img src="/img/about/star-big-img.webp" alt="" className="a-pop absolute left-[669px] top-[289.4px] h-[542px] w-[572px] max-w-none" style={d(0.6)} />
+          <img src="/img/about/star-peach-img.webp" alt="" className="a-pop absolute left-[1151px] top-[701.4px] h-[267px] w-[268px] max-w-none" style={d(0.9)} />
           <div className="a-up absolute left-[200.3px] top-[99.4px] z-10 w-[1019px]" style={d(0)}>
             <CommunityHeadline className="text-[72px]" />
           </div>
@@ -261,7 +252,7 @@ export default function AboutPage() {
             <h1 className="a-up text-[40px] font-medium leading-[0.92] tracking-[-0.06em] text-dark-navy sm:text-[56px]" style={d(0.1)}>
               We’re on a mission to share{" "}
               <span className="text-violet">
-                fun <img src="/img/about/symbol-inline.svg" alt="" className="inline-block h-[0.9em] w-auto align-[-0.12em]" /> with the world
+                fun <img src="/img/about/symbol-inline-dark.svg" alt="" className="inline-block h-[0.9em] w-auto align-[-0.12em]" /> with the world
               </span>
             </h1>
             <p className="a-up max-w-[465px] text-[17px] leading-[1.55] text-dark-navy" style={d(0.25)}>
@@ -350,10 +341,11 @@ export default function AboutPage() {
             <Angels cols={2} />
           </InView>
 
-          <InView className="relative pb-40">
-            <img src="/img/about/star-b.svg" alt="" className="a-pop absolute -right-16 top-24 w-[260px] max-w-none opacity-90" style={d(0.1)} />
-            <img src="/img/about/star-a.svg" alt="" className="a-pop absolute bottom-0 left-1/4 w-[150px] rotate-[13deg]" style={d(0.3)} />
-            <div className="a-up relative">
+          <InView className="relative pb-[260px]">
+            <img src="/img/about/star-violet-img.webp" alt="" className="a-pop absolute bottom-6 left-0 w-[120px] max-w-none" style={d(0.3)} />
+            <img src="/img/about/star-big-img.webp" alt="" className="a-pop absolute bottom-10 left-[30%] w-[200px] max-w-none" style={d(0.6)} />
+            <img src="/img/about/star-peach-img.webp" alt="" className="a-pop absolute -right-4 bottom-0 w-[100px] max-w-none" style={d(0.9)} />
+            <div className="a-up relative z-10">
               <CommunityHeadline className="text-[40px]" />
             </div>
           </InView>

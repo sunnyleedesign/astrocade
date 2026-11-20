@@ -491,3 +491,28 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .is-in .career-box-1, .is-in .career-box-2, .is-in .career-box-3 { animation: none; }
 }
+
+/* ───────────── Outlined CTA with gradient border ─────────────
+   --fill = the button's own background (page colour); on hover the
+   gradient fills the whole pill like the primary CTA. */
+@property --fill {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #040e22;
+}
+.grad-outline {
+  --fill: #040e22;
+  border: var(--bw, 1px) solid transparent;
+  background:
+    linear-gradient(var(--fill), var(--fill)) padding-box,
+    linear-gradient(180deg, #2be1a2 0%, #5578ff 100%) border-box;
+  transition: --fill 0.35s ease, color 0.35s ease;
+}
+.grad-outline.on-light {
+  --fill: #f0f1ea;
+}
+.grad-outline:hover,
+.grad-outline:focus-visible {
+  --fill: rgba(4, 14, 34, 0);
+  color: #040e22;
+}

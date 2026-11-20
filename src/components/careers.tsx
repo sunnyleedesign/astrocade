@@ -188,24 +188,23 @@ export function Benefits({ mobile = false }: { mobile?: boolean }) {
   const timers = useRef<Record<number, ReturnType<typeof setTimeout>>>({});
 
   useEffect(() => {
-    const set = (i: number, v: number) => setState((a) => (a[i] === v ? a : a.map((x, j) => (j === i ? v : x))));
+    const t = timers.current;
+    const first = refs.current[0];
+    if (!first) return;
+    // once the list scrolls into view, each line sweeps in with its gradient
+    // one after another, then settles to white (Figma storyboard)
     const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          const i = Number((e.target as HTMLElement).dataset.i);
-          // a line activates once it has scrolled above ~60% of the viewport
-          const on = e.isIntersecting || e.boundingClientRect.top < 0;
-          clearTimeout(timers.current[i]);
-          if (on) {
-            setState((a) => (a[i] ? a : a.map((x, j) => (j === i ? 1 : x))));
-            timers.current[i] = setTimeout(() => set(i, 2), 1100);
-          } else set(i, 0);
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        BENEFITS.forEach((_, i) => {
+          t[i * 2] = setTimeout(() => setState((a) => a.map((x, j) => (j === i ? Math.max(x, 1) : x))), i * 300);
+          t[i * 2 + 1] = setTimeout(() => setState((a) => a.map((x, j) => (j === i ? 2 : x))), i * 300 + 1100);
         });
       },
-      { rootMargin: "0px 0px -40% 0px", threshold: 0 },
+      { rootMargin: "0px 0px -25% 0px", threshold: 0 },
     );
-    refs.current.forEach((el) => el && io.observe(el));
-    const t = timers.current;
+    io.observe(first);
     return () => {
       io.disconnect();
       Object.values(t).forEach(clearTimeout);

@@ -99,7 +99,7 @@ export default function CareersPage() {
             >
               See open roles
             </a>
-            <a href="/about" className="rounded-full border border-dark-navy px-8 py-5 transition-colors hover:bg-dark-navy hover:text-white">
+            <a href="/about" className="grad-outline on-light rounded-full px-8 py-5">
               Our story
             </a>
           </div>
@@ -206,7 +206,7 @@ export default function CareersPage() {
               <a href="#open-roles" className="rounded-full px-6 py-4" style={{ backgroundImage: "linear-gradient(180deg, #2be1a2 0%, #5578ff 100%)" }}>
                 See open roles
               </a>
-              <a href="/about" className="rounded-full border border-dark-navy px-6 py-4">
+              <a href="/about" className="grad-outline on-light rounded-full px-6 py-4">
                 Our story
               </a>
             </div>
