@@ -27,13 +27,17 @@ const STATS = {
 
 function KitCards({ mobile = false }: { mobile?: boolean }) {
   const label = `font-semibold text-white text-center ${mobile ? "text-[18px]" : "text-[24px]"}`;
-  const card = "relative aspect-[4/3] w-full overflow-hidden rounded-[20px] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-1.5";
+  const card = "relative aspect-[4/3] w-full overflow-hidden rounded-[20px]";
+  // hover: the card stays put and its contents zoom in slightly (same as Blog / About cards)
+  const zoom = "absolute inset-0 transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.05]";
   const items = [
     {
       name: "Company logos",
       body: (
         <div className={`${card} bg-violet`}>
-          <img src="/img/home/symbol-big.svg" alt="" className="absolute left-[28%] top-[22%] h-[56.4%] w-[44.1%]" />
+          <div className={zoom}>
+            <img src="/img/home/symbol-big.svg" alt="" className="absolute left-[28%] top-[22%] h-[56.4%] w-[44.1%]" />
+          </div>
         </div>
       ),
     },
@@ -41,7 +45,9 @@ function KitCards({ mobile = false }: { mobile?: boolean }) {
       name: "Product photography",
       body: (
         <div className={`${card} bg-neon`}>
-          <img src="/img/press/product-photo.webp" alt="" className="absolute inset-0 size-full object-cover" />
+          <div className={zoom}>
+            <img src="/img/press/product-photo.webp" alt="" className="absolute inset-0 size-full object-cover" />
+          </div>
         </div>
       ),
     },
@@ -49,7 +55,7 @@ function KitCards({ mobile = false }: { mobile?: boolean }) {
       name: "Founder headshots",
       body: (
         <div className={`${card} bg-blue`}>
-          <div className="absolute inset-0 flex items-center justify-center gap-[3.7%]">
+          <div className={`${zoom} flex items-center justify-center gap-[3.7%]`}>
             {[
               { src: "/img/about/ceo1.webp", style: { left: "-12.5%", top: 0, width: "125%", height: "125%" } },
               { src: "/img/about/ceo2.webp", style: { left: "-19.49%", top: 0, width: "139.21%", height: "139.21%" } },
@@ -67,9 +73,11 @@ function KitCards({ mobile = false }: { mobile?: boolean }) {
       name: "Brand guidelines",
       body: (
         <div className={`${card} bg-peach`}>
-          <span className="absolute left-[17%] top-[50%] -translate-y-1/2 text-[min(173.6px,13vw)] font-medium leading-none tracking-[-0.1em] text-white lg:text-[173.6px]">
-            Aa
-          </span>
+          <div className={zoom}>
+            <span className="absolute left-[17%] top-[50%] -translate-y-1/2 text-[min(173.6px,13vw)] font-medium leading-none tracking-[-0.1em] text-white lg:text-[173.6px]">
+              Aa
+            </span>
+          </div>
         </div>
       ),
     },
