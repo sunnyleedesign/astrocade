@@ -26,10 +26,10 @@ const STATS = {
 };
 
 function KitCards({ mobile = false }: { mobile?: boolean }) {
-  const label = `font-semibold text-white text-center ${mobile ? "text-[18px]" : "text-[24px]"}`;
+  const label = `font-semibold text-white text-center transition-colors duration-300 group-hover:text-neon ${mobile ? "text-[18px]" : "text-[24px]"}`;
   const card = "relative aspect-[4/3] w-full overflow-hidden rounded-[20px]";
   // hover: the card stays put and its contents zoom in slightly (same as Blog / About cards)
-  const zoom = "absolute inset-0 transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.05]";
+  const zoom = "absolute inset-0 transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.1]";
   const items = [
     {
       name: "Company logos",
