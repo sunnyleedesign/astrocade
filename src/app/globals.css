@@ -510,11 +510,11 @@ body {
 .grad-outline.on-light {
   --fill: #f0f1ea;
 }
-/* hover: solid fill, white text — teal on dark backgrounds, navy on light */
+/* hover: solid fill — teal + navy text on dark backgrounds, navy + white text on light */
 .grad-outline:hover,
 .grad-outline:focus-visible {
   --fill: #2be1a2;
-  color: #fff;
+  color: #040e22;
 }
 .grad-outline.on-light:hover,
 .grad-outline.on-light:focus-visible {
