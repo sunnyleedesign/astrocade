@@ -106,7 +106,7 @@ export function DesktopNav({ tone: pageTone = "dark" }: { tone?: Tone }) {
             <Logo tone={tone} className="absolute left-0 top-[9px]" />
             <nav
               className={`absolute left-[calc(50%+1.13px)] top-[4px] flex h-[39px] w-[339px] -translate-x-1/2 items-center justify-center gap-8 rounded-full border-[0.75px] border-[rgba(202,202,202,0.26)] px-6 text-[15px] font-medium transition-colors duration-300 ${
-                tone === "dark" ? "bg-[rgba(4,14,34,0.8)] text-white" : "bg-white text-dark-navy"
+                tone === "dark" ? "bg-[rgba(4,14,34,0.95)] text-white" : "bg-white text-dark-navy"
               }`}
             >
               {NAV_LINKS.map((l) => (
@@ -160,7 +160,7 @@ export function MobileNav({ tone: pageTone = "dark" }: { tone?: Tone }) {
           aria-expanded={open}
           onClick={() => setOpen(true)}
           className={`flex size-10 items-center justify-center rounded-full border-[0.75px] border-[rgba(202,202,202,0.26)] ${
-            tone === "dark" ? "bg-[rgba(4,14,34,0.8)]" : "bg-dark-navy"
+            tone === "dark" ? "bg-[rgba(4,14,34,0.95)]" : "bg-dark-navy"
           }`}
         >
           <img src="/img/shared/menu.svg" alt="" className="h-[7.5px] w-[16.7px]" />
