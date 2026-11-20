@@ -16,13 +16,13 @@ export default function BlogPage() {
     <main>
       <DesktopNav />
       {/* ═════════════ Desktop (Figma: Blog - D, 1440 × 3105) ═════════════ */}
-      <Stage height={3113} className="hidden lg:block">
+      <Stage height={3105} className="hidden lg:block">
         <InView className="absolute left-[487px] top-[-123px] flex h-[1300.4px] w-[1258.7px] items-center justify-center" threshold={0}>
           <BlogStar className="h-[1158px] w-[1109.26px] shrink-0 rotate-[7.95deg]" />
         </InView>
 
         <InView className="absolute left-8 top-[151px] w-[562px]" threshold={0}>
-          <h1 className="a-up grad-text pb-3 text-[104px] font-medium leading-[0.95] tracking-[-0.035em]" style={{ backgroundImage: BLOG_GRAD }}>
+          <h1 className="a-up grad-text pb-[0.25em] -mb-[calc(0.25em-12px)] text-[104px] font-medium leading-[0.95] tracking-[-0.035em]" style={{ backgroundImage: BLOG_GRAD }}>
             Blog
           </h1>
           <p className="a-up mt-[94px] text-[48px] font-medium leading-[0.95] tracking-[-0.06em]" style={{ ["--d" as string]: "0.15s" }}>
@@ -34,7 +34,7 @@ export default function BlogPage() {
           <BlogList />
         </div>
 
-        <Footer className="absolute bottom-12 left-1/2 -translate-x-1/2" />
+        <Footer className="absolute bottom-6 left-1/2 -translate-x-1/2" />
       </Stage>
 
       {/* ═════════════ Mobile / tablet ═════════════ */}
@@ -44,7 +44,7 @@ export default function BlogPage() {
           <div className="pointer-events-none absolute -right-[260px] -top-[120px] h-[620px] w-[600px]">
             <BlogStar className="size-full rotate-[7.95deg] opacity-80" />
           </div>
-          <h1 className="a-up grad-text relative pb-2 text-[72px] font-medium leading-[0.95] tracking-[-0.035em]" style={{ backgroundImage: BLOG_GRAD }}>
+          <h1 className="a-up grad-text relative pb-[0.25em] -mb-[calc(0.25em-8px)] text-[72px] font-medium leading-[0.95] tracking-[-0.035em]" style={{ backgroundImage: BLOG_GRAD }}>
             Blog
           </h1>
           <p className="a-up relative mt-10 max-w-[420px] text-[32px] font-medium leading-[0.95] tracking-[-0.06em]" style={{ ["--d" as string]: "0.15s" }}>

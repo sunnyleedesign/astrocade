@@ -152,22 +152,20 @@ export default function PressPage() {
     <main>
       <DesktopNav />
       {/* ═════════════ Desktop (Figma: Press - D, 1440 × 3184) ═════════════ */}
-      <Stage height={3192} className="hidden lg:block">
+      <Stage height={3017} className="hidden lg:block">
 
-        {/* Hero art — blurred stars appear, swoosh sweeps through and leaves */}
-        <InView className="absolute inset-x-0 top-0 h-[1260px]" threshold={0}>
-          <img src="/img/press/star-violet-r.webp" alt="" className="a-pop absolute left-[982.9px] top-[78.3px] h-[287px] w-[262px] max-w-none mix-blend-lighten" style={d(0.3)} />
-          <img src="/img/press/star-green-r.webp" alt="" className="a-grow absolute left-[-46.1px] top-[327.8px] h-[667.5px] w-[612.5px] max-w-none mix-blend-lighten" style={d(0)} />
-          <div className="a-up absolute left-[238px] top-[392px] h-[473.5px] w-[255px] overflow-hidden" style={d(0.2, { "--y": "60px" })}>
-            <img src="/img/press/pencil.webp" alt="" className="absolute left-0 top-[-30.53%] h-[130.54%] w-[147.56%] max-w-none" />
+        {/* Hero art — 2 small stars, then the big star, appear one by one; then the
+            swoosh draws in and out on repeat while the stars stay */}
+        <InView className="absolute inset-x-0 top-0 h-[1100px]" threshold={0}>
+          <img src="/img/press/star-violet-r.webp" alt="" className="a-pop absolute left-[982.9px] top-[78.3px] h-[287px] w-[262px] max-w-none mix-blend-lighten" style={d(0.15)} />
+          <img src="/img/press/star-peach-r.webp" alt="" className="a-pop absolute left-[1221px] top-[183.6px] h-[212px] w-[212.5px] max-w-none mix-blend-lighten" style={d(0.4)} />
+          <img src="/img/press/star-green-r.webp" alt="" className="a-grow absolute left-[-40.8px] top-[332.2px] h-[667.5px] w-[612.5px] max-w-none mix-blend-lighten" style={d(0.65)} />
+          <div className="a-wipe-ltr loop pointer-events-none absolute left-[-581.4px] top-[560px] h-[335.7px] w-[1226.3px]" style={d(1.4, { "--cycle": "3.6s" })}>
+            <img src="/img/press/swoosh2.svg" alt="" className="size-full max-w-none -scale-x-100" />
           </div>
-          <div className="a-wipe-ltr pointer-events-none absolute left-[-1466px] top-[430.2px] flex h-[796.9px] w-[2437.1px] items-center justify-center" style={d(0.5)}>
-            <img src="/img/press/swoosh.svg" alt="" className="h-[637px] w-[2399.7px] max-w-none shrink-0 rotate-[3.86deg]" />
-          </div>
-          <img src="/img/press/star-peach-r.webp" alt="" className="a-pop absolute left-[1221px] top-[183.6px] h-[212px] w-[212.5px] max-w-none mix-blend-lighten" style={d(0.55)} />
 
           <h1 className="a-up absolute left-8 top-[149px] w-[562px] text-[72px] font-medium leading-[0.92] tracking-[-0.06em]" style={d(0.05)}>
-            Astrocade news, facts and assets.
+            Astrocade news, facts &amp; assets.
           </h1>
           <div className="a-up absolute left-[730px] top-[417px] flex w-[562px] flex-col gap-[29px] text-[17px] leading-[1.7] text-muted" style={d(0.2)}>
             {ABOUT_COPY.map((p) => (
@@ -184,7 +182,7 @@ export default function PressPage() {
         </InView>
 
         {/* Press kit */}
-        <InView className="absolute left-10 top-[1347px] w-[1360px]">
+        <InView className="absolute left-10 top-[1196px] w-[1360px]">
           <div className="a-up flex items-center justify-between">
             <h2 className="text-[48px] font-medium leading-[0.95] tracking-[-0.06em]">Press kit</h2>
             <KitButtons />
@@ -194,12 +192,12 @@ export default function PressPage() {
           </div>
         </InView>
 
-        <InView className="absolute left-[326px] top-[1900px] w-[789px]">
+        <InView className="absolute left-[326px] top-[1749px] w-[789px]">
           <MediaContact />
         </InView>
 
         {/* Stats */}
-        <InView className="absolute left-0 top-[2180px] h-[840px] w-[1440px]" threshold={0.3}>
+        <InView className="absolute left-0 top-[2028.9px] h-[840px] w-[1440px]" threshold={0.3}>
           <StarField className="absolute inset-0" />
           <StatPill {...STATS.plays} className="a-up absolute left-[845px] top-[32px] p-10" style={d(0.5, { "--y": "24px" })} />
           <StatPill {...STATS.players} className="a-up absolute left-[148px] top-[216px] p-10" style={d(0.65, { "--y": "24px" })} />
@@ -207,7 +205,7 @@ export default function PressPage() {
           <StatPill {...STATS.available} className="a-up absolute left-[31px] top-[583px] p-10" style={d(0.95, { "--y": "24px" })} />
         </InView>
 
-        <Footer className="absolute bottom-12 left-1/2 -translate-x-1/2" />
+        <Footer className="absolute bottom-6 left-1/2 -translate-x-1/2" />
       </Stage>
 
       {/* ═════════════ Mobile / tablet ═════════════ */}
@@ -215,11 +213,11 @@ export default function PressPage() {
         <MobileNav />
         <InView className="relative px-5 pt-14" threshold={0}>
           <img src="/img/press/star-violet-r.webp" alt="" className="a-pop absolute -right-10 -top-6 w-[170px] mix-blend-lighten" style={d(0.3)} />
-          <h1 className="a-up relative text-[40px] font-medium leading-[0.92] tracking-[-0.06em] sm:text-[56px]">Astrocade news, facts and assets.</h1>
-          <div className="relative mt-10 h-[340px]">
-            <img src="/img/press/star-green-r.webp" alt="" className="a-grow absolute -left-12 -top-10 h-[400px] w-auto max-w-none mix-blend-lighten" />
-            <div className="a-up absolute left-[110px] top-0 h-[300px] w-[160px] overflow-hidden" style={d(0.2)}>
-              <img src="/img/press/pencil.webp" alt="" className="absolute left-0 top-[-30.53%] h-[130.54%] w-[147.56%] max-w-none" />
+          <h1 className="a-up relative text-[40px] font-medium leading-[0.92] tracking-[-0.06em] sm:text-[56px]">Astrocade news, facts &amp; assets.</h1>
+          <div className="relative mt-10 h-[300px]">
+            <img src="/img/press/star-green-r.webp" alt="" className="a-grow absolute -left-12 -top-10 h-[360px] w-auto max-w-none mix-blend-lighten" style={d(0.4)} />
+            <div className="a-wipe-ltr loop pointer-events-none absolute -left-[230px] top-[95px] h-[160px] w-[585px]" style={d(1.1, { "--cycle": "3.6s" })}>
+              <img src="/img/press/swoosh2.svg" alt="" className="size-full max-w-none -scale-x-100" />
             </div>
           </div>
           <div className="a-up mt-6 flex flex-col gap-6 text-[17px] leading-[1.7] text-muted" style={d(0.2)}>
