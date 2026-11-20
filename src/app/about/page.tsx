@@ -350,7 +350,7 @@ export default function AboutPage() {
             </div>
           </InView>
         </section>
-        <Footer className="pb-10" />
+        <Footer className="pb-6" />
       </div>
     </main>
   );

@@ -269,7 +269,7 @@ export default function CareersPage() {
         <section className="px-5 pb-20">
           <OpenRoles mobile />
         </section>
-        <Footer className="pb-10" />
+        <Footer className="pb-6" />
       </div>
     </main>
   );

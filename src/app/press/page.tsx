@@ -273,7 +273,7 @@ export default function PressPage() {
             </div>
           </div>
         </InView>
-        <Footer className="mt-16 pb-10" />
+        <Footer className="mt-16 pb-6" />
       </div>
     </main>
   );
