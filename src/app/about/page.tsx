@@ -236,7 +236,9 @@ export default function AboutPage() {
           <img src="/img/about/star-violet-img.webp" alt="" className="a-pop absolute left-[237px] top-[498.4px] h-[337px] w-[302px] max-w-none" style={d(0.3)} />
           <img src="/img/about/star-big-img.webp" alt="" className="a-pop absolute left-[669px] top-[289.4px] h-[542px] w-[572px] max-w-none" style={d(0.6)} />
           <img src="/img/about/star-peach-img.webp" alt="" className="a-pop absolute left-[1151px] top-[701.4px] h-[267px] w-[268px] max-w-none" style={d(0.9)} />
-          <div className="a-up absolute left-[200.3px] top-[99.4px] z-10 w-[1019px]" style={d(0)}>
+          {/* small symbol centred above the closing line */}
+          <img src="/img/home/symbol-big.svg" alt="" className="a-spin absolute left-[674.2px] top-[-27px] z-10 h-[88px] w-[91.6px]" />
+          <div className="a-up absolute left-[200.3px] top-[99.4px] z-10 w-[1019px]" style={d(0.15)}>
             <CommunityHeadline className="text-[72px]" />
           </div>
           <Footer className="absolute bottom-20 left-1/2 z-10 -translate-x-1/2" />
