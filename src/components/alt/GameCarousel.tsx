@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 
 /**
- * Alt 1 — rotating game carousel (Figma "Alt 1").
- * Cards rotate right → left. The center card is largest and plays its video;
- * only the cards at the left/right edges show their colour gradient overlay.
+ * Rotating game-card carousel (homepage hero + Alt 1).
+ * Cards rotate right → left with a springy ease-in/ease-out, the centre card
+ * lifts and plays its video, and every move gets a subtle random jitter
+ * (tilt + bob) that settles — so it feels alive rather than mechanical.
+ * Only the cards at the far left/right show their colour gradient overlay.
  */
 
 type Card = { src: string; video?: string; overlay: string };
@@ -20,49 +23,87 @@ const CARDS: Card[] = [
   { src: "/img/alt1/add58.webp", overlay: "linear-gradient(4.2deg, rgba(255,66,136,0.8) 2.43%, rgba(196,47,237,0.8) 75.94%)" },
 ];
 
-// Slot geometry from Figma (1440 canvas, 127px gaps, centred on x=720)
-const SIZE: Record<number, { w: number; h: number; r: number }> = {
-  0: { w: 252, h: 536.5, r: 20 },
-  1: { w: 200, h: 425.8, r: 15.87 },
-  2: { w: 160, h: 340.6, r: 12.7 },
-  3: { w: 160, h: 340.6, r: 12.7 },
-};
-const CENTER_X: Record<number, number> = { 0: 720, 1: 1073, 2: 1380, 3: 1667 };
-
+// Centre card is 252 × 536.5 (radius 20); others are scaled copies of it.
+const W = 252;
+const H = 536.5;
+const SCALE = [1, 200 / 252, 160 / 252, 160 / 252];
 const N = CARDS.length; // 7 → slots -3 … 3
-const START = 3; // Figma shows card index 3 (Mimic Madness) in the centre
+const START = 3; // Figma shows the Mimic Madness card in the centre
 const INTERVAL = 3200;
 
 function slotOf(i: number, step: number) {
-  let s = (((i - step) % N) + N) % N; // 0 … 6
-  if (s > 3) s -= N; // -3 … 3
+  let s = (((i - step) % N) + N) % N;
+  if (s > 3) s -= N;
   return s;
 }
 
-export default function GameCarousel({ top = 177, rowHeight = 536.5 }: { top?: number; rowHeight?: number }) {
+/** Horizontal offset of each slot's centre from the carousel centre, for a given gap. */
+function offsets(gap: number) {
+  const w = SCALE.map((k) => W * k);
+  const o1 = w[0] / 2 + gap + w[1] / 2;
+  const o2 = o1 + w[1] / 2 + gap + w[2] / 2;
+  const o3 = o2 + w[2] / 2 + gap + w[3] / 2;
+  return [0, o1, o2, o3];
+}
+
+// deterministic pseudo-random so server and client agree
+function rand(seed: number) {
+  const x = Math.sin(seed * 9301 + 49297) * 233280;
+  return x - Math.floor(x);
+}
+
+export default function GameCarousel({
+  top = 177,
+  gap = 127,
+  centerX = 720,
+  scale = 1,
+}: {
+  /** top of the 536.5px-tall row, in design px */
+  top?: number;
+  /** gap between cards (Figma: 127 on Alt 1, 72 on the homepage) */
+  gap?: number;
+  /** horizontal centre in design px */
+  centerX?: number;
+  /** overall size multiplier (mobile uses ~0.5) */
+  scale?: number;
+}) {
+  const reduce = useReducedMotion();
   const [step, setStep] = useState(START);
   const [entered, setEntered] = useState(false);
   const prevSlots = useRef<number[]>(CARDS.map((_, i) => slotOf(i, START)));
   const videos = useRef<(HTMLVideoElement | null)[]>([]);
+  const root = useRef<HTMLDivElement>(null);
+  const OFF = offsets(gap);
 
+  // start once on screen; pause rotation while off screen
   useEffect(() => {
-    const t = setTimeout(() => setEntered(true), 50);
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const id = reduce ? undefined : setInterval(() => setStep((s) => s + 1), INTERVAL);
+    const el = root.current;
+    if (!el) return;
+    let id: ReturnType<typeof setInterval> | undefined;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setEntered(true);
+        if (!reduce && !id) id = setInterval(() => setStep((s) => s + 1), INTERVAL);
+      } else if (id) {
+        clearInterval(id);
+        id = undefined;
+      }
+    });
+    io.observe(el);
     return () => {
-      clearTimeout(t);
+      io.disconnect();
       if (id) clearInterval(id);
     };
-  }, []);
+  }, [reduce]);
 
   const slots = CARDS.map((_, i) => slotOf(i, step));
 
-  // Only the centre card plays
+  // Only the centre card plays; it restarts as it arrives
   useEffect(() => {
     videos.current.forEach((v, i) => {
       if (!v) return;
       if (slots[i] === 0) {
-        if (prevSlots.current[i] !== 0) v.currentTime = 0; // start fresh as it reaches the centre
+        if (prevSlots.current[i] !== 0) v.currentTime = 0;
         v.play().catch(() => {});
       } else v.pause();
     });
@@ -70,32 +111,57 @@ export default function GameCarousel({ top = 177, rowHeight = 536.5 }: { top?: n
   });
 
   return (
-    <div className="absolute inset-x-0" style={{ top, height: rowHeight }}>
+    <div ref={root} className="pointer-events-none absolute inset-x-0" style={{ top, height: H * scale }}>
       {CARDS.map((c, i) => {
         const s = slots[i];
-        const size = SIZE[Math.abs(s)];
-        const cx = s >= 0 ? CENTER_X[s] : 1440 - CENTER_X[-s];
-        // a card wrapping from far left to far right jumps instantly (it's off-screen)
-        const wrapped = Math.abs(s - prevSlots.current[i]) > 1;
-        const isEdge = Math.abs(s) >= 2;
-        // entrance: cards slide in from the right, one after another
-        const order = 3 - s; // right-most first
+        const a = Math.abs(s);
+        const k = SCALE[a] * scale;
+        const x = centerX + Math.sign(s) * OFF[a] * scale - W / 2;
+        const wrapped = Math.abs(s - prevSlots.current[i]) > 1; // jumped across the back, off-screen
+        const isEdge = a >= 2;
+        // per-move jitter: a small random tilt + bob that springs back to rest
+        const r = rand(i * 31 + step * 7);
+        const tilt = (r - 0.5) * (a === 0 ? 3 : 5);
+        const bob = (rand(i * 17 + step * 13) - 0.5) * 14 * scale;
+        const order = 3 - s; // entrance: right-most card first
+
         return (
-          <div
+          <motion.div
             key={i}
-            className="absolute top-1/2 overflow-hidden bg-[#354ea7]"
+            className="absolute left-0 top-1/2 origin-center overflow-hidden bg-[#354ea7]"
             style={{
-              left: cx - size.w / 2,
-              width: size.w,
-              height: size.h,
-              borderRadius: size.r,
-              translate: entered ? "0 -50%" : "160px -50%",
-              opacity: entered ? 1 : 0,
-              zIndex: 10 - Math.abs(s),
-              transition: wrapped
-                ? "none"
-                : `left 0.9s cubic-bezier(0.65,0,0.35,1), width 0.9s cubic-bezier(0.65,0,0.35,1), height 0.9s cubic-bezier(0.65,0,0.35,1), border-radius 0.9s, translate 0.9s cubic-bezier(0.16,1,0.3,1) ${order * 0.08}s, opacity 0.6s ease ${order * 0.08}s`,
+              width: W,
+              height: H,
+              marginTop: -H / 2,
+              borderRadius: 20,
+              zIndex: 10 - a,
+              boxShadow: a === 0 ? "0 30px 60px -20px rgba(0,0,0,0.6)" : "none",
             }}
+            initial={{ x: x + 160 * scale, scale: k, opacity: 0, rotate: 0, y: 0 }}
+            animate={
+              !entered
+                ? { x: x + 160 * scale, scale: k, opacity: 0 }
+                : reduce
+                  ? { x, scale: k, opacity: 1, rotate: 0, y: 0 }
+                  : {
+                      x,
+                      scale: a === 0 ? [k * 0.97, k * 1.03, k] : k,
+                      opacity: 1,
+                      rotate: [tilt, -tilt * 0.4, 0],
+                      y: [bob, -bob * 0.5, 0],
+                    }
+            }
+            transition={
+              wrapped
+                ? { duration: 0 }
+                : {
+                    x: { type: "spring", stiffness: 70, damping: 13, mass: 1, delay: entered && step === START ? order * 0.07 : 0 },
+                    scale: { duration: 0.9, ease: [0.34, 1.56, 0.64, 1] },
+                    rotate: { duration: 1.1, ease: "easeInOut", times: [0, 0.55, 1] },
+                    y: { duration: 1.1, ease: "easeInOut", times: [0, 0.55, 1] },
+                    opacity: { duration: 0.6, delay: entered && step === START ? order * 0.07 : 0 },
+                  }
+            }
           >
             {c.video ? (
               <video
@@ -118,7 +184,7 @@ export default function GameCarousel({ top = 177, rowHeight = 536.5 }: { top?: n
               className="absolute inset-0 transition-opacity duration-700"
               style={{ backgroundImage: c.overlay, opacity: isEdge ? 1 : 0 }}
             />
-          </div>
+          </motion.div>
         );
       })}
     </div>

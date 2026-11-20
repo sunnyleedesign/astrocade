@@ -1,7 +1,7 @@
 import Stage from "@/components/Stage";
 import InView from "@/components/InView";
 import InlineSvg from "@/components/InlineSvg";
-import LazyVideo from "@/components/LazyVideo";
+import GameCarousel from "@/components/alt/GameCarousel";
 import Footer from "@/components/Footer";
 import PlayCreateShare from "@/components/PlayCreateShare";
 import { DesktopNav, MobileNav } from "@/components/Nav";
@@ -21,19 +21,9 @@ export default function HomePage() {
   return (
     <main>
       <DesktopNav />
-      {/* ═════════════ Desktop (Figma: Homepage, 1440 × 3619) ═════════════ */}
-      <Stage height={3551} className="hidden lg:block">
+      {/* ═════════════ Desktop (Figma: Updated Website / Homepage, 1440 × 3539) ═════════════ */}
+      <Stage height={3539} className="hidden lg:block">
 
-        {/* Hero video + fade overlay */}
-        <InView className="absolute left-0 top-[697px] h-[713px] w-[1440px]" threshold={0}>
-          <div className="a-fade size-full" style={d(0.5)}>
-            <LazyVideo
-              src="/video/landing-hero.mp4"
-              poster="/video/landing-hero-poster.jpg"
-              className="size-full object-cover"
-            />
-          </div>
-        </InView>
         <div
           className="pointer-events-none absolute left-0 top-0 h-[1280px] w-[1440px]"
           style={{
@@ -41,6 +31,11 @@ export default function HomePage() {
               "linear-gradient(180deg, #040e22 35%, rgba(4,14,34,0) 55%, rgba(4,14,34,0) 85%, #040e22 98%)",
           }}
         />
+
+        {/* Hero game-card carousel (replaces the hero video) */}
+        <div className="absolute inset-x-0 top-0 z-10 h-[1300px] overflow-x-clip">
+          <GameCarousel top={696} gap={72} />
+        </div>
 
         {/* Hero copy */}
         <InView className="absolute left-[135.9px] top-[231px] flex w-[1168px] flex-col items-center gap-10 text-center" threshold={0}>
@@ -58,7 +53,7 @@ export default function HomePage() {
         </InView>
 
         {/* Stars + stats: symbol spins in, 5 stars pop one by one, stats slide up */}
-        <InView className="absolute left-0 top-[1530px] h-[740px] w-[1440px]" threshold={0.35}>
+        <InView className="absolute left-0 top-[1384px] h-[740px] w-[1440px]" threshold={0.35}>
           <InlineSvg
             src="img/home/stars.svg"
             className="svg-anim absolute left-[351.5px] top-[14px] h-[696.5px] w-[757px]"
@@ -69,9 +64,9 @@ export default function HomePage() {
         </InView>
         {/* each stat has its own trigger: it slides up when it reaches the screen */}
         {([
-          [STATS[1], 921.5, 1645.4],
-          [STATS[0], 97, 1795],
-          [STATS[2], 765.5, 2074],
+          [STATS[1], 925.5, 1498.7],
+          [STATS[0], 99.5, 1648.3],
+          [STATS[2], 767.5, 1927.3],
         ] as const).map(([st, left, top]) => (
           <InView key={st.label} className="absolute" style={{ left, top }} threshold={0.9}>
             <StatPill {...st} className="a-up px-10 py-6" style={{ ...d(0.15), ["--y" as string]: "40px" }} />
@@ -79,13 +74,13 @@ export default function HomePage() {
         ))}
 
         {/* Backed by */}
-        <InView className="absolute left-[207px] top-[2374px] flex w-[1027px] flex-col items-center gap-10">
+        <InView className="absolute left-[207px] top-[2269.4px] flex w-[1027px] flex-col items-center gap-10">
           <p className="a-up text-[32px] font-medium leading-[1.12] tracking-[-0.025em] text-blue">Backed by</p>
           <LogoRow />
         </InView>
 
         {/* Ending: headline + Play / Create / Share */}
-        <section className="absolute left-0 top-[2706px] h-[845px] w-[1440px] overflow-x-clip">
+        <section className="absolute left-0 top-[2590px] h-[949px] w-[1440px] overflow-x-clip">
           <InView className="absolute left-[146.5px] top-0 z-20 w-[1143px] text-center text-[72px] font-medium leading-[0.92] tracking-[-0.06em]">
             <h2>
               <span className="a-up block">and the people who built the</span>
@@ -96,11 +91,11 @@ export default function HomePage() {
           </InView>
           <PlayCreateShare
             swooshSrc="/img/home/swoosh.svg"
-            swooshBox={{ left: 207, top: 11, width: 3546, height: 721 }}
+            swooshBox={{ left: 207, top: 51.5, width: 3546, height: 721 }}
             swooshImg={{ width: 3521.4, height: 471.5 }}
-            tagTop={360}
+            tagTop={401}
           />
-          <Footer className="absolute bottom-12 left-1/2 z-20 -translate-x-1/2" />
+          <Footer className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2" />
         </section>
       </Stage>
 
@@ -122,19 +117,12 @@ export default function HomePage() {
           </p>
         </InView>
 
-        <div className="relative mt-[86px] flex h-[320px] justify-center">
-          <LazyVideo
-            src="/video/landing-hero.mp4"
-            poster="/video/landing-hero-poster.jpg"
-            className="h-[320px] w-[646.6px] max-w-none shrink-0 object-cover"
-          />
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{ backgroundImage: "linear-gradient(180deg, #040e22 0%, rgba(4,14,34,0) 18%, rgba(4,14,34,0) 75%, #040e22 100%)" }}
-          />
+        {/* hero game-card carousel (Figma mobile: 0.5× scale, 48px gaps) */}
+        <div className="relative mx-auto mt-[71px] h-[268px] w-[375px] overflow-x-clip">
+          <GameCarousel top={0} gap={96} centerX={187.5} scale={0.4995} />
         </div>
 
-        <InView className="relative mx-auto mt-[84px] w-[335px]" threshold={0.2}>
+        <InView className="relative mx-auto mt-[71px] w-[335px]" threshold={0.2}>
           <div className="relative left-1/2 h-[348px] w-[378.5px] -translate-x-1/2">
             <InlineSvg
               src="img/home/stars.svg"
