@@ -96,7 +96,7 @@ function KitButtons({ mobile = false }: { mobile?: boolean }) {
       >
         Download brand assets
       </a>
-      <a href={KIT_LINKS.logo} className="grad-outline flex h-[69px] items-center justify-center rounded-full px-8 text-white">
+      <a href={KIT_LINKS.logo} className="grad-outline flex h-[69px] items-center justify-center rounded-full px-8 text-white hover:!text-dark-navy focus-visible:!text-dark-navy">
         Download logo kit
       </a>
     </div>
@@ -174,7 +174,7 @@ export default function PressPage() {
           </div>
           <Link
             href="/about"
-            className="grad-outline a-up absolute left-[732px] top-[887px] flex h-[69px] items-center rounded-full px-8 text-[18px] font-medium tracking-[-0.01em]"
+            className="grad-outline a-up absolute left-[732px] top-[887px] flex h-[69px] items-center rounded-full px-8 text-[18px] font-medium tracking-[-0.01em] hover:!text-dark-navy focus-visible:!text-dark-navy"
             style={d(0.3)}
           >
             Read more about us here
@@ -225,7 +225,7 @@ export default function PressPage() {
               <p key={p.slice(0, 16)}>{p}</p>
             ))}
           </div>
-          <Link href="/about" className="grad-outline a-up mt-8 inline-flex h-[60px] items-center rounded-full px-7 text-[16px] font-medium" style={d(0.3)}>
+          <Link href="/about" className="grad-outline a-up mt-8 inline-flex h-[60px] items-center rounded-full px-7 text-[16px] font-medium hover:!text-dark-navy focus-visible:!text-dark-navy" style={d(0.3)}>
             Read more about us here
           </Link>
         </InView>
