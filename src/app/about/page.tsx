@@ -46,7 +46,7 @@ function Investors({ mobile = false }: { mobile?: boolean }) {
     <img src={src} alt={alt} className="shrink-0 object-cover" style={{ width: w * s, height: h * s }} />
   );
   return (
-    <div className={`flex flex-wrap items-center justify-center ${mobile ? "gap-4" : "w-[909px] gap-6"}`}>
+    <div className={`flex items-center justify-center ${mobile ? "flex-wrap gap-4" : "w-[909px] flex-nowrap gap-6"}`}>
       {img("/img/shared/sequoia.png", 175.7, 23.2, "Sequoia")}
       {dot}
       {mask("/img/about/peakxv-mask.png", 138.3, 48, "Peak XV")}
@@ -78,14 +78,9 @@ function Angels({ cols = 4 }: { cols?: number }) {
 
 function CommunityHeadline({ className = "" }: { className?: string }) {
   return (
-    <h2 className={`font-medium leading-[0.92] tracking-[-0.06em] ${className}`}>
-      and <span className="text-violet">a community of funds, founders</span> and{" "}
-      <span className="text-violet">operators</span> who’ve believed in{" "}
-      <span className="grad-text" style={{ backgroundImage: "linear-gradient(85.55deg, #ff4288 0.69%, #c42fed 75.56%)" }}>
-        Astrocade
-      </span>{" "}
-      <br className="hidden lg:block" />
-      from day one.
+    <h2 className={`text-center font-medium leading-[0.92] tracking-[-0.06em] ${className}`}>
+      ...and a community of funds, founders and operators <br className="hidden lg:block" />
+      <span className="text-violet">who’ve believed in Astrocade from day one.</span>
     </h2>
   );
 }
@@ -98,7 +93,7 @@ export default function AboutPage() {
       <div data-nav-light className="absolute inset-x-0 top-0 hidden h-[calc(939px*var(--vs))] bg-cloud lg:block" />
 
       {/* ═════════════ Desktop (Figma: About, 1440 × 6059) ═════════════ */}
-      <Stage height={5827} className="hidden lg:block" innerClassName="overflow-hidden">
+      <Stage height={5785} className="hidden lg:block" innerClassName="overflow-hidden">
         {/* ── Hero ── star spins + zooms in, then tiles grow out of their shared corner (reference video) */}
         <InView className="absolute left-0 top-0 h-[939px] w-[1440px] overflow-hidden bg-cloud" threshold={0}>
           <div className="absolute left-[-145.6px] top-[42.1px] flex h-[1696px] w-[1607.5px] items-center justify-center">
@@ -183,13 +178,13 @@ export default function AboutPage() {
 
         {/* ── Why we win ── star grows outward, art 1 then art 2 slide up */}
         <InView className="absolute left-0 top-[2810px] h-[620px] w-[1440px]" threshold={0.3}>
-          <div className="a-grow absolute left-[96px] top-[79.2px] h-[498.6px] w-[449px]" style={d(0)}>
+          <div className="a-grow absolute left-[107px] top-[66.4px] h-[498.6px] w-[449px]" style={d(0)}>
             <img src="/img/about/art4-star.svg" alt="" className="size-full -scale-x-100" />
           </div>
-          <div className="a-up absolute left-[-178px] top-[170px] h-[315px] w-[548px] overflow-hidden" style={d(0.35, { "--y": "60px" })}>
+          <div className="a-up absolute left-[-167px] top-[157.4px] h-[315px] w-[548px] overflow-hidden" style={d(0.35, { "--y": "60px" })}>
             <img src="/img/about/art-sprite.webp" alt="" className="absolute left-0 top-0 h-[158.93%] w-[137.03%] max-w-none" />
           </div>
-          <div className="a-up absolute left-[370px] top-[135px] h-[186px] w-[321px] overflow-hidden" style={d(0.7, { "--y": "60px" })}>
+          <div className="a-up absolute left-[381px] top-[122.4px] h-[186px] w-[321px] overflow-hidden" style={d(0.7, { "--y": "60px" })}>
             <img src="/img/about/art-sprite.webp" alt="" className="absolute left-[-133.96%] top-[-169.35%] h-[269.15%] w-[233.93%] max-w-none" />
           </div>
           <h2
@@ -204,6 +199,9 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Leadership ── */}
+        <InView className="absolute left-0 top-[3453px] w-[1440px] text-center">
+          <h2 className="a-up text-[48px] font-medium leading-[0.95] tracking-[-0.06em]">Meet The Founders</h2>
+        </InView>
         <InView className="absolute left-0 top-[3510px] h-[600px] w-[1440px]" threshold={0.25}>
           {LEADERS.map((l, i) => (
             <div
@@ -217,7 +215,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Investors ── */}
-        <InView className="absolute left-[207px] top-[4216.7px] flex w-[1027px] flex-col items-center gap-10">
+        <InView className="absolute left-[207px] top-[4167.8px] flex w-[1027px] flex-col items-center gap-10">
           <p className="a-up text-[32px] font-medium leading-[1.12] tracking-[-0.025em] text-blue">Investors</p>
           <div className="a-up" style={d(0.15, { "--y": "20px" })}>
             <Investors />
@@ -225,7 +223,7 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Angels ── */}
-        <InView className="absolute left-8 top-[4565.4px] flex w-[1376px] flex-col items-center gap-10">
+        <InView className="absolute left-8 top-[4403.1px] flex w-[1376px] flex-col items-center gap-10">
           <p className="a-up text-[32px] font-medium leading-[1.12] tracking-[-0.025em] text-neon">Angels</p>
           <div className="w-[1142px]">
             <Angels />
@@ -233,24 +231,24 @@ export default function AboutPage() {
         </InView>
 
         {/* ── Community ── stars appear one by one */}
-        <InView className="absolute left-0 top-[4910px] h-[917px] w-[1440px]" threshold={0.2}>
-          <div className="a-pop absolute left-[606.5px] top-[429.4px] flex h-[319.7px] w-[309px] items-center justify-center" style={d(0.3)}>
+        <InView className="absolute left-0 top-[4803.6px] h-[981.4px] w-[1440px]" threshold={0.2}>
+          <div className="a-pop absolute left-[294.5px] top-[515.4px] flex h-[319.7px] w-[309px] items-center justify-center" style={d(0.3)}>
             <div className="relative h-[268.6px] w-[254.3px] shrink-0 rotate-[13.24deg]">
               <img src="/img/about/star-a.svg" alt="" className="absolute inset-[-13.68%_-14.45%] max-w-none" />
             </div>
           </div>
-          <div className="a-pop absolute left-[907px] top-[64.4px] h-[526px] w-[562px]" style={d(0.1)}>
-            <img src="/img/about/star-b.svg" alt="" className="absolute inset-[-9.15%_-8.57%] max-w-none" />
+          <div className="a-pop absolute left-[698px] top-[328.4px] h-[445px] w-[475px]" style={d(0.1)}>
+            <img src="/img/about/star-b2.svg" alt="" className="absolute inset-[-10.82%_-10.14%] max-w-none" />
           </div>
-          <div className="a-pop absolute left-[1173.3px] top-[626.4px] flex h-[232.2px] w-[220px] items-center justify-center" style={d(0.5)}>
+          <div className="a-pop absolute left-[1205.3px] top-[719.4px] flex h-[232.2px] w-[220px] items-center justify-center" style={d(0.5)}>
             <div className="relative h-[201.2px] w-[185.9px] shrink-0 rotate-[10.68deg]">
               <img src="/img/about/star-c.svg" alt="" className="absolute inset-[-20.76%_-22.46%] max-w-none" />
             </div>
           </div>
-          <div className="a-up absolute left-10 top-[99.4px] w-[1019px]" style={d(0)}>
+          <div className="a-up absolute left-[200.3px] top-[99.4px] z-10 w-[1019px]" style={d(0)}>
             <CommunityHeadline className="text-[72px]" />
           </div>
-          <Footer className="absolute bottom-12 left-1/2 -translate-x-1/2" />
+          <Footer className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2" />
         </InView>
       </Stage>
 
