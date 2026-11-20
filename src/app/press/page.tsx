@@ -255,9 +255,22 @@ export default function PressPage() {
             </div>
           </div>
           <div className="mt-2 flex flex-col gap-4">
-            {[STATS.plays, STATS.players, STATS.hq, STATS.available].map((s, i) => (
+            {[STATS.plays, STATS.players, STATS.hq].map((s, i) => (
               <StatPill key={s.label} {...s} size="sm" className="a-up w-full !gap-2 !px-4 [&>span:last-child]:!text-[26px]" style={d(0.4 + i * 0.15, { "--y": "20px" })} />
             ))}
+            {/* long value stacks under its label (Figma mobile) */}
+            <div
+              className="a-up flex w-full flex-col items-center justify-center gap-3 rounded-[60px] bg-white p-6 text-center drop-shadow-[0_-3px_13.5px_rgba(0,0,0,0.15)]"
+              style={d(0.85, { "--y": "20px" })}
+            >
+              <span className="text-[17px] leading-[1.55] text-dark-navy">{STATS.available.label}</span>
+              <span
+                className="grad-text w-[190px] pb-1 text-[32px] font-semibold leading-[0.95] tracking-[-0.04em]"
+                style={{ backgroundImage: "linear-gradient(to left, #2be1a2, #5578ff)" }}
+              >
+                {STATS.available.value}
+              </span>
+            </div>
           </div>
         </InView>
         <Footer className="mt-16 pb-10" />
