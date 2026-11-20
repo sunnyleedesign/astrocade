@@ -164,14 +164,9 @@ export default function CareersPage() {
 
         {/* Benefits */}
         <InView className="absolute left-0 top-[3550px] h-[1000px] w-[1440px]" threshold={0.1}>
-          <div className="a-pop absolute left-[1073px] top-[51px] h-[306px] w-[326px]" style={d(0.1)}>
-            <img src="/img/career/star-a.svg" alt="" className="absolute inset-[-14.69%_-13.79%] max-w-none" />
-          </div>
-          <div className="a-pop absolute left-[146.2px] top-[649px] flex h-[262.7px] w-[249px] items-center justify-center" style={d(0.4)}>
-            <div className="relative h-[227.6px] w-[210.5px] shrink-0 rotate-[10.68deg]">
-              <img src="/img/career/star-b.svg" alt="" className="absolute inset-[-17.13%_-18.53%] max-w-none" />
-            </div>
-          </div>
+          {/* supplied star images */}
+          <img src="/img/career/star-big-img.webp" alt="" className="a-pop absolute left-[1028px] top-[6px] h-[396px] w-[412px] max-w-none" style={d(0.1)} />
+          <img src="/img/career/star-peach-img.webp" alt="" className="a-pop absolute left-[127.2px] top-[637.9px] h-[285px] w-[287px] max-w-none" style={d(0.4)} />
           <p className="a-up absolute left-0 top-[257px] w-[1440px] text-center text-[32px] font-medium leading-[1.12] tracking-[-0.025em]">Benefits</p>
           <div className="absolute left-0 top-[373px] w-[1440px]">
             <Benefits />
@@ -266,7 +261,7 @@ export default function CareersPage() {
         </section>
 
         <InView className="relative px-5 py-24" threshold={0.1}>
-          <img src="/img/career/star-a.svg" alt="" className="a-pop absolute -right-10 top-4 w-[160px]" />
+          <img src="/img/career/star-big-img.webp" alt="" className="a-pop absolute -right-10 top-4 w-[170px]" />
           <p className="a-up mb-10 text-center text-[24px] font-medium">Benefits</p>
           <Benefits mobile />
         </InView>

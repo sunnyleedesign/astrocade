@@ -493,8 +493,7 @@ body {
 }
 
 /* ───────────── Outlined CTA with gradient border ─────────────
-   --fill = the button's own background (page colour); on hover the
-   gradient fills the whole pill like the primary CTA. */
+   --fill = the button's own background (page colour). */
 @property --fill {
   syntax: "<color>";
   inherits: false;
@@ -511,8 +510,14 @@ body {
 .grad-outline.on-light {
   --fill: #f0f1ea;
 }
+/* hover: solid fill, white text — teal on dark backgrounds, navy on light */
 .grad-outline:hover,
 .grad-outline:focus-visible {
-  --fill: rgba(4, 14, 34, 0);
-  color: #040e22;
+  --fill: #2be1a2;
+  color: #fff;
+}
+.grad-outline.on-light:hover,
+.grad-outline.on-light:focus-visible {
+  --fill: #040e22;
+  color: #fff;
 }

@@ -222,7 +222,7 @@ export function Benefits({ mobile = false }: { mobile?: boolean }) {
               refs.current[i] = el;
             }}
             data-i={i}
-            className={`grad-text px-2 ${i === BENEFITS.length - 1 ? (mobile ? "" : "max-w-[721px]") : mobile ? "" : "whitespace-nowrap"}`}
+            className={`grad-text px-2 ${i === BENEFITS.length - 1 ? (mobile ? "" : "max-w-[760px]") : mobile ? "" : "whitespace-nowrap"}`}
             style={{
               // layers: white (final) · gradient · faint white base
               backgroundImage: `linear-gradient(#fff, #fff), ${b.grad}, linear-gradient(#fff, #fff)`,
