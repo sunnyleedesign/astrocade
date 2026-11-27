@@ -220,9 +220,9 @@ export function Founders() {
       {FOUNDERS.map((f, i) => {
         const isOpen = open === i;
         return (
-          <div key={f.name} className="a-up w-[329px]" style={{ ["--d" as string]: `${i * 0.12}s` }}>
-            <div className="group relative h-[411px] overflow-hidden rounded-[20px] bg-navy">
-              <img src={f.img} alt={f.name} className="absolute max-w-none transition-transform duration-700 ease-[var(--ease-out-expo)] group-hover:scale-[1.04]" style={f.imgStyle} />
+          <div key={f.name} className="group a-up w-[329px]" style={{ ["--d" as string]: `${i * 0.12}s` }}>
+            <div className="relative h-[411px] overflow-hidden rounded-[20px] bg-navy">
+              <img src={f.img} alt={f.name} className="absolute max-w-none transition-transform duration-700 ease-[var(--ease-out-expo)] group-has-[button:hover]:scale-[1.04]" style={f.imgStyle} />
             </div>
             <div className="mt-6 flex items-center justify-between">
               <div className="flex flex-col text-white">
