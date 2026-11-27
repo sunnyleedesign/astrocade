@@ -169,9 +169,8 @@ export default function Home() {
 
         {/* ── Footer ── */}
         <footer className="absolute left-0 h-[283px] w-[1440px]" style={{ top: Y(7140) }}>
-          <Link href="/" aria-label="Astrocade home" className="absolute left-10 top-10 block h-12 w-[271px]">
-            <img src="/img/home/footer-mark.svg" alt="" className="absolute left-0 top-0 h-12 w-[50px]" />
-            <img src="/img/home/footer-wordmark.svg" alt="Astrocade" className="absolute left-[66.4px] top-[10.4px] h-[29.8px] w-[204.7px]" />
+          <Link href="/" aria-label="Astrocade home" className="absolute left-10 top-10 block h-12 w-[50px] transition-opacity hover:opacity-80">
+            <img src="/img/home/footer-mark.svg" alt="Astrocade" className="size-full" />
           </Link>
           <nav className="absolute left-[730px] top-12 flex gap-5 text-[15px] font-medium">
             {[

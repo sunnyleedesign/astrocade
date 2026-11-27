@@ -8,8 +8,9 @@ import { useEffect, useRef } from "react";
  *    tiles tilt toward the viewer (and grow) the further they sit from the
  *    centre, which gives the skewed look
  *  - the wall drifts on its own; moving the cursor pans it to reveal more
- *  - scrolling pushes the tiles out toward the left/right edges while the
- *    headline + body fade in; scrolling further sends them fully off-screen
+ *  - scrolling flies the camera forward: tiles stream outward from the centre
+ *    in every direction (growing as they go), opening an empty middle around the
+ *    headline + body (which rise in on load); scrolling further sends them off-screen
  */
 
 const GAMES = [
@@ -31,13 +32,12 @@ const DRIFT_X = -26; // px/s auto drift
 const DRIFT_Y = -9;
 const PERSPECTIVE = 1100;
 
+const smooth = (t: number) => t * t * (3 - 2 * t);
 const wrap = (v: number, size: number) => ((((v + size / 2) % size) + size) % size) - size / 2;
 
 export default function HomeHero() {
   const section = useRef<HTMLElement>(null);
   const field = useRef<HTMLDivElement>(null);
-  const copy = useRef<HTMLDivElement>(null);
-  const glow = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const sec = section.current!;
@@ -82,19 +82,31 @@ export default function HomeHero() {
         // cursor pans the wall: look toward where the pointer is
         const panX = -cx * 380 * (1 - p);
         const panY = -cy * 240 * (1 - p);
-        const push = Math.pow(p, 1.3) * (hw + 400) * 1.15;
+        // scroll: zoom the wall + push every tile radially out of a central oval
+        //   phase 1 (p 0 → 0.5): open an empty oval, tiles frame the edges
+        //   phase 2 (p 0.5 → 1): tiles fly off past the edges
+        const open = smooth(Math.min(1, p / 0.5));
+        const exit = Math.pow(Math.max(0, (p - 0.5) / 0.5), 1.6);
+        const zoom = 1 + 0.08 * open + 0.8 * exit;
+        // a small hole from the start keeps the headline readable
+        const pushN = 0.16 + 0.3 * open + 1.6 * exit; // in viewport-normalised units
+        const lift = 30 * open + 160 * exit; // tiles come toward the camera as they leave
         const fade = 1 - Math.max(0, (p - 0.72) / 0.28);
 
         tiles.forEach((t, i) => {
           let x = wrap(base[i].x + ox + panX, WW);
-          const y = wrap(base[i].y + oy + panY, WH);
-          // scroll: split away from the centre line
-          const side = x < 0 ? -1 : 1;
-          x += side * push * (1 + Math.abs(x) / hw * 0.35);
+          let y = wrap(base[i].y + oy + panY, WH);
+          // scroll: stream outward from the centre
+          {
+            const ux = x / hw, uy = y / hh;
+            const len = Math.hypot(ux, uy) || 1e-3;
+            x = (ux * zoom + (ux / len) * pushN) * hw;
+            y = (uy * zoom + (uy / len) * pushN) * hh;
+          }
           // concave wall: tilt + bring forward with distance from centre
           const nx = Math.max(-1.8, Math.min(1.8, x / hw));
           const ny = Math.max(-1.8, Math.min(1.8, y / hh));
-          const z = Math.min(nx * nx + ny * ny, 3) * 85;
+          const z = Math.min(nx * nx + ny * ny, 3) * 85 + lift;
           const ry = -nx * 30;
           const rx = ny * 22;
           t.style.transform =
@@ -105,13 +117,6 @@ export default function HomeHero() {
         });
       }
 
-      // copy + navy glow fade in during the first part of the scroll
-      const k = Math.min(1, Math.max(0, (p - 0.12) / 0.3));
-      if (copy.current) {
-        copy.current.style.opacity = String(k);
-        copy.current.style.translate = `0 ${(1 - k) * 30}px`;
-      }
-      if (glow.current) glow.current.style.opacity = String(k);
       raf = requestAnimationFrame(frame);
     };
     raf = requestAnimationFrame(frame);
@@ -162,23 +167,23 @@ export default function HomeHero() {
 
         {/* navy glow + copy (Figma Ellipse 1 + Content) */}
         <img
-          ref={glow}
           src="/img/hero-glow.svg"
           alt=""
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 w-[1655px] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-0"
+          className="pointer-events-none absolute left-1/2 top-1/2 w-[1655px] max-w-none -translate-x-1/2 -translate-y-1/2 load-fade"
         />
         <div
-          ref={copy}
-          className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-6 px-5 text-center opacity-0 drop-shadow-[0_4px_42px_#040e22] lg:gap-10"
+          className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-6 px-5 text-center drop-shadow-[0_4px_42px_#040e22] lg:gap-10"
         >
           <h1 className="text-[48px] font-medium leading-[0.95] tracking-[-0.035em] sm:text-[64px] lg:text-[88px]">
-            Where the Internet
-            <span className="grad-text -mb-[0.2em] block pb-[0.2em]" style={{ backgroundImage: "linear-gradient(253.26deg, #c42fed 0.94%, #ff4288 98.94%)" }}>
-              comes to play.
+            <span className="load-rise block" style={{ ["--d" as string]: "0.25s" }}>Where the Internet</span>
+            <span className="load-rise block" style={{ ["--d" as string]: "0.4s" }}>
+              <span className="grad-text -mb-[0.2em] block pb-[0.2em]" style={{ backgroundImage: "linear-gradient(253.26deg, #c42fed 0.94%, #ff4288 98.94%)" }}>
+                comes to play.
+              </span>
             </span>
           </h1>
-          <p className="max-w-[520px] text-[17px] leading-[1.55] text-white lg:text-[20px]">
+          <p className="load-rise max-w-[520px] text-[17px] leading-[1.55] text-white lg:text-[20px]" style={{ ["--d" as string]: "0.6s" }}>
             Astrocade is where anyone can create, share, and play games and interactive content
           </p>
         </div>
