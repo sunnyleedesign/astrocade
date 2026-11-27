@@ -106,14 +106,14 @@ h1, h2, h3 { text-wrap: balance; }
   70% { opacity: 1; scale: 1; }
   79%, 100% { opacity: 1; scale: 0; }
 }
-/* Our Story outline: lines draw in one by one */
-.story-line { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
-.is-in .story-line { animation: line-draw 1.8s cubic-bezier(0.55, 0, 0.25, 1) var(--d, 0s) both; }
-@keyframes line-draw { to { stroke-dashoffset: 0; } }
+/* Our Story star outline: lines ripple outward from the innermost one, once */
+.story-line { opacity: 0; }
+.is-in .story-line { animation: line-ripple 1.6s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both; }
+@keyframes line-ripple { from { opacity: 0; translate: var(--tx, 0) var(--ty, 0); } 30% { opacity: 1; } to { opacity: 1; translate: 0 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   .a-up, .a-pop, .a-fade, .grid-grow { opacity: 1 !important; animation: none !important; }
-  .story-line { stroke-dashoffset: 0 !important; animation: none !important; }
+  .story-line { opacity: 1 !important; animation: none !important; }
   .load-rise, .load-fade { animation: none !important; }
   .trim-path { animation: none !important; stroke-dasharray: none !important; }
 }
