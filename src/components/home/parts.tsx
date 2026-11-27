@@ -3,6 +3,10 @@
 import Swoosh from "./Swoosh";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
+/** Glue the last two words together so a paragraph never ends on a lone word
+ *  (backs up `text-wrap: pretty`, which not every browser supports yet). */
+const noOrphan = (text: string) => text.replace(/\s+(\S+)\s*$/, "\u00a0$1");
+
 /* ───────────── Stat number: ticks up while its gradient sweeps in ───────────── */
 export function StatTicker({ value, suffix, grad, delay = 0, className = "" }: { value: number; suffix: string; grad: string; delay?: number; className?: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
@@ -189,7 +193,7 @@ export function WhyNow() {
                     style={{ opacity: open ? 1 : 0, translate: open ? "0 0" : "0 16px", transitionDelay: open ? "200ms" : "0ms" }}
                   >
                     {s.body.map((p) => (
-                      <p key={p.slice(0, 16)}>{p}</p>
+                      <p key={p.slice(0, 16)}>{noOrphan(p)}</p>
                     ))}
                   </div>
                 </div>
@@ -241,7 +245,7 @@ export function Founders() {
             <div className="grid transition-[grid-template-rows] duration-500 ease-[var(--ease-out-expo)]" style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}>
               <div className="overflow-hidden">
                 <p className="pt-8 text-[17px] leading-[1.45] text-muted transition-opacity duration-500" style={{ opacity: isOpen ? 1 : 0 }}>
-                  {f.bio}
+                  {noOrphan(f.bio)}
                 </p>
               </div>
             </div>

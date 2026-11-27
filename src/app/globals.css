@@ -67,6 +67,9 @@ body {
 .stage { position: relative; width: 100%; max-width: 1440px; margin-inline: auto; overflow-x: clip; }
 .stage > .stage-inner { position: absolute; left: 0; top: 0; width: 1440px; transform-origin: 0 0; transform: scale(var(--vs)); }
 html { overflow-x: clip; }
+/* no lone last word on a line in body copy; balanced headings */
+p { text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }
 
 /* ───────────── Scroll-triggered animations (InView adds .is-in) ───────────── */
 .a-up, .a-pop, .a-fade { opacity: 0; }
@@ -103,11 +106,14 @@ html { overflow-x: clip; }
   70% { opacity: 1; scale: 1; }
   79%, 100% { opacity: 1; scale: 0; }
 }
-.story-lines-in { opacity: 0; }
-.is-in .story-lines-in { animation: a-fade 1.4s ease 0.2s both; }
+/* Our Story outline: lines draw in one by one */
+.story-line { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.is-in .story-line { animation: line-draw 1.8s cubic-bezier(0.55, 0, 0.25, 1) var(--d, 0s) both; }
+@keyframes line-draw { to { stroke-dashoffset: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .a-up, .a-pop, .a-fade, .grid-grow, .story-lines-in { opacity: 1 !important; animation: none !important; }
+  .a-up, .a-pop, .a-fade, .grid-grow { opacity: 1 !important; animation: none !important; }
+  .story-line { stroke-dashoffset: 0 !important; animation: none !important; }
   .load-rise, .load-fade { animation: none !important; }
   .trim-path { animation: none !important; stroke-dasharray: none !important; }
 }

@@ -4,6 +4,7 @@ import Stage from "@/components/Stage";
 import InView from "@/components/InView";
 import HomeHero from "@/components/home/HomeHero";
 import Swoosh from "@/components/home/Swoosh";
+import StoryLines from "@/components/home/StoryLines";
 import { EndBoxes, Founders, StatTicker, WhyNow } from "@/components/home/parts";
 
 /** Figma "Homepage" y-coordinates minus the 830px hero (rendered separately above). */
@@ -92,8 +93,8 @@ export default function Home() {
 
         {/* ── Our Story ── */}
         <InView className="absolute left-0 h-[810px] w-[1440px] overflow-hidden bg-navy" style={{ top: Y(2406) }} threshold={0.25}>
-          <div className="story-lines-in absolute flex items-center justify-center" style={{ left: -82.9, top: -161, width: 1810.8, height: 1622.7 }}>
-            <img src="/img/home/story-lines.svg" alt="" className="h-[1629.7px] w-[1408.4px] max-w-none shrink-0 rotate-[-81.95deg]" />
+          <div className="absolute flex items-center justify-center" style={{ left: -82.9, top: -161, width: 1810.8, height: 1622.7 }}>
+            <StoryLines className="h-[1629.7px] w-[1408.4px] max-w-none shrink-0 rotate-[-81.95deg]" />
           </div>
           {/* 3 boxes grow out of their shared corner, hold, shrink back — loop (star_grid.mp4) */}
           <div className="grid-grow absolute origin-top-right overflow-hidden" style={{ left: 603, top: 490.5, width: 319.5, height: 319.5, ...d(0.4) }}>
