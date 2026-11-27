@@ -1,21 +1,15 @@
 # Astrocade website
 
-Next.js 15 (App Router) + Tailwind CSS v4 + Motion. Five pages: `/`, `/about`, `/careers`, `/blog`, `/press`.
+- **Root (`/`)** — the new Astrocade site (in progress). Next.js 15 + Tailwind CSS v4 + Motion.
+- **`old/`** — the previous site (Home, About, Careers, Blog, Press, Alt 1, Alt 2), kept as a
+  self-contained Next.js project.
 
 ```bash
-npm install
-npm run dev      # http://localhost:3000
-npm run build && npm start
+npm install && npm run dev            # new site
+cd old && npm install && npm run dev  # previous site
 ```
 
-## How it's built
-
-- **Desktop (≥1024px)** is laid out on the 1440px Figma canvas (`components/Stage.tsx`) using the exact
-  Figma coordinates, and scales down to the viewport (`--vs`, set in `app/layout.tsx`).
-- **Mobile (<1024px)** is a separate stacked layout per page; the homepage follows the Figma "Mobile" frame,
-  the mobile menu follows "Nav Open".
-- **Animations** are scroll-triggered: wrap a block in `<InView>` and give children `a-up`, `a-pop`, `a-spin`,
-  `a-grow`, `a-tile`, `a-wipe-ltr`, `a-wipe-rtl` or `a-grad`; stagger with `style={{ "--d": "0.2s" }}`
-  (see `app/globals.css`). Reduced-motion users get the final state.
-- **Editable content** lives in `src/content/` (blog posts, jobs, people quotes, benefits, leaders).
-- Fonts: Poppins Regular / Medium / SemiBold (self-hosted from `src/app/fonts`).
+## Vercel
+While the new site is being built, the live deployment uses **Root Directory = `old`**
+(Project → Settings → Build and Deployment). Switch it back to the repository root when
+the new site is ready to go live.

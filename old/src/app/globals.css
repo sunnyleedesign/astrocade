@@ -1,0 +1,523 @@
+@import "tailwindcss";
+
+/* ───────────── Design tokens (from Figma variables) ───────────── */
+@theme {
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "JetBrains Mono", SFMono-Regular, Menlo, monospace;
+
+  --color-dark-navy: #040e22;
+  --color-navy: #0b1936;
+  --color-cloud: #f0f1ea;
+  --color-dark-cloud: #9aa3b8;
+  --color-muted: #c9ceda;
+  --color-neon: #2be1a2;
+  --color-blue: #5578ff;
+  --color-violet: #c42fed;
+  --color-pink: #ff4288;
+  --color-peach: #ffaa5d;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+:root {
+  --vs: 1;
+  --grad-sunset: linear-gradient(255deg, #ff4288 1%, #ffaa5d 99%);
+  --grad-ocean: linear-gradient(90deg, #5578ff 0%, #2be1a2 96%);
+  --grad-ocean-v: linear-gradient(180deg, #2be1a2 0%, #5578ff 100%);
+  --grad-violet: linear-gradient(90deg, #5578ff 0%, #c42fed 100%);
+  --grad-magenta: linear-gradient(85deg, #ff4288 1%, #c42fed 76%);
+}
+
+html {
+  overflow-x: clip;
+}
+html,
+body {
+  background: var(--color-dark-navy);
+  color: #fff;
+}
+body {
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+/* ───────────── Scaled 1440 canvas ───────────── */
+.stage {
+  position: relative;
+  overflow-x: clip;
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+.stage > .stage-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1440px;
+  transform-origin: 0 0;
+  transform: scale(var(--vs));
+}
+
+/* ───────────── Gradient text ───────────── */
+.grad-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ───────────── Scroll-triggered animation system ─────────────
+   Elements stay hidden until an ancestor <InView> gets `.is-in`.
+   Animations use the individual `translate` / `scale` / `rotate`
+   properties so they compose with an element's own `transform`. */
+.a-up,
+.a-fade,
+.a-pop,
+.a-spin,
+.a-grow,
+.a-tile {
+  opacity: 0;
+}
+.a-wipe-ltr,
+.a-wipe-rtl {
+  clip-path: inset(0 100% 0 0);
+}
+.a-grad {
+  background-repeat: no-repeat;
+  background-size: 0% 100%, 100% 100%;
+}
+
+.is-in .a-up {
+  animation: a-up 0.9s var(--ease-out-expo) var(--d, 0s) both;
+}
+.is-in .a-fade {
+  animation: a-fade 0.8s ease var(--d, 0s) both;
+}
+.is-in .a-pop {
+  animation: a-pop 0.7s var(--ease-back) var(--d, 0s) both;
+}
+.is-in .a-spin {
+  animation: a-spin 1.6s var(--ease-out-expo) var(--d, 0s) both;
+}
+.is-in .a-grow {
+  animation: a-grow 1.2s var(--ease-out-expo) var(--d, 0s) both;
+}
+.is-in .a-tile {
+  animation: a-tile 0.45s var(--ease-out-expo) var(--d, 0s) both;
+}
+.is-in .a-wipe-ltr {
+  animation: a-wipe-ltr var(--dur, 2.2s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) both;
+}
+.is-in .a-wipe-rtl {
+  animation: a-wipe-rtl var(--dur, 2.2s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) both;
+}
+.is-in .a-grad {
+  animation: a-grad 1.1s var(--ease-out-expo) var(--d, 0s) both;
+}
+
+@keyframes a-up {
+  from {
+    opacity: 0;
+    translate: 0 var(--y, 40px);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes a-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes a-pop {
+  0% {
+    opacity: 0;
+    scale: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes a-spin {
+  from {
+    opacity: 0;
+    rotate: -360deg;
+    scale: 0.4;
+  }
+  to {
+    opacity: 1;
+    rotate: 0deg;
+    scale: 1;
+  }
+}
+@keyframes a-grow {
+  from {
+    opacity: 0;
+    scale: 0.55;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes a-tile {
+  from {
+    opacity: 1;
+    clip-path: inset(100% 0 0 0);
+    translate: 0 24px;
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    translate: 0 0;
+  }
+}
+/* Swoosh: draws in, holds, then leaves in the same direction */
+@keyframes a-wipe-ltr {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  45%,
+  60% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@keyframes a-wipe-rtl {
+  0% {
+    clip-path: inset(0 0 0 100%);
+  }
+  45%,
+  60% {
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+@keyframes a-grad {
+  from {
+    background-size: 0% 100%, 100% 100%;
+  }
+  to {
+    background-size: 100% 100%, 100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a-up,
+  .a-fade,
+  .a-pop,
+  .a-spin,
+  .a-grow,
+  .a-tile {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .a-wipe-ltr,
+  .a-wipe-rtl {
+    clip-path: none !important;
+    animation: none !important;
+  }
+  .a-grad {
+    animation: none !important;
+    background-size: 100% 100%, 100% 100%;
+  }
+}
+
+/* Inline SVG paths animate around their own centre */
+.svg-anim path {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* Infinite logo marquee (mobile) */
+@keyframes marquee {
+  to {
+    translate: -50% 0;
+  }
+}
+.marquee {
+  animation: marquee 22s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+}
+
+/* Blog hero star: solid star lands, then outlines ripple out of its edge forever */
+.blog-star path {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.blog-star-solid,
+.blog-ripple {
+  opacity: 0;
+}
+.is-in .blog-star-solid {
+  animation: a-grow 1.1s var(--ease-back) 0.15s both;
+}
+.is-in .blog-ripple {
+  /* 5 lines, 0.7s apart → one new line every 0.7s, like the reference */
+  animation: blog-ripple 3.5s linear calc(0.6s + var(--i) * 0.7s) infinite both;
+}
+@keyframes blog-ripple {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+    scale: 1;
+  }
+  10% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    translate: -300px -200px;
+    scale: 1.24;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blog-star-solid {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+  .blog-ripple {
+    animation: none !important;
+  }
+}
+
+/* ───────────── Looping variants (add `loop` next to the base class) ───────────── */
+.is-in .a-wipe-ltr.loop {
+  animation: a-wipe-ltr-loop var(--cycle, 3.6s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) infinite both;
+}
+.is-in .a-wipe-rtl.loop {
+  animation: a-wipe-rtl-loop var(--cycle, 3.6s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) infinite both;
+}
+.is-in .a-tile.loop {
+  animation: a-tile-loop var(--cycle, 4.4s) var(--ease-out-expo) var(--d, 0s) infinite both;
+}
+
+@keyframes a-wipe-ltr-loop {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  35%,
+  45% {
+    clip-path: inset(0 0 0 0);
+  }
+  80%,
+  100% {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+@keyframes a-wipe-rtl-loop {
+  0% {
+    clip-path: inset(0 0 0 100%);
+  }
+  35%,
+  45% {
+    clip-path: inset(0 0 0 0);
+  }
+  80%,
+  100% {
+    clip-path: inset(0 100% 0 0);
+  }
+}
+/* tile slides up into view, holds, then slides away upward */
+@keyframes a-tile-loop {
+  0% {
+    opacity: 1;
+    clip-path: inset(100% 0 0 0);
+    translate: 0 24px;
+  }
+  12%,
+  76% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    translate: 0 0;
+  }
+  90%,
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 100% 0);
+    translate: 0 -24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-in .loop {
+    animation: none !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* ───────────── About hero (reference video): star spins + zooms in, tiles grow from their shared corner ───────────── */
+.hero-star-in,
+.tile-grow {
+  opacity: 0;
+}
+/* full sequence loops every 6s: star spins in → tiles grow → hold → tiles shrink → star spins out */
+.is-in .hero-star-in {
+  animation: hero-star-loop 6s cubic-bezier(0.22, 1, 0.36, 1) var(--d, 0s) infinite both;
+}
+.is-in .tile-grow {
+  animation: tile-loop 6s cubic-bezier(0.33, 1, 0.68, 1) var(--d, 0s) infinite both;
+}
+@keyframes hero-star-loop {
+  0% {
+    opacity: 1;
+    scale: 0.06;
+    rotate: -50deg;
+  }
+  14% {
+    opacity: 1;
+    scale: 1;
+    rotate: 10.68deg;
+  }
+  86% {
+    opacity: 1;
+    scale: 1;
+    rotate: 10.68deg;
+  }
+  100% {
+    opacity: 1;
+    scale: 0.06;
+    rotate: -50deg;
+  }
+}
+@keyframes tile-loop {
+  0% {
+    opacity: 1;
+    scale: 0;
+  }
+  8.3% {
+    opacity: 1;
+    scale: 1;
+  }
+  60% {
+    opacity: 1;
+    scale: 1;
+  }
+  66.7%,
+  100% {
+    opacity: 1;
+    scale: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-star-in,
+  .tile-grow {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
+
+/* ───────────── Alt 2: stars slide in from the sides ───────────── */
+.alt-star-from-right,
+.alt-star-from-left {
+  opacity: 0;
+}
+.is-in .alt-star-from-right {
+  animation: alt-from-right 1.2s var(--ease-out-expo) var(--d, 0s) both;
+}
+.is-in .alt-star-from-left {
+  animation: alt-from-left 1.2s var(--ease-out-expo) var(--d, 0s) both;
+}
+@keyframes alt-from-right {
+  from {
+    opacity: 0;
+    translate: 260px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes alt-from-left {
+  from {
+    opacity: 0;
+    translate: -260px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .alt-star-from-right,
+  .alt-star-from-left {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
+
+/* ───────────── Careers hero: boxes resize through 3 storyboard states ───────────── */
+.career-box-1 { left: 1145px; top: -112px; width: 390px; height: 390px; }
+.career-box-2 { left: 624px; top: 278px; width: 521px; height: 521px; }
+.career-box-3 { left: 1145px; top: 799px; width: 255px; height: 255px; }
+.is-in .career-box-1 { animation: career-box-1 9s cubic-bezier(0.65, 0, 0.35, 1) 2s infinite; }
+.is-in .career-box-2 { animation: career-box-2 9s cubic-bezier(0.65, 0, 0.35, 1) 2s infinite; }
+.is-in .career-box-3 { animation: career-box-3 9s cubic-bezier(0.65, 0, 0.35, 1) 2s infinite; }
+@keyframes career-box-1 {
+  0%, 22%, 100% { left: 1145px; top: -112px; width: 390px; height: 390px; }
+  33%, 55% { left: 943px; top: -134px; width: 592px; height: 592px; }
+  66%, 88% { left: 1079px; top: 54px; width: 211px; height: 212px; }
+}
+@keyframes career-box-2 {
+  0%, 22%, 100% { left: 624px; top: 278px; width: 521px; height: 521px; }
+  33%, 55% { left: 624px; top: 440px; width: 321px; height: 321px; }
+  66%, 88% { left: 614px; top: 257px; width: 465px; height: 465px; }
+}
+@keyframes career-box-3 {
+  0%, 22%, 100% { left: 1145px; top: 799px; width: 255px; height: 255px; }
+  33%, 55% { left: 945px; top: 761px; width: 461px; height: 461px; }
+  66%, 88% { left: 1079px; top: 722px; width: 327px; height: 327px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-in .career-box-1, .is-in .career-box-2, .is-in .career-box-3 { animation: none; }
+}
+
+/* ───────────── Outlined CTA with gradient border ─────────────
+   --fill = the button's own background (page colour). */
+@property --fill {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #040e22;
+}
+.grad-outline {
+  --fill: #040e22;
+  border: var(--bw, 1px) solid transparent;
+  background:
+    linear-gradient(var(--fill), var(--fill)) padding-box,
+    linear-gradient(180deg, #2be1a2 0%, #5578ff 100%) border-box;
+  transition: --fill 0.35s ease, color 0.35s ease;
+}
+.grad-outline.on-light {
+  --fill: #f0f1ea;
+}
+/* hover: solid fill — teal + navy text on dark backgrounds, navy + white text on light */
+.grad-outline:hover,
+.grad-outline:focus-visible {
+  --fill: #2be1a2;
+  color: #040e22;
+}
+.grad-outline.on-light:hover,
+.grad-outline.on-light:focus-visible {
+  --fill: #040e22;
+  color: #fff;
+}

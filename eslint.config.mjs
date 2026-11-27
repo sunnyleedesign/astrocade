@@ -12,16 +12,13 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
-    // Design assets are pre-optimised SVG/WebP placed at exact Figma sizes.
-    rules: { "@next/next/no-img-element": "off" },
-  },
-  {
     ignores: [
       "node_modules/**",
       ".next/**",
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "old/**",
     ],
   },
 ];
