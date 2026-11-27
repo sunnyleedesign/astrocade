@@ -19,11 +19,11 @@ const GAMES = [
 ];
 
 // layout on the 1440 × 830 design frame
-const TW = 214; // tile width
-const TH = 204; // tile height
-const PX = 352; // column pitch
-const PY = 330; // row pitch
-const NC = 6; // columns (wrap width = NC * PX)
+const TW = 168; // tile width  (9:16 phone ratio, like the game videos)
+const TH = 298; // tile height
+const PX = 268; // column pitch
+const PY = 372; // row pitch
+const NC = 7; // columns (wrap width = NC * PX)
 const NR = 4; // rows (wrap height = NR * PY)
 const WW = NC * PX;
 const WH = NR * PY;
@@ -143,7 +143,7 @@ export default function HomeHero() {
               data-tile
               data-x={cell.x}
               data-y={cell.y}
-              className="absolute left-0 top-0 origin-center overflow-hidden rounded-[18px] bg-navy will-change-transform"
+              className="absolute left-0 top-0 origin-center overflow-hidden rounded-[16px] bg-navy will-change-transform"
               style={{ width: TW, height: TH }}
             >
               <video
