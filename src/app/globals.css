@@ -22,3 +22,10 @@ body {
 body {
   font-family: var(--font-sans);
 }
+
+.grad-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
