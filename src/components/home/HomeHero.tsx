@@ -3,10 +3,12 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Homepage hero (Figma "Hero" → "Hero" scroll states, reference Hero_reference.mov)
- *  - a skewed field of game videos fills the screen
- *  - moving the cursor pans the field, revealing more videos
- *  - scrolling pushes the videos out toward the left/right edges while the
+ * Homepage hero (references Hero_reference.mov + 706922fd-2.mp4)
+ *  - an endless wall of game-video tiles, curved like the inside of a sphere:
+ *    tiles tilt toward the viewer (and grow) the further they sit from the
+ *    centre, which gives the skewed look
+ *  - the wall drifts on its own; moving the cursor pans it to reveal more
+ *  - scrolling pushes the tiles out toward the left/right edges while the
  *    headline + body fade in; scrolling further sends them fully off-screen
  */
 
@@ -16,14 +18,20 @@ const GAMES = [
   "horizen", "frozen-harbor", "daydream-arena",
 ];
 
-// Figma grid: 250 × 444 tiles, column pitch 410, row pitch 588, odd columns offset by -295
-const TW = 250;
-const TH = 444;
-const COL = 410;
-const ROW = 588;
-// a wider field than the screen so the cursor can reveal more
-const COLS = [-1, 0, 1, 2, 3, 4]; // ×410 from x=-20
-const ROWS = [-1, 0, 1, 2];
+// layout on the 1440 × 830 design frame
+const TW = 214; // tile width
+const TH = 204; // tile height
+const PX = 352; // column pitch
+const PY = 330; // row pitch
+const NC = 6; // columns (wrap width = NC * PX)
+const NR = 4; // rows (wrap height = NR * PY)
+const WW = NC * PX;
+const WH = NR * PY;
+const DRIFT_X = -26; // px/s auto drift
+const DRIFT_Y = -9;
+const PERSPECTIVE = 1100;
+
+const wrap = (v: number, size: number) => ((((v + size / 2) % size) + size) % size) - size / 2;
 
 export default function HomeHero() {
   const section = useRef<HTMLElement>(null);
@@ -36,10 +44,13 @@ export default function HomeHero() {
     const fld = field.current!;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const tiles = [...fld.querySelectorAll<HTMLElement>("[data-tile]")];
+    const base = tiles.map((t) => ({ x: Number(t.dataset.x), y: Number(t.dataset.y) }));
     const vids = tiles.map((t) => t.querySelector("video")!);
 
     let mx = 0, my = 0; // cursor target (-1..1)
     let cx = 0, cy = 0; // eased cursor
+    let ox = 0, oy = 0; // drift offset
+    let last = performance.now();
     let raf = 0;
 
     const onMove = (e: PointerEvent) => {
@@ -48,37 +59,59 @@ export default function HomeHero() {
     };
     addEventListener("pointermove", onMove, { passive: true });
 
-    const frame = () => {
+    const frame = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
       const rect = sec.getBoundingClientRect();
       const total = sec.offsetHeight - innerHeight; // scroll distance while pinned
       const p = Math.min(1, Math.max(0, -rect.top / total)); // 0 → 1
+      const visible = rect.bottom > 0;
 
-      cx += (mx - cx) * 0.06;
-      cy += (my - cy) * 0.06;
-      const panX = reduce ? 0 : -cx * 260 * (1 - p);
-      const panY = reduce ? 0 : -cy * 180 * (1 - p);
-      fld.style.translate = `${panX}px ${panY}px`;
+      if (visible) {
+        // fit the 1440 × 830 design frame to cover the viewport
+        const s = Math.max(innerWidth / 1440, innerHeight / 830);
+        const hw = innerWidth / 2 / s; // half viewport, in design px
+        const hh = innerHeight / 2 / s;
 
-      // split: tiles left of centre slide left, right of centre slide right
-      const vw = innerWidth;
-      const push = Math.pow(p, 1.4) * vw * 0.95;
-      tiles.forEach((t, i) => {
-        const side = Number(t.dataset.side); // -1 | 1
-        const lane = Number(t.dataset.lane); // 0 = closest to centre
-        const k = 1 + lane * 0.18;
-        t.style.translate = `${side * push * k}px 0`;
-        t.style.opacity = String(1 - Math.max(0, (p - 0.7) / 0.3));
-        const v = vids[i];
-        if (p > 0.98) { if (!v.paused) v.pause(); } else if (v.paused) v.play().catch(() => {});
-      });
+        if (!reduce) {
+          ox += DRIFT_X * dt * (1 - p);
+          oy += DRIFT_Y * dt * (1 - p);
+          cx += (mx - cx) * 0.05;
+          cy += (my - cy) * 0.05;
+        }
+        // cursor pans the wall: look toward where the pointer is
+        const panX = -cx * 380 * (1 - p);
+        const panY = -cy * 240 * (1 - p);
+        const push = Math.pow(p, 1.3) * (hw + 400) * 1.15;
+        const fade = 1 - Math.max(0, (p - 0.72) / 0.28);
+
+        tiles.forEach((t, i) => {
+          let x = wrap(base[i].x + ox + panX, WW);
+          const y = wrap(base[i].y + oy + panY, WH);
+          // scroll: split away from the centre line
+          const side = x < 0 ? -1 : 1;
+          x += side * push * (1 + Math.abs(x) / hw * 0.35);
+          // concave wall: tilt + bring forward with distance from centre
+          const nx = Math.max(-1.8, Math.min(1.8, x / hw));
+          const ny = Math.max(-1.8, Math.min(1.8, y / hh));
+          const z = Math.min(nx * nx + ny * ny, 3) * 85;
+          const ry = -nx * 30;
+          const rx = ny * 22;
+          t.style.transform =
+            `translate3d(${x * s - TW / 2}px, ${y * s - TH / 2}px, ${z * s}px) rotateY(${ry}deg) rotateX(${rx}deg) scale(${s})`;
+          t.style.opacity = String(fade);
+          const v = vids[i];
+          if (p > 0.98) { if (!v.paused) v.pause(); } else if (v.paused) v.play().catch(() => {});
+        });
+      }
 
       // copy + navy glow fade in during the first part of the scroll
-      const t = Math.min(1, Math.max(0, (p - 0.12) / 0.3));
+      const k = Math.min(1, Math.max(0, (p - 0.12) / 0.3));
       if (copy.current) {
-        copy.current.style.opacity = String(t);
-        copy.current.style.translate = `0 ${(1 - t) * 30}px`;
+        copy.current.style.opacity = String(k);
+        copy.current.style.translate = `0 ${(1 - k) * 30}px`;
       }
-      if (glow.current) glow.current.style.opacity = String(t);
+      if (glow.current) glow.current.style.opacity = String(k);
       raf = requestAnimationFrame(frame);
     };
     raf = requestAnimationFrame(frame);
@@ -88,45 +121,43 @@ export default function HomeHero() {
     };
   }, []);
 
-  let n = 0;
+  const cells: { key: string; x: number; y: number; game: string }[] = [];
+  for (let c = 0; c < NC; c++)
+    for (let r = 0; r < NR; r++)
+      cells.push({
+        key: `${c}-${r}`,
+        x: -WW / 2 + PX / 2 + c * PX,
+        // alternate columns sit half a row lower, like the reference
+        y: -WH / 2 + PY / 2 + r * PY + (c % 2 ? PY / 2 : 0),
+        game: GAMES[(c * NR + r) % GAMES.length],
+      });
+
   return (
     <section ref={section} className="relative h-[260svh] bg-dark-navy">
-      <div className="sticky top-0 h-svh overflow-hidden">
-        {/* skewed video field */}
-        <div className="absolute left-1/2 top-1/2 h-0 w-0" style={{ transform: "rotate(-14deg) skewX(10deg) scale(var(--hero-scale, 1))" }}>
-          <div ref={field} className="absolute left-0 top-0 will-change-transform">
-            {COLS.map((c) =>
-              ROWS.map((r) => {
-                const x = -720 - 20 + c * COL; // centred on the 1440 frame
-                const y = -415 - 101 + r * ROW + (((c % 2) + 2) % 2 === 0 ? 0 : -295);
-                const cxTile = x + TW / 2;
-                const side = cxTile < 0 ? -1 : 1;
-                const lane = Math.floor(Math.abs(cxTile) / COL);
-                const game = GAMES[n++ % GAMES.length];
-                return (
-                  <div
-                    key={`${c}-${r}`}
-                    data-tile
-                    data-side={side}
-                    data-lane={lane}
-                    className="absolute overflow-hidden rounded-[20px] bg-navy will-change-transform"
-                    style={{ left: x, top: y, width: TW, height: TH }}
-                  >
-                    <video
-                      src={`/video/games/${game}.mp4`}
-                      poster={`/video/games/${game}.jpg`}
-                      muted
-                      loop
-                      playsInline
-                      autoPlay
-                      preload="metadata"
-                      className="size-full object-cover"
-                    />
-                  </div>
-                );
-              }),
-            )}
-          </div>
+      <div className="sticky top-0 h-svh overflow-hidden" style={{ perspective: PERSPECTIVE }}>
+        {/* curved video wall */}
+        <div ref={field} aria-hidden className="absolute left-1/2 top-1/2 h-0 w-0" style={{ transformStyle: "preserve-3d" }}>
+          {cells.map((cell) => (
+            <div
+              key={cell.key}
+              data-tile
+              data-x={cell.x}
+              data-y={cell.y}
+              className="absolute left-0 top-0 origin-center overflow-hidden rounded-[18px] bg-navy will-change-transform"
+              style={{ width: TW, height: TH }}
+            >
+              <video
+                src={`/video/games/${cell.game}.mp4`}
+                poster={`/video/games/${cell.game}.jpg`}
+                muted
+                loop
+                playsInline
+                autoPlay
+                preload="metadata"
+                className="size-full object-cover"
+              />
+            </div>
+          ))}
         </div>
 
         {/* navy glow + copy (Figma Ellipse 1 + Content) */}

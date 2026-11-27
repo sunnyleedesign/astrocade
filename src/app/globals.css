@@ -82,8 +82,10 @@ html { overflow-x: clip; }
 .is-in .swoosh-loop { animation: swoosh-loop var(--cycle, 4s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) infinite both; }
 .swoosh-loop.rtl { clip-path: inset(0 0 0 100%); }
 .is-in .swoosh-loop.rtl { animation-name: swoosh-loop-rtl; }
-@keyframes swoosh-loop { 0% { clip-path: inset(0 100% 0 0); } 35%, 50% { clip-path: inset(0 0 0 0); } 85%, 100% { clip-path: inset(0 0 0 100%); } }
-@keyframes swoosh-loop-rtl { 0% { clip-path: inset(0 0 0 100%); } 35%, 50% { clip-path: inset(0 0 0 0); } 85%, 100% { clip-path: inset(0 100% 0 0); } }
+/* --off = share of the swoosh hanging off-screen on the side it enters from,
+   so the draw starts right at the screen edge (never mid-screen) */
+@keyframes swoosh-loop { 0% { clip-path: inset(0 calc(100% - var(--off, 0%)) 0 0); } 35% { clip-path: inset(0 0 0 0); } 50% { clip-path: inset(0 0 0 var(--off, 0%)); } 85%, 100% { clip-path: inset(0 0 0 100%); } }
+@keyframes swoosh-loop-rtl { 0% { clip-path: inset(0 0 0 calc(100% - var(--off, 0%))); } 35% { clip-path: inset(0 0 0 0); } 50% { clip-path: inset(0 var(--off, 0%) 0 0); } 85%, 100% { clip-path: inset(0 100% 0 0); } }
 
 /* Our Story grid (star_grid.mp4): boxes grow out of their shared corner, hold, shrink back — loop */
 .grid-grow { opacity: 0; }

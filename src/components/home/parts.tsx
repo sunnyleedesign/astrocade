@@ -65,7 +65,7 @@ const STORY = [
       "Making something people can play, explore, or even just chat with used to take an entire team of coders, artists, musicians, and designers. Now all it takes is an idea —and Astrocade is where people share it.",
     ],
     video: "daydream-arena",
-    swoosh: { src: "/img/home/swoosh-whynow.svg", box: { left: 602, top: 295, width: 3398, height: 631 }, img: { width: 3379, height: 452 }, rot: 3.04, flip: true },
+    swoosh: { src: "/img/home/swoosh-whynow.svg", box: { left: 602, top: 295, width: 3398, height: 631 }, img: { width: 3379, height: 452 }, rot: 3.04, flip: true, dir: "ltr", off: 0.74 },
   },
   {
     title: ["What we are and", "where we’re headed."],
@@ -73,7 +73,7 @@ const STORY = [
       "We’re starting with games. Today, anyone can describe an idea on Astrocade and play it minutes later. Our algorithm presents it to players most likely to enjoy it, and creators earn every time someone plays. But games are just the start: creators across our platform are exploring new categories of interactive play, from simulations to AI companions to educational games to memes",
     ],
     video: "papercut-io",
-    swoosh: { src: "/img/home/swoosh-violet.svg", box: { left: 472, top: 29, width: 2032, height: 805 }, img: { width: 2032, height: 805 }, rot: 0, flip: false },
+    swoosh: { src: "/img/home/swoosh-violet.svg", box: { left: 472, top: 29, width: 2032, height: 805 }, img: { width: 2032, height: 805 }, rot: 0, flip: false, dir: "rtl", off: 0.51 },
   },
   {
     title: ["Why we win."],
@@ -81,7 +81,7 @@ const STORY = [
       "AI can be used to make games, but only from models trained on code. At Astrocade, we’re developing the first frontier model trained on fun: built from the ground up within our platform, with each step of creation and every moment of play helping to make both better. Every day, our models learn from real-world experience how to make things more fun, while every player gets a feed more finely personalized to them, from tested classics to games created just minutes ago. It’s how we empower more creators, bring more players, and ensure the next creation is always better than the last.",
     ],
     video: "frozen-harbor",
-    swoosh: { src: "/img/home/swoosh-blue.svg", box: { left: 637, top: 528, width: 2465, height: 342 }, img: { width: 2465, height: 342 }, rot: 0, flip: false },
+    swoosh: { src: "/img/home/swoosh-blue.svg", box: { left: 637, top: 528, width: 2465, height: 342 }, img: { width: 2465, height: 342 }, rot: 0, flip: false, dir: "rtl", off: 0.66 },
   },
 ];
 const STEP_MS = 7000;
@@ -149,8 +149,9 @@ export function WhyNow() {
           <img
             src={s.swoosh.src}
             alt=""
-            className="swoosh-loop max-w-none shrink-0"
+            className={`swoosh-loop max-w-none shrink-0 ${s.swoosh.dir === "rtl" ? "rtl" : ""}`}
             style={{
+              ["--off" as string]: `${s.swoosh.off * 100}%`,
               width: s.swoosh.img.width,
               height: s.swoosh.img.height,
               rotate: `${s.swoosh.rot}deg`,
@@ -232,7 +233,10 @@ export function Founders() {
                 aria-label={`${isOpen ? "Hide" : "Show"} bio: ${f.name}`}
                 className="flex size-10 shrink-0 items-center justify-center rounded-full border-[0.25px] border-white backdrop-blur-[14px] transition-colors hover:bg-white/10"
               >
-                <img src="/img/home/plus.svg" alt="" className={`size-4 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`} />
+                <span aria-hidden className="relative block size-4">
+                  <span className="absolute left-[3.33px] top-[7px] h-[2px] w-[9.33px] rounded-full bg-white" />
+                  <span className={`absolute left-[7px] top-[3.33px] h-[9.33px] w-[2px] rounded-full bg-white transition-transform duration-300 ${isOpen ? "rotate-90 scale-y-0" : ""}`} />
+                </span>
               </button>
             </div>
             <div className="grid transition-[grid-template-rows] duration-500 ease-[var(--ease-out-expo)]" style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}>
