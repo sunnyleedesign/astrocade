@@ -120,7 +120,7 @@ export function WhyNow() {
     <div ref={root} className="absolute inset-0">
       {/* phone cards (back: blue, front: video that swipes up like a feed) */}
       <div className="absolute left-[1013px] top-[120px] flex h-[592.9px] w-[222.2px] items-center justify-center">
-        <div className="h-[512px] w-[236.4px] shrink-0 rounded-[14.8px] bg-blue" style={{ transform: CARD }} />
+        <div className="h-[512px] w-[236.4px] shrink-0 rounded-[14.8px] bg-[#122346]" style={{ transform: CARD }} />
       </div>
       <div className="absolute left-[947px] top-[179px] flex h-[592.9px] w-[222.2px] items-center justify-center">
         <div className="relative h-[512px] w-[236.4px] shrink-0 overflow-hidden rounded-[14.8px] bg-navy" style={{ transform: CARD }}>
