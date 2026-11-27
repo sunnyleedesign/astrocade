@@ -1,34 +1,37 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 /**
  * Hero intro (Figma "Hero Alt" → "Hero", reference 1.mp4):
- *  1. game videos twinkle in and out at random spots on a 4 × 3 grid
+ *  1. three rows of game videos glide sideways — row 1 right→left, row 2
+ *     left→right, row 3 right→left — while individual tiles flicker on and off
+ *     with a quick glitchy jitter
  *  2. every tile clears
  *  3. the headline + body copy fade up and stay
  */
 
 const GAMES = [
-  "window-pane-ting", "runespell", "papercut-io", "odd-things",
-  "tiny-planet-chopper", "zombie-miner", "one-little-push", "impact-pong",
-  "pottery-master-3d", "drift-market", "horizen", "frozen-harbor",
-  "daydream-arena",
+  "window-pane-ting", "runespell", "papercut-io", "odd-things", "tiny-planet-chopper",
+  "zombie-miner", "one-little-push", "impact-pong", "pottery-master-3d", "drift-market",
+  "horizen", "frozen-harbor", "daydream-arena",
 ];
 
 // Figma grid (1440 × 830 frame): 187 × 333 tiles, 40px gaps
-const COLS = [286, 513, 740, 967];
-const ROWS = [-124, 249, 622];
 const W = 187;
 const H = 333;
+const PITCH = W + 40;
+const ROWS = [-124, 249, 622];
+const DIRS = [-1, 1, -1]; // -1 = right→left
+const PER_ROW = 9; // 9 × 227 = 2043px > 1440 viewport, doubled for a seamless loop
+const SPEED = 130; // px/s (measured from the reference, scaled to the 1440 grid)
 
-const TWINKLE_MS = 5200; // how long tiles twinkle before clearing
-const TICK_MS = 260; // one tile changes every tick
-const CLEAR_MS = 500;
+const TWINKLE_MS = 6000;
+const TICK_MS = 220; // one tile toggles every tick
+const CLEAR_MS = 600;
 
 type Phase = "twinkle" | "clear" | "text";
 
-// deterministic pseudo-random so server and client render the same first frame
 function rng(seed: number) {
   let s = seed;
   return () => {
@@ -39,12 +42,15 @@ function rng(seed: number) {
 
 export default function HeroIntro() {
   const [phase, setPhase] = useState<Phase>("twinkle");
-  // which game each of the 12 slots shows, and whether it's visible
-  const [slots, setSlots] = useState(() => GAMES.slice(0, 12).map((g, i) => ({ game: g, on: [1, 3, 5, 6, 8, 11].includes(i) })));
+  // on/off per tile: rows × PER_ROW (the duplicated half mirrors it so the loop stays seamless)
+  const initial = useMemo(() => {
+    const r = rng(3);
+    return ROWS.map(() => Array.from({ length: PER_ROW }, () => r() < 0.55));
+  }, []);
+  const [on, setOn] = useState(initial);
   const [scale, setScale] = useState(1);
-  const box = useRef<HTMLDivElement>(null);
+  const box = useRef<HTMLElement>(null);
 
-  // fit the 1440 × 830 grid to the hero (cover width, keep tiles readable on phones)
   useEffect(() => {
     const el = box.current;
     if (!el) return;
@@ -60,24 +66,17 @@ export default function HeroIntro() {
       setPhase("text");
       return;
     }
-    const rand = rng(7);
-    let next = 12; // next game to swap in (cycles through all 13)
+    const rand = rng(11);
     const tick = setInterval(() => {
-      setSlots((prev) => {
-        const i = Math.floor(rand() * 12);
-        const s = [...prev];
-        if (s[i].on) s[i] = { ...s[i], on: false };
-        else {
-          s[i] = { game: GAMES[next % GAMES.length], on: true };
-          next++;
-        }
-        return s;
+      setOn((prev) => {
+        const r = Math.floor(rand() * ROWS.length);
+        const c = Math.floor(rand() * PER_ROW);
+        return prev.map((row, ri) => (ri === r ? row.map((v, ci) => (ci === c ? !v : v)) : row));
       });
     }, TICK_MS);
     const clear = setTimeout(() => {
       clearInterval(tick);
       setPhase("clear");
-      setSlots((prev) => prev.map((s) => ({ ...s, on: false })));
     }, TWINKLE_MS);
     const text = setTimeout(() => setPhase("text"), TWINKLE_MS + CLEAR_MS);
     return () => {
@@ -87,16 +86,43 @@ export default function HeroIntro() {
     };
   }, []);
 
+  const loopSec = (PER_ROW * PITCH) / SPEED;
+
   return (
     <section ref={box} className="relative h-svh min-h-[640px] w-full overflow-hidden bg-dark-navy">
-      {/* video tiles */}
+      {/* gliding video rows */}
       <div
         aria-hidden
         className="absolute left-1/2 top-1/2 h-[830px] w-[1440px] origin-center"
         style={{ transform: `translate(-50%, -50%) scale(${scale})` }}
       >
-        {slots.map((s, i) => (
-          <Tile key={i} game={s.game} on={s.on && phase === "twinkle"} left={COLS[i % 4]} top={ROWS[Math.floor(i / 4)]} />
+        {ROWS.map((top, ri) => (
+          <div
+            key={ri}
+            className="hero-row absolute left-0 flex"
+            style={{
+              top,
+              gap: 40,
+              animationDuration: `${loopSec}s`,
+              animationDirection: DIRS[ri] === -1 ? "normal" : "reverse",
+              // start the row offset so tiles don't line up column-to-column
+              animationDelay: `${-loopSec * (ri * 0.37)}s`,
+            }}
+          >
+            {[0, 1].map((half) =>
+              Array.from({ length: PER_ROW }, (_, ci) => {
+                const game = GAMES[(ri * 5 + ci * 3) % GAMES.length];
+                return (
+                  <Tile
+                    key={`${half}-${ci}`}
+                    game={game}
+                    on={on[ri][ci] && phase === "twinkle"}
+                    seed={ri * 31 + ci * 7 + half}
+                  />
+                );
+              }),
+            )}
+          </div>
         ))}
       </div>
 
@@ -128,7 +154,7 @@ export default function HeroIntro() {
   );
 }
 
-function Tile({ game, on, left, top }: { game: string; on: boolean; left: number; top: number }) {
+function Tile({ game, on, seed }: { game: string; on: boolean; seed: number }) {
   const ref = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     const v = ref.current;
@@ -138,23 +164,14 @@ function Tile({ game, on, left, top }: { game: string; on: boolean; left: number
       const t = setTimeout(() => v.pause(), 400);
       return () => clearTimeout(t);
     }
-  }, [on, game]);
+  }, [on]);
   return (
     <div
-      className="absolute overflow-hidden rounded-[20px] bg-navy"
-      style={{
-        left,
-        top,
-        width: W,
-        height: H,
-        opacity: on ? 1 : 0,
-        scale: on ? "1" : "0.9",
-        transition: "opacity 0.35s ease, scale 0.45s cubic-bezier(0.34,1.56,0.64,1)",
-      }}
+      className={`relative shrink-0 overflow-hidden rounded-[20px] bg-navy ${on ? "tile-on" : "tile-off"}`}
+      style={{ width: W, height: H, ["--jx" as string]: `${((seed * 37) % 7) - 3}px`, ["--jy" as string]: `${((seed * 53) % 7) - 3}px` }}
     >
       <video
         ref={ref}
-        key={game}
         src={`/video/games/${game}.mp4`}
         poster={`/video/games/${game}.jpg`}
         muted
