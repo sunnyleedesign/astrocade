@@ -173,7 +173,7 @@ export default function HomeHero() {
           className="pointer-events-none absolute left-1/2 top-1/2 w-[1655px] max-w-none -translate-x-1/2 -translate-y-1/2 load-fade"
         />
         <div
-          className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-6 px-5 text-center drop-shadow-[0_4px_42px_rgba(4,14,34,0.5)] lg:gap-10"
+          className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-6 px-5 text-center drop-shadow-[0_2px_18px_rgba(4,14,34,0.5)] lg:gap-10"
         >
           <h1 className="text-[48px] font-medium leading-[0.95] tracking-[-0.035em] sm:text-[64px] lg:text-[88px]">
             <span className="load-rise block" style={{ ["--d" as string]: "0.25s" }}>Where the Internet</span>
