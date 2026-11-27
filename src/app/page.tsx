@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Stage from "@/components/Stage";
 import InView from "@/components/InView";
 import HomeHero from "@/components/home/HomeHero";
+import Swoosh from "@/components/home/Swoosh";
 import { EndBoxes, Founders, StatTicker, WhyNow } from "@/components/home/parts";
 
 /** Figma "Homepage" y-coordinates minus the 830px hero (rendered separately above). */
@@ -82,7 +83,7 @@ export default function Home() {
         {/* ── "and the people…" with a swoosh that draws in and out on repeat ── */}
         <InView className="absolute inset-x-0 h-[700px]" style={{ top: Y(1846) }} threshold={0.3}>
           <div className="pointer-events-none absolute flex items-center justify-center" style={{ left: -1379, top: 0, width: 2757, height: 512 }}>
-            <img src="/img/home/swoosh-stats.svg" alt="" className="swoosh-loop max-w-none shrink-0" style={{ width: 2741, height: 367, rotate: "-3.04deg", ["--cycle" as string]: "4.5s", ["--off" as string]: "49%" }} />
+            <Swoosh name="stats" className="max-w-none shrink-0" style={{ width: 2741, height: 367, rotate: "-3.04deg", ["--cycle" as string]: "4.5s" }} />
           </div>
           <p className="a-up absolute left-[265px] w-[910px] text-center text-[72px] font-medium leading-[0.92] tracking-[-0.025em]" style={{ top: 1964 - 1846 }}>
             and the people who built the Internet’s biggest platforms

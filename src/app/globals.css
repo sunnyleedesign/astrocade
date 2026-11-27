@@ -77,15 +77,16 @@ html { overflow-x: clip; }
 @keyframes a-pop { 0% { opacity: 0; scale: 0; } 60% { opacity: 1; } 100% { opacity: 1; scale: 1; } }
 @keyframes a-fade { from { opacity: 0; } to { opacity: 1; } }
 
-/* swoosh: draws in, holds, wipes out — on repeat */
-.swoosh-loop { clip-path: inset(0 100% 0 0); }
-.is-in .swoosh-loop { animation: swoosh-loop var(--cycle, 4s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) infinite both; }
-.swoosh-loop.rtl { clip-path: inset(0 0 0 100%); }
-.is-in .swoosh-loop.rtl { animation-name: swoosh-loop-rtl; }
-/* --off = share of the swoosh hanging off-screen on the side it enters from,
-   so the draw starts right at the screen edge (never mid-screen) */
-@keyframes swoosh-loop { 0% { clip-path: inset(0 calc(100% - var(--off, 0%)) 0 0); } 35% { clip-path: inset(0 0 0 0); } 50% { clip-path: inset(0 0 0 var(--off, 0%)); } 85%, 100% { clip-path: inset(0 0 0 100%); } }
-@keyframes swoosh-loop-rtl { 0% { clip-path: inset(0 0 0 calc(100% - var(--off, 0%))); } 35% { clip-path: inset(0 0 0 0); } 50% { clip-path: inset(0 var(--off, 0%) 0 0); } 85%, 100% { clip-path: inset(0 100% 0 0); } }
+/* swoosh: trim-path — draws along its path, holds, erases along its path — on repeat
+   (vars per mask path come from swooshes.ts; --cycle sets the loop length) */
+.trim-swoosh { display: block; }
+.trim-path { stroke-dasharray: 0 3000px; stroke-dashoffset: var(--o0); }
+.is-in .trim-path { animation: trim-path var(--cycle, 4.5s) var(--d, 0s) infinite both; }
+@keyframes trim-path {
+  0% { stroke-dasharray: 0 3000px; stroke-dashoffset: var(--o0); animation-timing-function: cubic-bezier(0.55, 0, 0.25, 1); }
+  26%, 62% { stroke-dasharray: var(--len) var(--gap); stroke-dashoffset: var(--o1); animation-timing-function: cubic-bezier(0.6, 0, 0.3, 1); }
+  84%, 100% { stroke-dasharray: 0 3000px; stroke-dashoffset: var(--o2); }
+}
 
 /* Our Story grid (star_grid.mp4): boxes grow out of their shared corner, hold, shrink back — loop */
 .grid-grow { opacity: 0; }
@@ -101,5 +102,5 @@ html { overflow-x: clip; }
 
 @media (prefers-reduced-motion: reduce) {
   .a-up, .a-pop, .a-fade, .grid-grow, .story-lines-in { opacity: 1 !important; animation: none !important; }
-  .swoosh-loop { clip-path: none !important; animation: none !important; }
+  .trim-path { animation: none !important; stroke-dasharray: none !important; }
 }
