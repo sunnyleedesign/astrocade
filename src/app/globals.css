@@ -61,3 +61,43 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hero-row, .tile-on { animation: none; }
 }
+
+/* ───────────── Scaled 1440 canvas (desktop sections) ───────────── */
+:root { --vs: 1; --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); --ease-back: cubic-bezier(0.34, 1.56, 0.64, 1); }
+.stage { position: relative; width: 100%; max-width: 1440px; margin-inline: auto; overflow-x: clip; }
+.stage > .stage-inner { position: absolute; left: 0; top: 0; width: 1440px; transform-origin: 0 0; transform: scale(var(--vs)); }
+html { overflow-x: clip; }
+
+/* ───────────── Scroll-triggered animations (InView adds .is-in) ───────────── */
+.a-up, .a-pop, .a-fade { opacity: 0; }
+.is-in .a-up { animation: a-up 0.9s var(--ease-out-expo) var(--d, 0s) both; }
+.is-in .a-pop { animation: a-pop 0.7s var(--ease-back) var(--d, 0s) both; }
+.is-in .a-fade { animation: a-fade 0.8s ease var(--d, 0s) both; }
+@keyframes a-up { from { opacity: 0; translate: 0 var(--y, 40px); } to { opacity: 1; translate: 0 0; } }
+@keyframes a-pop { 0% { opacity: 0; scale: 0; } 60% { opacity: 1; } 100% { opacity: 1; scale: 1; } }
+@keyframes a-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* swoosh: draws in, holds, wipes out — on repeat */
+.swoosh-loop { clip-path: inset(0 100% 0 0); }
+.is-in .swoosh-loop { animation: swoosh-loop var(--cycle, 4s) cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0s) infinite both; }
+.swoosh-loop.rtl { clip-path: inset(0 0 0 100%); }
+.is-in .swoosh-loop.rtl { animation-name: swoosh-loop-rtl; }
+@keyframes swoosh-loop { 0% { clip-path: inset(0 100% 0 0); } 35%, 50% { clip-path: inset(0 0 0 0); } 85%, 100% { clip-path: inset(0 0 0 100%); } }
+@keyframes swoosh-loop-rtl { 0% { clip-path: inset(0 0 0 100%); } 35%, 50% { clip-path: inset(0 0 0 0); } 85%, 100% { clip-path: inset(0 100% 0 0); } }
+
+/* Our Story grid (star_grid.mp4): boxes grow out of their shared corner, hold, shrink back — loop */
+.grid-grow { opacity: 0; }
+.is-in .grid-grow { animation: grid-grow 6s cubic-bezier(0.33, 1, 0.68, 1) var(--d, 0s) infinite both; }
+@keyframes grid-grow {
+  0% { opacity: 1; scale: 0; }
+  9% { opacity: 1; scale: 1; }
+  70% { opacity: 1; scale: 1; }
+  79%, 100% { opacity: 1; scale: 0; }
+}
+.story-lines-in { opacity: 0; }
+.is-in .story-lines-in { animation: a-fade 1.4s ease 0.2s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .a-up, .a-pop, .a-fade, .grid-grow, .story-lines-in { opacity: 1 !important; animation: none !important; }
+  .swoosh-loop { clip-path: none !important; animation: none !important; }
+}
