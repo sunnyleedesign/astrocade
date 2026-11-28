@@ -69,6 +69,12 @@ export default function Home() {
           </InView>
         ))}
 
+        {/* stat dividers */}
+        <InView className="absolute inset-x-0 h-[151px]" style={{ top: Y(910) }} threshold={0.6}>
+          <div className="a-fade absolute left-[490px] top-0 h-[151px] w-px bg-white/20" style={d(0.3)} />
+          <div className="a-fade absolute left-[996px] top-0 h-[151px] w-px bg-white/20" style={d(0.45)} />
+        </InView>
+
         {/* ── Backed by ── */}
         <InView className="absolute left-[207px] flex w-[1027px] flex-col items-center gap-6" style={{ top: Y(1381) }}>
           <p className="a-up text-[18px] leading-[1.55] text-white">Backed by</p>
@@ -143,9 +149,9 @@ export default function Home() {
           <p className="a-up text-[32px] font-medium leading-[1.12] tracking-[-0.025em]">Angels</p>
           <div className="grid w-[1142px] grid-cols-4 gap-x-2 gap-y-9">
             {ANGELS.map(([name, title], i) => (
-              <div key={name} className="a-up flex flex-col gap-[2px]" style={d(i * 0.05, { "--y": "20px" })}>
-                <p className="text-[24px] font-semibold">{name}</p>
-                <p className="text-[17px] leading-[1.7] text-cloud">{title}</p>
+              <div key={name} className="a-up flex flex-col gap-1" style={d(i * 0.05, { "--y": "20px" })}>
+                <p className="text-[20px] font-semibold">{name}</p>
+                <p className="whitespace-nowrap text-[15px] leading-[1.7] text-cloud">{title}</p>
               </div>
             ))}
           </div>
