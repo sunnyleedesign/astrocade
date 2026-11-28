@@ -196,7 +196,7 @@ export default function HeroIntro() {
 
       {/* headline + body: appear after the tiles clear, then stay */}
       <div className="absolute inset-x-0 top-[calc(50%+40px)] flex -translate-y-1/2 flex-col items-center gap-6 px-5 text-center lg:gap-10">
-        <h1 className="text-[40px] font-medium leading-[0.95] tracking-[-0.035em] sm:text-[64px] lg:text-[96px]">
+        <h1 className="text-[40px] font-medium leading-[0.95] tracking-[-0.035em] sm:text-[56px] lg:text-[80px]">
           <Reveal show={phase === "text"} delay={0}>
             Where the Internet
           </Reveal>
