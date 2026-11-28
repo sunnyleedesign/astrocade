@@ -26,9 +26,10 @@ const DIRS = [-1, 1, -1]; // -1 = right→left
 const PER_ROW = 9; // 9 × 227 = 2043px > 1440 viewport, doubled for a seamless loop
 const SPEED = 130; // px/s (measured from the reference, scaled to the 1440 grid)
 
-const TWINKLE_MS = 6000;
+const TWINKLE_MS = 3600;
+const TEXT_BY_MS = 5000; // headline + body are in by 5s at the latest
 const TICK_MS = 240; // one tile toggles every tick
-const FADE_STEP_MS = 280; // exit: one tile disappears per step
+const FADE_STEP_MS = 200; // exit: one tile disappears per step
 
 type Phase = "twinkle" | "clear" | "text";
 
@@ -130,9 +131,13 @@ export default function HeroIntro() {
       }, FADE_STEP_MS);
     }, TWINKLE_MS);
 
+    // hard cap: never keep people waiting longer than 5s for the copy
+    const cap = setTimeout(() => setPhase("text"), TEXT_BY_MS);
+
     return () => {
       clearInterval(tick);
       clearTimeout(clear);
+      clearTimeout(cap);
       if (fade) clearInterval(fade);
       if (text) clearTimeout(text);
     };
