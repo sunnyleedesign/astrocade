@@ -73,7 +73,7 @@ export default function Home() {
 
         {/* ── Backed by ── */}
         <InView className="absolute left-[207px] flex w-[1027px] flex-col items-center gap-6" style={{ top: Y(1596) }}>
-          <p className="a-up text-[20px] leading-[1.55] text-white">Backed by</p>
+          <p className="a-up text-[18px] leading-[1.55] text-white">Backed by</p>
           <div className="flex items-center gap-[72px] opacity-80">
             {BACKERS.map((b, i) => (
               <img key={b.alt} src={b.src} alt={b.alt} className="a-up shrink-0 object-cover" style={{ width: b.w, height: b.h, ...d(0.1 + i * 0.08, { "--y": "16px" }) }} />
@@ -86,7 +86,7 @@ export default function Home() {
           <div className="pointer-events-none absolute flex items-center justify-center" style={{ left: -1379, top: 0, width: 2757, height: 512 }}>
             <Swoosh name="stats" className="max-w-none shrink-0" style={{ width: 2741, height: 367, rotate: "-3.04deg", ["--cycle" as string]: "4.5s" }} />
           </div>
-          <p className="a-up absolute left-[265px] w-[910px] text-center text-[72px] font-medium leading-[0.92] tracking-[-0.025em]" style={{ top: 1964 - 1846 }}>
+          <p className="a-up absolute left-[265px] w-[910px] text-center text-[64px] font-medium leading-[0.92] tracking-[-0.025em]" style={{ top: 1964 - 1846 }}>
             and the people who built the Internet’s biggest platforms
           </p>
         </InView>
@@ -104,11 +104,11 @@ export default function Home() {
           <div className="grid-grow absolute origin-bottom-left overflow-hidden bg-blue" style={{ left: 1240.5, top: 172, width: 319.5, height: 319.5, ...d(0.8) }}>
             <img src="/img/home/grid3-star.webp" alt="" className="absolute left-[4.15px] top-[20.25px] h-[278px] w-[311px]" />
           </div>
-          <p className="a-up absolute left-[148px] top-[120px] text-[32px] font-medium leading-[1.12] tracking-[-0.025em] text-neon">Our Story</p>
-          <h2 className="a-up absolute left-[148px] top-[172px] w-[695px] text-[56px] font-medium leading-none tracking-[-0.06em]" style={d(0.1)}>
+          <p className="a-up absolute left-[148px] top-[120px] text-[24px] font-medium leading-[1.12] tracking-[-0.025em] text-neon">Our Story</p>
+          <h2 className="a-up absolute left-[148px] top-[172px] w-[695px] text-[48px] font-medium leading-none tracking-[-0.06em]" style={d(0.1)}>
             We’re on a mission to share fun with the world
           </h2>
-          <p className="a-up absolute left-[148px] top-[322px] w-[465px] text-[20px] leading-[1.55] text-white" style={d(0.2)}>
+          <p className="a-up absolute left-[148px] top-[306px] w-[465px] text-[18px] leading-[1.55] text-white" style={d(0.2)}>
             Astrocade is where anyone can create, share, and play games and interactive content.
           </p>
         </InView>
@@ -120,7 +120,7 @@ export default function Home() {
 
         {/* ── Meet the founders ── */}
         <InView className="absolute left-0 w-[1440px]" style={{ top: Y(4587) }} threshold={0.15}>
-          <h2 className="a-up text-center text-[40px] font-medium leading-[0.95] tracking-[-0.06em]">Meet the founders</h2>
+          <h2 className="a-up text-center text-[32px] font-medium leading-[0.95] tracking-[-0.06em]">Meet the founders</h2>
           <div className="relative mt-[49px]">
             <Founders />
           </div>
@@ -128,7 +128,7 @@ export default function Home() {
 
         {/* ── Investors ── */}
         <InView className="absolute left-[207px] flex w-[1027px] flex-col items-center gap-10" style={{ top: Y(5444) }}>
-          <p className="a-up text-[32px] font-medium leading-[1.12] tracking-[-0.025em]">Investors</p>
+          <p className="a-up text-[24px] font-medium leading-[1.12] tracking-[-0.025em]">Investors</p>
           <div className="a-up flex w-[793px] flex-wrap items-center justify-center gap-x-20 gap-y-10 opacity-80" style={d(0.15, { "--y": "20px" })}>
             <img src="/img/home/sequoia.png" alt="Sequoia" className="h-[23.2px] w-[175.7px]" />
             <Mask src="/img/home/peakxv-mask.png" w={138.3} h={48} alt="Peak XV" />
@@ -142,12 +142,12 @@ export default function Home() {
 
         {/* ── Angels ── */}
         <InView className="absolute left-8 flex w-[1376px] flex-col items-center gap-10 text-center" style={{ top: Y(5810) }}>
-          <p className="a-up text-[32px] font-medium leading-[1.12] tracking-[-0.025em]">Angels</p>
+          <p className="a-up text-[24px] font-medium leading-[1.12] tracking-[-0.025em]">Angels</p>
           <div className="grid w-[1142px] grid-cols-4 gap-x-2 gap-y-9">
             {ANGELS.map(([name, title], i) => (
               <div key={name} className="a-up flex flex-col gap-[2px]" style={d(i * 0.05, { "--y": "20px" })}>
                 <p className="text-[24px] font-semibold">{name}</p>
-                <p className="text-[17px] leading-[1.7] text-cloud">{title}</p>
+                <p className="text-[15px] leading-[1.7] text-cloud">{title}</p>
               </div>
             ))}
           </div>
@@ -156,12 +156,12 @@ export default function Home() {
         {/* ── End module: boxes grow and shrink on repeat ── */}
         <InView className="absolute left-0 h-[810px] w-[1440px] overflow-hidden bg-navy" style={{ top: Y(6330) }} threshold={0.2}>
           <EndBoxes />
-          <h2 className="a-up absolute left-[148px] top-[104px] w-[741px] text-[56px] font-medium leading-[0.95] tracking-[-0.06em]">
+          <h2 className="a-up absolute left-[148px] top-[104px] w-[741px] text-[48px] font-medium leading-[0.95] tracking-[-0.06em]">
             ...and a community of funds, founders and operators who’ve believed in Astrocade from day one.
           </h2>
           <a
             href="https://www.astrocade.com"
-            className="a-up absolute left-[148px] top-[388px] rounded-full p-6 text-[18px] font-medium leading-none text-dark-navy transition-[background-position] duration-500 hover:[background-position:0_100%]"
+            className="a-up absolute left-[148px] top-[357px] rounded-full p-6 text-[16px] font-medium leading-none text-dark-navy transition-[background-position] duration-500 hover:[background-position:0_100%]"
             style={{ ...d(0.15), backgroundImage: "linear-gradient(180deg, #2be1a2 0%, #5578ff 50%, #5578ff 100%)", backgroundSize: "100% 200%" }}
           >
             Play Astrocade

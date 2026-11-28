@@ -196,7 +196,7 @@ export default function HeroIntro() {
 
       {/* headline + body: appear after the tiles clear, then stay */}
       <div className="absolute inset-x-0 top-[calc(50%+40px)] flex -translate-y-1/2 flex-col items-center gap-6 px-5 text-center lg:gap-10">
-        <h1 className="text-[48px] font-medium leading-[0.95] tracking-[-0.035em] sm:text-[72px] lg:text-[104px]">
+        <h1 className="text-[40px] font-medium leading-[0.95] tracking-[-0.035em] sm:text-[64px] lg:text-[96px]">
           <Reveal show={phase === "text"} delay={0}>
             Where the Internet
           </Reveal>
@@ -206,7 +206,7 @@ export default function HeroIntro() {
             </span>
           </Reveal>
         </h1>
-        <Reveal show={phase === "text"} delay={300} className="max-w-[520px] text-[17px] leading-[1.55] text-white lg:text-[20px]">
+        <Reveal show={phase === "text"} delay={300} className="max-w-[520px] text-[15px] leading-[1.55] text-white lg:text-[18px]">
           Astrocade is where anyone can create, share, and play games and interactive content
         </Reveal>
       </div>

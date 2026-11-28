@@ -175,7 +175,7 @@ export default function HomeHero() {
         <div
           className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center gap-6 px-5 text-center drop-shadow-[0_2px_18px_rgba(4,14,34,0.5)] lg:gap-10"
         >
-          <h1 className="text-[48px] font-medium leading-[0.95] tracking-[-0.035em] sm:text-[64px] lg:text-[88px]">
+          <h1 className="text-[40px] font-medium leading-[0.95] tracking-[-0.035em] sm:text-[56px] lg:text-[80px]">
             <span className="load-rise block" style={{ ["--d" as string]: "0.25s" }}>Where the Internet</span>
             <span className="load-rise block" style={{ ["--d" as string]: "0.4s" }}>
               <span className="grad-text -mb-[0.2em] block pb-[0.2em]" style={{ backgroundImage: "linear-gradient(253.26deg, #c42fed 0.94%, #ff4288 98.94%)" }}>
@@ -183,7 +183,7 @@ export default function HomeHero() {
               </span>
             </span>
           </h1>
-          <p className="load-rise max-w-[520px] text-[17px] leading-[1.55] text-white lg:text-[20px]" style={{ ["--d" as string]: "0.6s" }}>
+          <p className="load-rise max-w-[520px] text-[15px] leading-[1.55] text-white lg:text-[18px]" style={{ ["--d" as string]: "0.6s" }}>
             Astrocade is where anyone can create, share, and play games and interactive content
           </p>
         </div>
