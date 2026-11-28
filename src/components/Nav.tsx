@@ -27,7 +27,7 @@ function PlayCta({ className = "" }: { className?: string }) {
   return (
     <a
       href={PLAY_URL}
-      className={`flex h-12 items-center justify-center rounded-full px-4 text-[13px] font-medium text-dark-navy transition-[background-position] duration-500 hover:[background-position:0_100%] ${className}`}
+      className={`flex h-12 items-center justify-center rounded-full px-4 text-[15px] font-medium text-dark-navy transition-[background-position] duration-500 hover:[background-position:0_100%] ${className}`}
       style={{ backgroundImage: "linear-gradient(180deg, #2be1a2 0%, #5578ff 50%, #5578ff 100%)", backgroundSize: "100% 200%" }}
     >
       Play Astrocade
@@ -48,7 +48,7 @@ export default function Nav() {
           <Logo />
         </Link>
 
-        <nav className={`${PILL} absolute left-1/2 top-6 hidden h-12 -translate-x-1/2 items-center gap-8 px-6 text-[15px] font-medium text-white lg:flex`}>
+        <nav className={`${PILL} absolute left-1/2 top-6 hidden h-12 -translate-x-1/2 items-center gap-8 px-6 text-[13px] font-medium text-white lg:flex`}>
           {NAV_LINKS.map((l) => (
             <Link
               key={l.href}

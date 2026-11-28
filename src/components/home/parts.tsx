@@ -178,7 +178,7 @@ export function WhyNow() {
                   restart();
                 }}
                 aria-expanded={open}
-                className={`block w-full text-left text-[32px] font-medium leading-[0.95] tracking-[-0.06em] transition-opacity duration-500 ${i ? "pt-12" : ""} ${open ? "opacity-100" : "opacity-20 hover:opacity-50"} ${open ? "pb-10" : "pb-12"}`}
+                className={`block w-full text-left text-[32px] font-medium leading-[0.95] tracking-[-0.06em] transition-opacity duration-500 ${i ? "pt-14" : ""} ${open ? "opacity-100" : "opacity-20 hover:opacity-50"} ${open ? "pb-11" : "pb-14"}`}
               >
                 {s.title.map((t) => (
                   <span key={t} className="block">
@@ -189,7 +189,7 @@ export function WhyNow() {
               <div className="grid transition-[grid-template-rows] duration-700 ease-[var(--ease-out-expo)]" style={{ gridTemplateRows: open ? "1fr" : "0fr" }}>
                 <div className="overflow-hidden">
                   <div
-                    className="flex w-[446px] flex-col gap-[1.2em] pb-12 text-[15px] leading-[1.7] text-muted transition-[opacity,translate] duration-700"
+                    className="flex w-[446px] flex-col gap-[1.7em] pb-24 text-[16px] leading-[1.7] text-muted transition-[opacity,translate] duration-700"
                     style={{ opacity: open ? 1 : 0, translate: open ? "0 0" : "0 16px", transitionDelay: open ? "200ms" : "0ms" }}
                   >
                     {s.body.map((p) => (
@@ -226,7 +226,7 @@ export function Founders() {
             </div>
             <div className="mt-6 flex items-center justify-between">
               <div className="flex flex-col text-white">
-                <span className="-mb-1 text-[24px] font-semibold">{f.name}</span>
+                <span className="text-[20px] font-semibold">{f.name}</span>
                 <span className="text-[15px] leading-[1.7]">{f.role}</span>
               </div>
               <button
